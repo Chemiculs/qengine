@@ -2,11 +2,22 @@
 
 NOTE: __-- MSVC SUPPORT IS EXPIRIMENTAL - LLVM / CLANG ARE THOROUGHLY TESTED --__ :
 
-As you can see reading over the source, i have attempted to implement support for MSVC and others however have not succeeded at this yet. 
+--------------------------------------------------------------------------------------
 
-This is a well tested and while not perfect, an effective polymorphic type engine for C++ applications which will prevent security applications such Antiviruse's and Anticheat's from creating effective runtime signatures of your program, and above all else greatly obstruct reverse-engineers attempting to steal / crack your source.
+__-- FEATURES --__
 
-This class is fully inlined, employing minimalist design and maximum performance and reliability.
+* Runtime stack polymorphism (locals will be manipulated directly on the stack)
+* Runtime heap polymorphism (dynamic polymorphic allocations are supported)
+* 
+--------------------------------------------------------------------------------------
+
+As you can see reading over the source, i have attempted to implement support for MSVC and others however have a ways to go with this, it was originally only written for LLVM / clang compiler. 
+
+This is a well tested (in LLVM / clang) and while not perfect, is an effective, basic polymorphic type engine for C++ applications which will prevent security applications such Antiviruse's and Anticheat's from creating effective runtime signatures of your program, and above all else greatly obstruct reverse-engineers attempting to steal / crack your source.
+
+This class is fully inlined, employing minimalist design and maximum performance + reliability.
+
+--------------------------------------------------------------------------------------
 
 __--HOW-TO--__
 
@@ -16,17 +27,25 @@ __--HOW-TO--__
 
 * in the source file(s) which you wish to include the project, you can simply use the #include directive to import the library and begin using it as such
 
+--------------------------------------------------------------------------------------
+
+__--EXAMPLES--__
 
 Example project indicating generalized usage of primitive and extended types included in according folder.
 
+--------------------------------------------------------------------------------------
 
 Demonstration of control flow obfuscation:
 __-- Basic "Hello, World!" application before polymorphic type --__
 ![IDA view of hello world C++ program before polymorphic engine](crypt2.png)
 
+--------------------------------------------------------------------------------------
+
 __-- Basic "Hello, World!" application after polymorphic type --__
 (the control flow chart gets more and more messy, the more instances of polymorphic types are instantiated) 
 ![IDA view of hello world C++ program after polymorphic engine](crypt1.png)
+
+--------------------------------------------------------------------------------------
 
 __--NOTES--__
 
