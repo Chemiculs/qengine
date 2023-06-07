@@ -1,0 +1,8 @@
+﻿  pmorph_example.cpp
+C:\Users\laneg\source\repos\pmorph_example\pmorph_example\enc_t.hpp(73,1): warning C4005: 'NULL': macro redefinition
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.36.32532\include\vcruntime.h(233,1): message : see previous definition of 'NULL'
+C:\Users\laneg\source\repos\pmorph_example\pmorph_example\enc_t.hpp(2145,36): warning C4101: 'except': unreferenced local variable
+C:\Users\laneg\source\repos\pmorph_example\pmorph_example\enc_t.hpp(2228,36): warning C4101: 'except': unreferenced local variable
+C:\Users\laneg\source\repos\pmorph_example\pmorph_example\enc_t.hpp(2531,40): warning C4101: 'except': unreferenced local variable
+C:\Users\laneg\source\repos\pmorph_example\pmorph_example\enc_t.hpp(2296): warning C4172: returning address of local variable or temporary: value
+  pmorph_example.vcxproj -> C:\Users\laneg\source\repos\pmorph_example\x64\Debug\pmorph_example.exe
