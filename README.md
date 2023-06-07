@@ -1,6 +1,6 @@
 # Polymorphic-Engine
 
-NOTE-- MSVC SUPPORT IS EXPIRIMENTAL - LLVM / CLANG ARE THOROUGHLY TESTED --|
+NOTE: __-- MSVC SUPPORT IS EXPIRIMENTAL - LLVM / CLANG ARE THOROUGHLY TESTED --__ :
 
 As you can see reading over the source, i have attempted to implement support for MSVC and others however have not succeeded at this yet. 
 
@@ -8,7 +8,7 @@ This is a well tested and while not perfect, an effective polymorphic type engin
 
 This class is fully inlined, employing minimalist design and maximum performance and reliability.
 
-HOW-TO:
+__--HOW-TO--__
 
 * Download enc_t.cpp and enc_t.hpp and include both of these in your project  
 
@@ -27,3 +27,11 @@ __-- Basic "Hello, World!" application before polymorphic type --__
 __-- Basic "Hello, World!" application after polymorphic type --__
 (the control flow chart gets more and more messy, the more instances of polymorphic types are instantiated) 
 ![IDA view of hello world C++ program after polymorphic engine](crypt1.png)
+
+__--NOTES--__
+
+* Extended types (SSE / AVX) must be enabled in your project settings if you wish to use the derived polymorphic versions of them.
+
+* When using the e_malloc class to allocate dynamic blocks of memory, i suggest using the UNIQUE macro as such, unless you wish to manually call free() subsequently for every get() call:
+* 
+auto unique_block_pointer = (e_malloc_instance.get())
