@@ -1,6 +1,6 @@
 # Polymorphic-Engine
 
-NOTE-- MUST USE LLVM / CLANG COMPILER FOR NOW --|
+NOTE-- MSVC SUPPORT IS EXPIRIMENTAL - LLVM / CLANG ARE THOROUGHLY TESTED --|
 
 As you can see reading over the source, i have attempted to implement support for MSVC and others however have not succeeded at this yet. 
 
