@@ -47,7 +47,6 @@ EXTENDED TYPES (MUST enable extended types in C++ -> Code Generation):
 * __m256 (e_m256)
 * __m256i (e_m256i)
 * __m256d (e_m256d)
-* 
 
 --------------------------------------------------------------------------------------
 
