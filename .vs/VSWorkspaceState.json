@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\example",
+    "\\example\\pmorph_example",
+    "\\example\\x64",
+    "\\example\\x64\\Debug",
+    "\\example\\x64\\Release",
+    "\\src"
+  ],
+  "SelectedNode": "\\example\\pmorph_example\\pmorph_example.vcxproj",
+  "PreviewInSolutionExplorer": false
+}
