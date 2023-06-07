@@ -33,5 +33,11 @@ __--NOTES--__
 * Extended types (SSE / AVX) must be enabled in your project settings if you wish to use the derived polymorphic versions of them.
 
 * When using the e_malloc class to allocate dynamic blocks of memory, i suggest using the UNIQUE macro as such, unless you wish to manually call free() subsequently for every get() call:
-* 
-auto unique_block_pointer = (e_malloc_instance.get())
+```cpp
+e_malloc e_malloc_instance(insert_allocation_size); // instantiate polymorphic memory block
+
+auto unique_block_pointer = UNIQUE(e_malloc_instance.get()); // get unique_ptr to memory block (macro will apply custom Decommission object for malloc / free)
+
+// use unique_block_pointer - it will prevent memory leaks on it's own when it goes out of scope
+```
+
