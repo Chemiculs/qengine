@@ -21,7 +21,9 @@ Example project indicating generalized usage of primitive and extended types inc
 
 
 Demonstration of control flow obfuscation:
-
+__-- Basic "Hello, World!" application before polymorphic type --__
 ![IDA view of hello world C++ program before polymorphic engine](crypt2.png)
 
+__-- Basic "Hello, World!" application after polymorphic type --__
+(the control flow chart gets more and more messy, the more instances of polymorphic types are instantiated) 
 ![IDA view of hello world C++ program after polymorphic engine](crypt1.png)
