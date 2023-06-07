@@ -8,7 +8,7 @@ __-- FEATURES --__
 
 * Runtime stack polymorphism (locals will be manipulated directly on the stack)
 * Runtime heap polymorphism (dynamic polymorphic allocations are supported)
-* 
+
 --------------------------------------------------------------------------------------
 
 As you can see reading over the source, i have attempted to implement support for MSVC and others however have a ways to go with this, it was originally only written for LLVM / clang compiler. 
