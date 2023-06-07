@@ -29,6 +29,17 @@ __--HOW-TO--__
 
 * in the source file(s) which you wish to include the project, you can simply use the #include directive to import the library and begin using it as such
 
+```cpp
+#include "enc_t.hpp"
+
+int main(){
+  crypto::init_constants(); // initialize the namespace globals
+  
+  // use the namespace throughout application now
+  return 0;
+}
+```
+
 --------------------------------------------------------------------------------------
 
 __--EXAMPLES--__
@@ -51,7 +62,7 @@ __-- Basic "Hello, World!" application after polymorphic type --__
 
 __--NOTES--__
 
-* at the startup of your application, you must instantiate the global variables used by the classes by calling the static init_constants() function in the namespace:
+* at the startup of your application, you MUST instantiate the global variables used by the classes by calling the static init_constants() function in the namespace:
 
 ```cpp
 #include "enc_t.hpp"
