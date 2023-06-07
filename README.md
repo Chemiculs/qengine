@@ -1,5 +1,10 @@
 # Polymorphic-Engine
-This is a fairly thoroughly tested and while not perfect, an effective polymorphic type engine for C++ applications which will prevent security applications such Antiviruse's and Anticheat's from creating effective runtime signatures of your program, and above all else greatly obstruct reverse-engineers attempting to steal / crack your source.
+
+NOTE-- MUST USE LLVM / CLANG COMPILER FOR NOW --|
+
+As you can see reading over the source, i have attempted to implement support for MSVC and others however have not succeeded at this yet. 
+
+This is a well tested and while not perfect, an effective polymorphic type engine for C++ applications which will prevent security applications such Antiviruse's and Anticheat's from creating effective runtime signatures of your program, and above all else greatly obstruct reverse-engineers attempting to steal / crack your source.
 
 This class is fully inlined, employing minimalist design and maximum performance and reliability.
 
