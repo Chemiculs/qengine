@@ -49,6 +49,19 @@ __-- Basic "Hello, World!" application after polymorphic type --__
 
 __--NOTES--__
 
+* at the startup of your application, you must instantiate the global variables used by the classes by calling the static init_constants() function in the namespace:
+
+```cpp
+#include "enc_t.hpp"
+
+int main(){
+  crypto::init_constants(); // initialize the namespace
+  
+  // use the namespace throughout application now
+  return 0;
+}
+```
+
 * Extended types (SSE / AVX) must be enabled in your project settings if you wish to use the derived polymorphic versions of them.
 
 * When using the e_malloc class to allocate dynamic blocks of memory, i suggest using the UNIQUE macro as such, unless you wish to manually call free() subsequently for every get() call:
