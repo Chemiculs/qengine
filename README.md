@@ -60,3 +60,11 @@ auto unique_block_pointer = UNIQUE(e_malloc_instance.get()); // get unique_ptr t
 // use unique_block_pointer - it will prevent memory leaks on it's own when it goes out of scope
 ```
 
+
+--------------------------------------------------------------------------------------
+
+__--TO-DO / GOALS--__
+
+* optimize the e_malloc class - it is the one class here that is terrible performance heavy during runtime and currently, unless used with the UNIQUE macro, prone to memory leaks
+* strengthen XOR encryption algorithm and further randomize seeding method, to make this harder than it currently is to reverse.
+
