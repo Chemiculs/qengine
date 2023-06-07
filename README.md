@@ -13,7 +13,9 @@ __-- FEATURES --__
 
 As you can see reading over the source, i have attempted to implement support for MSVC and others however have a ways to go with this, it was originally only written for LLVM / clang compiler. 
 
-This is a well tested (in LLVM / clang) and while not perfect, is an effective, basic polymorphic type engine for C++ applications which will prevent security applications such Antiviruse's and Anticheat's from creating effective runtime signatures of your program, and above all else greatly obstruct reverse-engineers attempting to steal / crack your source.
+This is a well tested (in LLVM / clang) and while not perfect, is an effective, basic polymorphic type engine for C++ applications which will prevent security applications such as Antiviruses and Anticheats from creating effective runtime signatures of your program, and above all else greatly obstruct reverse-engineers attempting to steal / crack your source.
+
+This will NOT prevent static disk-signatures of your executables - only make them harder to reverse-engineer and signature during runtime
 
 This class is fully inlined, employing minimalist design and maximum performance + reliability.
 
