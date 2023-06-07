@@ -9,6 +9,34 @@ __-- FEATURES --__
 * Runtime stack polymorphism (locals will be manipulated directly on the stack)
 * Runtime heap polymorphism (dynamic polymorphic allocations are supported)
 
+
+_-- SUPPORTED POLYMORPHIC TYPES--__
+
+*char (e_int8)
+*unsigned char (e_uint8)
+*short (e_int16)
+*unsigned short (e_uint16)
+*int (e_int32)
+*unsigned int (e_uint32)
+*long long (e_int64 on 64 bit applications)
+*unsigned long long (e_uint64 on 64 bit applications)
+
+*float (e_float)
+*double (e_double)
+
+*std::string (e_string)
+*std::wstring(e_wstring)
+
+EXTENDED TYPES (MUST enable extended types in C++ -> Code Generation):
+
+* __m128 (e_m128)
+* __m128i (e_m128i)
+* __m128d (e_m128d)
+* __m256 (e_m256)
+* __m256i (e_m256i)
+* __m256d (e_m256d)
+* 
+
 --------------------------------------------------------------------------------------
 
 As you can see reading over the source, i have attempted to implement support for MSVC and others however have a ways to go with this, it was originally only written for LLVM / clang compiler. 
