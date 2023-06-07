@@ -17,13 +17,5 @@ HOW-TO:
 * in the source file(s) which you wish to include the project, you can simply use the #include directive to import the library and begin using it as such
 
 
-EXAMPLE--
-main.cpp 
------------------------------------
-#include "../pathto/enc_t.hpp"
+Example project indicating generalized usage of primitive and extended types included in according folder.
 
-int main(){
-  // use the class as needed
-}
-
-examples of usage will be located in the "example" folder of the project.
