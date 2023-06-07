@@ -19,3 +19,4 @@ HOW-TO:
 
 Example project indicating generalized usage of primitive and extended types included in according folder.
 
+![IDA view of hello world C++ program before polymorphic engine](crypt1.png)
