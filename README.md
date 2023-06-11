@@ -10,7 +10,7 @@ __-- FEATURES --__
 * Runtime heap polymorphism (dynamic polymorphic allocations are supported)
 
 
-_-- SUPPORTED POLYMORPHIC TYPES--__
+-- SUPPORTED POLYMORPHIC TYPES--
 
 *char (e_int8)
 
