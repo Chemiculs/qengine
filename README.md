@@ -31,7 +31,7 @@ __-- FEATURES --__
 
 *float (e_float)
 
-*double (e_double)
+*double (e_double in 64 bit applications)
 
 
 *std::string (e_string)
