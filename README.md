@@ -1,6 +1,7 @@
-# qengine - easy to use and highly configurable binary obfuscation for C++ windows applications
+# - qengine - 
 
-##NOTE: __-- MSVC SUPPORT IS EXPIRIMENTAL - LLVM / CLANG ARE THOROUGHLY TESTED --__ :
+easy to use and highly configurable, compiler-independent binary obfuscation for C++ windows applications
+
 
 --------------------------------------------------------------------------------------
 
