@@ -17,44 +17,56 @@ Easy to use and highly configurable, compiler-independent, fully inlined binary 
 
 ## What is qengine?
 
+qengine is a polymorphic engine (meaning an engine that takes multiple forms / permutations) for windows with the end goal of making the reverse engineers day much more difficult, and making the binary appear as unique as possible and unrecognizable at each independent runtime.
 
+i couldn't find a good solution - llvm-obfuscator only supports llvm / clang, vmprotect / themida are proprietary solutions which offer little in terms of control over the process of obfuscation and other options tend to have the same issue - 
 
---------------------------------------------------------------------------------------
+i couldn't control the way my binary was obfuscated the ways in which i wanted to.
 
-As you can see reading over the source, i have attempted to implement support for MSVC and others however have a ways to go with this, it was originally only written for LLVM / clang compiler. 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-This is a well tested (in LLVM / clang) and while not perfect, is an effective, basic polymorphic type engine for C++ applications which will prevent security applications such as Antiviruses and Anticheats from creating effective runtime signatures of your program, and above all else greatly obstruct reverse-engineers attempting to steal / crack your source.
+This library is fairly well tested (considering i am a one-man team) - i currently am unaware of any bugs for LLVM / CLANG, MSVC, and Intel compiler targets for both x86 and x64 release builds.
 
-This will NOT prevent static disk-signatures of your executables - only make them harder to reverse-engineer and signature during runtime
+This will NOT prevent static disk-signatures of your executables - however, it will make the task of understanding your code from a classic disassembler such as IDA nearly impossible if used properly, and will prevent memory-dump / memory-scan based signature detections of your binary.
 
-This class is fully inlined, employing minimalist design and maximum performance + reliability.
+This class is fully inlined, employing minimalist design and maximum performance + reliability -
 
---------------------------------------------------------------------------------------
+Obfuscation and polymorphism can be heavy in terms of performance cost, howver on 
 
-__--HOW-TO--__
+~1.70% average performance loss vs standard library / primitive types, likewise you will retain ~98.3% of your programs original performance ( on average )
 
-* Download enc_t.cpp and enc_t.hpp and include both of these in your project  
+If anyone is able to contribute detailed benchmarks if they have the time, this would be extremely helpful - my hands are tied when it comes to free time for this project at the moment.
 
-* Depending on the pathing structure of both your project and the placement of these specific files - you may need to adjust the include pathing in the source file "enc_t.cpp" to adhere to aformentioned pathing.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-* in the source file(s) which you wish to include the project, you can simply use the #include directive to import the library and begin using it as such
+## Usage
+
+* Download the repository as a zip file, and extract the qengine folder to your project's main / root directory
+* Include the qengine header file contained in <root_directory>/qengine/engine/
+
+### Hello World
+
+here is the obligatory "Hello World" for qengine:
 
 ```cpp
-#include "enc_t.hpp"
+#include <iostream>
 
-int main(){
-  crypto::init_constants(); // initialize the namespace globals
-  
-  // use the namespace throughout application now
-  return 0;
+#include "qengine/engine/qengine.hpp"
+
+using namespace qengine;
+
+int main() {
+	std::cout << qenc_t::e_string("Hello World!").get() << std::endl; // dynamically encrypted type(s)
+
+	std::cout << qhash_t::h_string("Hello World!").get() << std::endl; // secured / hash-checked type(s)
+
+	std::cout << qenc_h_t::q_string("Hello World!").get() << std::endl; // dynamically encrypted AND hash-checked type(s)
+
+	std::cin.get();
+
+	return 0;
 }
 ```
-
---------------------------------------------------------------------------------------
-
-__--EXAMPLES--__
-
-Example project indicating generalized usage of primitive and extended types included in according folder.
 
 --------------------------------------------------------------------------------------
 
