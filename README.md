@@ -262,11 +262,9 @@ Some field such as e_magic in the DOS header and SizeOfStackCommit / SizeOfStack
 
 #### The above may appear underwhelming -
 
-Keep in mind that the interrupt padding instructions between symbols are well-spaced out throughout the executbale sections of the PE, but are substantial in total - unfortunately hard to display all of these in a single screenshot.
+Keep in mind that the interrupt padding instructions between symbols are well-spaced out throughout the executable sections of the PE, but are substantial in total - unfortunately hard to display all of these in a single screenshot.
 
 The interrupt3 paddings (0xCC arrays) are regions that the instruction pointer never hits, so we can do anything we want (almost) with them, the engine permutates them between { INT1, INT3, NOP } for the time being with random seed to accomplish this.
-
-
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
