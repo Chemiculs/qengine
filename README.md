@@ -25,15 +25,13 @@ i couldn't control the way my binary was obfuscated the ways in which i wanted t
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-*This library is fairly well tested (considering i am a one-man team) - i currently am unaware of any bugs for LLVM / CLANG, MSVC, and Intel compiler targets for both x86 and x64 release builds.
+* qengine is fairly well tested (considering i am a one-man team) - i currently am unaware of any bugs for LLVM / CLANG, MSVC, and Intel compiler targets for both x86 and x64 release builds.
 
 * This will NOT prevent static disk-signatures of your executables - however, it will make the task of understanding your code from a classic disassembler such as IDA VERY difficult if used properly, and will prevent memory-dump / memory-scan based signature detections of your binary.
 
-*This library is fully inlined, employing minimalist design and maximum performance + reliability --
+* This library is fully inlined, employing minimalist design and maximum performance + reliability --
 
-Obfuscation and polymorphism can be heavy in terms of performance cost, howver on 
-
-~1.70% average performance loss vs standard library / primitive types, likewise you will retain ~98.3% of your programs original performance ( on average )
+qengine is very lightweight and likewise incurs a ~1.70% average performance loss vs standard library / primitive types, likewise you will retain ~98.3% of your programs original performance ( on average )
 
 If anyone is able to contribute detailed benchmarks if they have the time, this would be extremely helpful - my hands are tied when it comes to free time for this project at the moment.
 
