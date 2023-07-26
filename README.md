@@ -1,6 +1,6 @@
 #                                                     - qengine - 
 
-Easy to use and highly configurable, compiler-independent, fully inlined binary obfuscation for C++ windows applications
+Easy to use and highly configurable, compiler-independent, fully inlined binary obfuscation for C++ 17+ windows applications
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -314,6 +314,8 @@ qhash64 algorithm (64-bit) - 0.0% collision rate amongst 65535 unique 16-bit dat
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Notes
+
+* You must target C++ 17 or higher as your language standard for the library to compile properly
 
 * Manipulating header info and morphing executable section will likely break virtualization tools such as VMProtect and Themida - I have not thoroughly tested this
 
