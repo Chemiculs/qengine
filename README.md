@@ -1,11 +1,10 @@
 # - qengine - 
 
-easy to use and highly configurable, compiler-independent binary obfuscation for C++ windows applications
+Easy to use and highly configurable, compiler-independent, fully inlined binary obfuscation for C++ windows applications
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
---------------------------------------------------------------------------------------
-
-__-- FEATURES --__
+## Features
 
 * Runtime stack polymorphism (locals will be manipulated directly on the stack and appear differently each execution, not really a big deal as this happens in most applications anyways)
 * Runtime heap polymorphism (dynamic polymorphic allocations are supported, not a big deal as above)
@@ -14,43 +13,11 @@ __-- FEATURES --__
 * .text / executable section Polymorphism (.text section dumps will appear different at each runtime which would hypothetically prevent basic static .text dump signature scans by AV's / AC's etc.)
 * PE header wipe / mutation (headers will be wiped or appear different at each runtime)
 
--- SUPPORTED POLYMORPHIC TYPES--
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-*char (e_int8)
-
-*unsigned char (e_uint8)
-
-*short (e_int16)
-
-*unsigned short (e_uint16)
-
-*int (e_int32)
-
-*unsigned int (e_uint32)
-
-*long long (e_int64 on 64 bit applications)
-
-*unsigned long long (e_uint64 on 64 bit applications)
+## What is qengine?
 
 
-*float (e_float)
-
-*double (e_double in 64 bit applications)
-
-
-*std::string (e_string)
-
-*std::wstring(e_wstring)
-
-
-EXTENDED TYPES (MUST enable extended types in C++ -> Code Generation):
-
-* __m128 (e_m128)
-* __m128i (e_m128i)
-* __m128d (e_m128d)
-* __m256 (e_m256)
-* __m256i (e_m256i)
-* __m256d (e_m256d)
 
 --------------------------------------------------------------------------------------
 
