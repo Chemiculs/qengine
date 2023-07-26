@@ -1,4 +1,4 @@
-# - qengine - 
+#                                                     - qengine - 
 
 Easy to use and highly configurable, compiler-independent, fully inlined binary obfuscation for C++ windows applications
 
@@ -21,16 +21,15 @@ Easy to use and highly configurable, compiler-independent, fully inlined binary 
 qengine is a polymorphic engine (meaning an engine that takes multiple forms / permutations) for windows with the end goal of making the reverse engineers day much more difficult, and making the binary appear as unique as possible and unrecognizable at each independent runtime.
 
 i couldn't find a good solution - llvm-obfuscator only supports llvm / clang, vmprotect / themida are proprietary solutions which offer little in terms of control over the process of obfuscation and other options tend to have the same issue - 
-
 i couldn't control the way my binary was obfuscated the ways in which i wanted to.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-This library is fairly well tested (considering i am a one-man team) - i currently am unaware of any bugs for LLVM / CLANG, MSVC, and Intel compiler targets for both x86 and x64 release builds.
+*This library is fairly well tested (considering i am a one-man team) - i currently am unaware of any bugs for LLVM / CLANG, MSVC, and Intel compiler targets for both x86 and x64 release builds.
 
-This will NOT prevent static disk-signatures of your executables - however, it will make the task of understanding your code from a classic disassembler such as IDA nearly impossible if used properly, and will prevent memory-dump / memory-scan based signature detections of your binary.
+* This will NOT prevent static disk-signatures of your executables - however, it will make the task of understanding your code from a classic disassembler such as IDA VERY difficult if used properly, and will prevent memory-dump / memory-scan based signature detections of your binary.
 
-This class is fully inlined, employing minimalist design and maximum performance + reliability -
+*This library is fully inlined, employing minimalist design and maximum performance + reliability --
 
 Obfuscation and polymorphism can be heavy in terms of performance cost, howver on 
 
