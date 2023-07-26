@@ -122,7 +122,57 @@ AND
 
 * Each sub-routine contains multiple iterations of cmp / test instructions rather than a single cmp / test instruction as the compiler would normally generate and is beyond trivial to crack using a debugger.
 
-#### - Hashing -
+### Memory Hash-Check Violation Handling
+
+This library allows you to handle the event where a debugger or external tool attempts to illicitly write data to the stack / heap which corrupts / change any of your variables. 
+
+Below i will give an example of how to create a callback function to handle this event, assign it to the library, and trigger it yourself to test it -
+
+```cpp
+#include <iostream>
+
+#include "qengine/engine/qengine.hpp"
+
+using namespace qengine;
+
+ __declspec(noinline) void __fastcall violation_callback(qexcept::q_rogueaccess except, void* data) {
+
+	if (except.id != qexcept::MEMORY_ALTERATION) // ensure this callback has been raised due to memory alteration
+		return;
+
+	std::cout << "Memory access violation occured, original hash: " << std::hex << except.original_hash << std::endl; // display the original hash of the data when it was valid
+
+	std::cout << "Altered hash: " << std::hex << except.altered_hash << std::endl; // display the hash of the data which was altered
+
+	std::cout << "Memory address: " << std::hex << reinterpret_cast<uintptr_t>(data) << std::endl; //display the memory address of the data which was altered 
+
+	//here you would normally flag the user for a ban / violation or force-quit the application
+}
+
+
+int main() {
+
+	qhash_t::init_hash_t(violation_callback); // assign our callback function to the namespace - all instances will refer to this callback if they detect a violation
+
+	qhash_t::h_int32 MyInteger(999); // instance a hash-checked integer and set it's value to 999
+
+	(*MyInteger.get_raw_memory_address()) = 998; // use the built in illegal-accessor for this example to modify the value of the data and trigger our callback
+
+	int32_t value = MyInteger; // store the value held within MyInteger in a normal primitive variable to invoke get() (get() is when the check will occur)
+
+	std::cout << "Hacked value: " << value << std::endl; // print the new / hacked value to the screen (998)
+
+	std::cin.get();
+
+	return 0;
+}
+```
+
+Below is a screenshot of the resulting output from the above code:
+
+![Output from hash check violation](callback_h.png)
+
+## - Hashing -
 
 To address the reliability of the hashing algorithm(s), i made a collision testing application which will be included in the repo which tests for collisions amongt all possible permatations of a 2-byte / 16-bit data set using both algorithm's, the results are:
 
@@ -131,14 +181,17 @@ qhash64 algorithm (64-bit) - 0.0% collision rate amongst 65535 unique 16-bit dat
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Demonstration of control flow obfuscation:
-__-- Basic "Hello, World!" application before polymorphic type --__
+## Demonstration of control flow obfuscation:
+
+- Basic "Hello, World!" application before polymorphic type -
+- 
 ![IDA view of hello world C++ program before polymorphic engine](crypt2.png)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-__-- Basic "Hello, World!" application after polymorphic type --__
-(the control flow chart gets more and more messy, the more instances of polymorphic types are instantiated) 
+- Basic "Hello, World!" application after polymorphic type -
+(the control flow chart gets more and more messy, the more instances of polymorphic types are instantiated)
+
 ![IDA view of hello world C++ program after polymorphic engine](crypt1.png)
 
 --------------------------------------------------------------------------------------
