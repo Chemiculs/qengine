@@ -39,6 +39,21 @@ If anyone is able to contribute detailed benchmarks if they have the time, this 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Demonstration of control-flow obfuscation:
+
+- "Hello, World!" application before polymorphic type -
+- 
+![IDA view of hello world C++ program before polymorphic engine](crypt2.png)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- "Hello, World!" application after polymorphic type -
+(the control flow chart might be hard to see, but there are roughly 1000 sub-routines)
+
+![IDA view of hello world C++ program after polymorphic engine](crypt1.png)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 ## Usage
 
 * Download the repository as a zip file, and extract the qengine folder to your project's main / root directory
@@ -172,6 +187,89 @@ Below is a screenshot of the resulting output from the above code:
 
 ![Output from hash check violation](callback_h.png)
 
+### Header Manipulation / Executable Section Polymorphism / Permutations
+
+This library can disrupt the ability to signature scan the executable sections of the PE file f=in memory / from memory dumps, and corrupt / wipe the header information (it would need to be rebuilt to properly parse through PE-bear / CFF explorer etc.)
+
+Below is an example of how to mutate the executable sections of the PE and scramble the header information:
+
+```cpp
+#include <iostream>
+
+#include "qengine/engine/qengine.hpp"
+
+using namespace qengine;
+
+
+int main() {
+
+	// You do not have to use all of the below functions, however analyze_executable_sections() must be called before morph_executable_sections(), and this must be called before manipulating headers as it depends on information from the headers to perform analyzation
+
+	qdisasm::qsection_assembler sec{ };
+
+	sec.analyze_executable_sections();
+
+	if (sec.morph_executable_sections(true)) // NOW we morph our stored sections and pass true to flag for memory clearance 
+		std::cout << "Interrupt Padding morphed successfully! " << std::endl;
+	else
+		std::cout << "Interrupt Padding failed to be morphed! " << std::endl;
+
+	if (sec.zero_information_sections())
+		std::cout << "Garbage sections nulled" << std::endl;
+	else
+		std::cout << "Garbage section wipe failed" << std::endl;
+
+	if (sec.scramble_dos_header(true))
+		std::cout << "DOS headers wiped" << std::endl;
+	else
+		std::cout << "DOS headers not wiped" << std::endl;
+
+	if (sec.scramble_nt_header())
+		std::cout << "NT headers wiped" << std::endl;
+	else
+		std::cout << "NT headers not wiped" << std::endl;
+	
+	std::cout << ".text / header permutations complete!" << std::endl;
+
+	std::cin.get();
+}
+```
+
+The above code will complete successfully and without errors, there are instances where the section header manipulation will, however, cause the visual studio debugger to trigger exceptions if is attempting to read data from any of the altered sections (this does not matter as you won't be publishing a debug build of your application anyways if you are concerned about security)
+
+Below are examples, before and after the above functions are called, of the PE headers and .text section of an executable
+
+#### Headers before scramble:
+
+![Headers before scramble](headerbeforescramble.png)
+
+#### Headers after scramble:
+
+![Headers after scramble](headerafterscramble.png)
+
+As you can see i mixed zeroing with scrambling and much of the headers wound up zero'd - nevertheless, very different outcomes compared to the original binary which is the goal.
+
+Some field such as e_magic in the DOS header and SizeOfStackCommit / SizeOfStackReserve fields in the optional header must be preserved as the application will crash elsewise.
+
+#### .text section before scramble:
+
+![.text before scramble](beforescramble.png)
+
+#### .text section after scramble:
+
+![.text before scramble](afterscramble.png)
+
+
+#### The above may appear underwhelming -
+
+Keep in mind that the interrupt padding instructions between symbols are well-spaced out throughout the executbale sections of the PE, but are substantial in total - unfortunately hard to display all of these in a single screenshot.
+
+The interrupt3 paddings (0xCC arrays) are regions that the instruction pointer never hits, so we can do anything we want (almost) with them, the engine permutates them between { INT1, INT3, NOP } for the time being with random seed to accomplish this.
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 ## - Hashing -
 
 To address the reliability of the hashing algorithm(s), i made a collision testing application which will be included in the repo which tests for collisions amongt all possible permatations of a 2-byte / 16-bit data set using both algorithm's, the results are:
@@ -181,35 +279,7 @@ qhash64 algorithm (64-bit) - 0.0% collision rate amongst 65535 unique 16-bit dat
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Demonstration of control flow obfuscation:
-
-- Basic "Hello, World!" application before polymorphic type -
-- 
-![IDA view of hello world C++ program before polymorphic engine](crypt2.png)
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-- Basic "Hello, World!" application after polymorphic type -
-(the control flow chart might be hard to see, but there are roughly 1000 sub-routines)
-
-![IDA view of hello world C++ program after polymorphic engine](crypt1.png)
-
---------------------------------------------------------------------------------------
-
 ### Notes
-
-* If you are concerned about external manipulation of your application, the hash-checked types in the qenc_h_t and qhash_t namespace's allow you to specify a callback routine which will be triggered if a variable you instanced from these namespaces is midified through a debugger or WriteProcessMemory etc. 
-
-```cpp
-#include "enc_t.hpp"
-
-int main(){
-  crypto::init_constants(); // initialize the namespace
-  
-  // use the namespace throughout application now
-  return 0;
-}
-```
 
 * Extended types (SSE / AVX) must be enabled in your project settings if you wish to use the derived polymorphic versions of them.
 
@@ -225,7 +295,7 @@ auto unique_block_pointer = UNIQUE(e_malloc_instance.get()); // get unique_ptr t
 
 --------------------------------------------------------------------------------------
 
-__--TO-DO / GOALS--__
+ -TO-DO / GOALS-
 
 * optimize the e_malloc class - it is the one class here that is terrible performance heavy during runtime and currently, unless used with the UNIQUE macro, prone to memory leaks
 * strengthen XOR encryption algorithm and further randomize seeding method, to make this harder than it currently is to reverse.
