@@ -322,14 +322,24 @@ qhash64 algorithm (64-bit) - 0.0% collision rate amongst 65535 unique 16-bit dat
 
 * While this library works for all of the compilers i will mention, MSVC produces the least complex control-flow graphing as a compiler - LLVM / CLANG and Intel Compiler always produce the best obfuscated output files and skewed control-flow graphs - here are some examples all from the same basic application with only a main function :
 
+#### CLANG
   ![CFG_clang](clang.png)
 
+#### INTEL
   ![CFG_intel](intel.png)
 
+#### MSVC
   ![CFG_msvc](MSVC.png)
 
 I am unsure as to exactly why this occurs when i use the same compiler settings for all of the above compilers, my experience would say that MSVC likely does not like to inline functions when you 
 instruct it to, while CLANG / Intel com[pilers are more likely to listen to user commands
+
+
+* Proper compiler settings play a massive role in the output this library will produce.
+- Make sure the binary is built for Release mode
+- Here are the most important settings to use for maximum security (In VS 2022):
+
+    ![VS2022 Config](optimization.png)
   
 --------------------------------------------------------------------------------------
 
