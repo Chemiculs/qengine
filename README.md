@@ -12,6 +12,7 @@ Easy to use and highly configurable, compiler-independent, fully inlined binary 
 * Cumbersome conditional branching (extended memory check obfuscation e.g create indirection for checking valuable information such as product keys etc.)
 * .text / executable section Polymorphism (.text section dumps will appear different at each runtime which would hypothetically prevent basic static .text dump signature scans by AV's / AC's etc.)
 * PE header wipe / mutation (headers will be wiped or appear different at each runtime)
+* Dynamic / Runtime imports ( hide imports from disk import table )
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -59,6 +60,8 @@ If anyone is able to contribute detailed benchmarks if they have the time, this 
 * Download the repository as a zip file, and extract the qengine folder to your project's main / root directory
 * Include the qengine header file contained in <root_directory>/qengine/engine/
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 ### Hello World
 
 Here is the obligatory "Hello World" for qengine:
@@ -86,6 +89,8 @@ int main() {
 * All types contained in the qenc_t and qenc_h_t namespace's are encrypted using a polymorphic encryption algorithm and decrypted only when accessed, then re-encrypted. 
 
 * All types contained in the qhash_t and qenc_h_t namespace's are hashed using a high-performance 32 or 64-bit hashing algorithm i made for this purpose.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Cumbersome Conditional Branching
 
@@ -137,6 +142,8 @@ AND
 
 * Each sub-routine contains multiple iterations of cmp / test instructions rather than a single cmp / test instruction as the compiler would normally generate and is beyond trivial to crack using a debugger.
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 ### Memory Hash-Check Violation Handling
 
 This library allows you to handle the event where a debugger or external tool attempts to illicitly write data to the stack / heap which corrupts / change any of your variables. 
@@ -186,6 +193,8 @@ int main() {
 Below is a screenshot of the resulting output from the above code:
 
 ![Output from hash check violation](callback_h.png)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Header Manipulation / Executable Section Polymorphism / Permutations
 
@@ -247,9 +256,7 @@ Below are examples, before and after the above functions are called, of the PE h
 
 ![Headers after scramble](headerafterscramble.png)
 
-As you can see i mixed zeroing with scrambling and much of the headers wound up zero'd - nevertheless, very different outcomes compared to the original binary which is the goal.
-
-Some field such as e_magic in the DOS header and SizeOfStackCommit / SizeOfStackReserve fields in the optional header must be preserved as the application will crash elsewise.
+Some fields such as e_magic in the DOS header and SizeOfStackCommit / SizeOfStackReserve fields in the optional header must be preserved as the application will crash elsewise.
 
 #### .text section before scramble:
 
@@ -259,42 +266,78 @@ Some field such as e_magic in the DOS header and SizeOfStackCommit / SizeOfStack
 
 ![.text before scramble](afterscramble.png)
 
+I cannot show the whole .text section in one screenshot, so i tracked down a section above from a memory dump which was mutated.
 
-#### The above may appear underwhelming -
-
-Keep in mind that the interrupt padding instructions between symbols are well-spaced out throughout the executable sections of the PE, but are substantial in total - unfortunately hard to display all of these in a single screenshot.
+The interrupt padding (0xCC / INT3 on x86 PE files) between symbols is being tracked and permutated to change the appearance of the executable section in memory, which is a big thing , for me at least, as it is very hard to change machine code in a stable / reliable fashion during runtime.
 
 The interrupt3 paddings (0xCC arrays) are regions that the instruction pointer never hits, so we can do anything we want (almost) with them, the engine permutates them between { INT1, INT3, NOP } for the time being with random seed to accomplish this.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+### Runtime imports
+
+This library allows you to manually load api libraries at runtime and invoke them from their imported address - This prevents the names of the libraries and functions you are using in your application from being included on the import table of your PE.
+
+Below is an example of importing a windows API function using the import tool -
+
+```cpp
+#include <iostream>
+
+#include "qengine/engine/qengine.hpp"
+
+using namespace qengine;
+
+
+int main() {
+	// Return type is NTSTATUS (template parameter)
+	// Argument 1 is the library name (wide / ansi char depend on charset)
+	// Argument 2 is name of function or ordinal number
+	// all following arguments correspond to the API functions args themselves
+
+	auto status = qimport::qimp::invoke<NTSTATUS>(L"user32.dll", "MessageBoxA", NULL, "Hello World", "Hello World", NULL);
+
+	std::cin.get();
+}
+```
+
+As you can see below, this yields the expected result from calling MessageBoxA with the according arguments:
+
+![import protection](importer.png)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 ## - Hashing -
 
-To address the reliability of the hashing algorithm(s), i made a collision testing application which will be included in the repo which tests for collisions amongt all possible permatations of a 2-byte / 16-bit data set using both algorithm's, the results are:
+To address the reliability of the hashing algorithm(s), i made a collision testing application which tests for collisions amongst all possible permatations of a 2-byte / 16-bit data set using both algorithm's, the results are:
 
 qhash32 algorithm (32-bit) - 0.0000000233% collision rate amongst 65535 unique 16-bit datasets (1 collision), which is the same rate as crc32
 qhash64 algorithm (64-bit) - 0.0% collision rate amongst 65535 unique 16-bit datasets (0 collisions)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### Notes
+## Notes
 
 * Extended types (SSE / AVX) must be enabled in your project settings if you wish to use the derived polymorphic versions of them.
 
-* When using the e_malloc class to allocate dynamic blocks of memory, i suggest using the UNIQUE macro as such, unless you wish to manually call free() subsequently for every get() call:
-```cpp
-e_malloc e_malloc_instance(insert_allocation_size); // instantiate polymorphic memory block
-
-auto unique_block_pointer = UNIQUE(e_malloc_instance.get()); // get unique_ptr to memory block (macro will apply custom Decommission object for malloc / free)
-
-// use unique_block_pointer - it will prevent memory leaks on it's own when it goes out of scope
-```
+  
+* All heap-allocated types such as e_malloc, q_malloc, and h_malloc will automatically free their own memory when they go out of scope, however keep in mind that reading variable length memory with their according get() accessor will return new memory allocated with malloc() which you mut free yourself.
 
 
+* While this library works for all of the compilers i will mention, MSVC produces the least complex control-flow graphing as a compiler - LLVM / CLANG and Intel Compiler always produce the best obfuscated output files and skewed control-flow graphs - here are some examples all from the same basic application with only a main function :
+
+  ![CFG_clang](clang.png)
+
+  ![CFG_intel](intel.png)
+
+  ![CFG_msvc](MSVC.png)
+
+I am unsure as to exactly why this occurs when i use the same compiler settings for all of the above compilers, my experience would say that MSVC likely does not like to inline functions when you 
+instruct it to, while CLANG / Intel com[pilers are more likely to listen to user commands
+  
 --------------------------------------------------------------------------------------
 
- -TO-DO / GOALS-
+## How you can help
 
-* optimize the e_malloc class - it is the one class here that is terrible performance heavy during runtime and currently, unless used with the UNIQUE macro, prone to memory leaks
-* strengthen XOR encryption algorithm and further randomize seeding method, to make this harder than it currently is to reverse.
+I don't have much time on my hands at the moment. I am passionate about this project and can see it having a very bright future, however due to these aformentioned reasons i have limited ideas coming to mind as to what the next move will be, how to improve this etc...
 
+Please submit any bugs with the library you find, and i encourage you to contribute to the project if you enjoy it or find any use from it.
