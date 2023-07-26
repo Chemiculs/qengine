@@ -190,7 +190,7 @@ qhash64 algorithm (64-bit) - 0.0% collision rate amongst 65535 unique 16-bit dat
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 - Basic "Hello, World!" application after polymorphic type -
-(the control flow chart gets more and more messy, the more instances of polymorphic types are instantiated)
+(the control flow chart might be hard to see, but there are roughly 1000 sub-routines)
 
 ![IDA view of hello world C++ program after polymorphic engine](crypt1.png)
 
