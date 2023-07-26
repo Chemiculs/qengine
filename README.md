@@ -56,6 +56,7 @@ If anyone is able to contribute detailed benchmarks if they have the time, this 
 
 * Download the repository as a zip file, and extract the qengine folder to your project's main / root directory
 * Include the qengine header file contained in <root_directory>/qengine/engine/
+* Add <root_directory>/qengine/extern/ to additional library directories (for linking)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -314,9 +315,12 @@ qhash64 algorithm (64-bit) - 0.0% collision rate amongst 65535 unique 16-bit dat
 
 ## Notes
 
+* Manipulating header info and morphing executable section will likely break virtualization tools such as VMProtect and Themida - I have not thoroughly tested this
+
+
 * Extended types (SSE / AVX) must be enabled in your project settings if you wish to use the derived polymorphic versions of them.
 
-  
+
 * All heap-allocated types such as e_malloc, q_malloc, and h_malloc will automatically free their own memory when they go out of scope, however keep in mind that reading variable length memory with their according get() accessor will return new memory allocated with malloc() which you mut free yourself.
 
 
@@ -330,6 +334,7 @@ qhash64 algorithm (64-bit) - 0.0% collision rate amongst 65535 unique 16-bit dat
 
 #### MSVC
   ![CFG_msvc](MSVC.png)
+
 
 I am unsure as to exactly why this occurs when i use the same compiler settings for all of the above compilers, my experience would say that MSVC likely does not like to inline functions when you 
 instruct it to, while CLANG / Intel com[pilers are more likely to listen to user commands
@@ -348,3 +353,6 @@ instruct it to, while CLANG / Intel com[pilers are more likely to listen to user
 I don't have much time on my hands at the moment. I am passionate about this project and can see it having a very bright future, however due to these aformentioned reasons i have limited ideas coming to mind as to what the next move will be, how to improve this etc...
 
 Please submit any bugs with the library you find, and i encourage you to contribute to the project if you enjoy it or find any use from it.
+
+#### If you have any questions / inquiries, feel free to contact me on discord:
+### 0xH4X0R#0390
