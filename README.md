@@ -43,7 +43,7 @@ i couldn't control the way my binary was obfuscated the ways in which i wanted t
 
 * This library is fully inlined, employing minimalist design and maximum performance + reliability --
 
-qengine is very lightweight and likewise incurs a ~1.70% average performance loss vs standard library / primitive types, likewise you will retain ~98.3% of your programs original performance ( on average )
+qengine is very lightweight and likewise incurs a ~1.70% average performance loss vs standard library / primitive types, likewise you will retain ~98.3% of your application's original performance ( on average )
 
 If anyone is able to contribute detailed benchmarks if they have the time, this would be extremely helpful - my hands are tied when it comes to free time for this project at the moment.
 
