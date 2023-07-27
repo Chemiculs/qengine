@@ -159,7 +159,7 @@ When i get time i will upload a more in-depth analysis including screen-shots of
   
 AND
 
-* Each sub-routine contains multiple iterations of cmp / test instructions rather than a single cmp / test instruction as the compiler would normally generate and is beyond trivial to crack using a debugger.
+* Each sub-routine contains multiple iterations of cmp / test instructions rather than a single cmp / test instruction as the compiler would normally generate - which is beyond trivial to crack using a debugger.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
