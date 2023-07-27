@@ -54,9 +54,18 @@ If anyone is able to contribute detailed benchmarks if they have the time, this 
 
 ## Usage
 
-* Download the repository as a zip file, and extract the qengine folder to your project's main / root directory
+### Option 1: Add to existing project:
+
+* Download the repository as a zip file, and extract the /src/qengine folder to your project's main / root directory
 * Include the qengine header file contained in <root_directory>/qengine/engine/
 * Add <root_directory>/qengine/extern/ to additional library directories (for linking)
+
+### Option 2: Build from source
+
+* Download the repository as a zip file and extract the /vs/ folder
+* Open the Project in visual studio 2022
+* Change the compiler to whichever you prefer (the project is by default set to LLVM / CLANG), make sure C++ language standard is set to 17 or higher and build for desired architecture (leave build as a static library)
+* Link against built libraries and include the qengine folder in your project
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
