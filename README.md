@@ -273,11 +273,11 @@ Some fields such as e_magic in the DOS header and SizeOfStackCommit / SizeOfStac
 
 ![.text before scramble](afterscramble.png)
 
-I cannot show the whole .text section in one screenshot, so i tracked down a section above from a memory dump which was mutated.
+I cannot show the whole .text section in one screenshot, so i tracked down a section above from a memory dump which was mutated (note that there are generaally hundreds or thousands of these regions which will be mutated depending on the symbol count / complexity of the binary) .
 
 The interrupt padding (0xCC / INT3 on x86 PE files) between symbols is being tracked and permutated to change the appearance of the executable section in memory, which is a big thing , for me at least, as it is very hard to change machine code in a stable / reliable fashion during runtime.
 
-The interrupt3 paddings (0xCC arrays) are regions that the instruction pointer never hits, so we can do anything we want (almost) with them, the engine permutates them between { INT1, INT3, NOP } for the time being with random seed to accomplish this.
+The interrupt3 paddings (0xCC arrays) are regions that the instruction pointer never hits, so they are (almost) safely mutable to any form, the engine permutates them between { INT1, INT3, NOP } for the time being with random seed to accomplish this.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
