@@ -1,4 +1,4 @@
-#                                                     - qengine - 
+#                                          		qengine 
 
 Easy to use and highly configurable, compiler-independent, fully inlined binary obfuscation for C++ 17+ windows applications
 
@@ -7,11 +7,23 @@ Easy to use and highly configurable, compiler-independent, fully inlined binary 
 ## Features
 
 * Runtime stack polymorphism (locals will be manipulated directly on the stack and appear differently each execution, not really a big deal as this happens in most applications anyways)
+
+  
 * Runtime heap polymorphism (dynamic polymorphic allocations are supported, not a big deal as above)
+
+  
 * Thorough control-flow obfuscation (depending on compiler used and amount of library types used, IDA control-flow graph will be extremely difficult to read and in many cases fail pseudo-code generation)
+
+  
 * Cumbersome conditional branching (extended memory check obfuscation e.g create indirection for checking valuable information such as product keys etc.)
+
+  
 * .text / executable section Polymorphism (.text section dumps will appear different at each runtime which would hypothetically prevent basic static .text dump signature scans by AV's / AC's etc.)
+
+  
 * PE header wipe / mutation (headers will be wiped or appear different at each runtime)
+
+  
 * Dynamic / Runtime imports ( hide imports from disk import table )
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
