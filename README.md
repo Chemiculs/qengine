@@ -329,8 +329,9 @@ As you can see below, this yields the expected result from calling MessageBoxA w
 
 To address the reliability of the hashing algorithm(s), i made a collision testing application which tests for collisions amongst all possible permatations of a 2-byte / 16-bit data set using both algorithm's, the results are:
 
-qhash32 algorithm (32-bit) - 0.0000000233% collision rate amongst 65535 unique 16-bit datasets (1 collision), which is the same rate as crc32
-qhash64 algorithm (64-bit) - 0.0% collision rate amongst 65535 unique 16-bit datasets (0 collisions)
+* qhash32 algorithm (32-bit) - 0.0000000233% collision rate amongst 65535 unique 16-bit datasets (1 collision), which is the same rate as crc32
+
+* qhash64 algorithm (64-bit) - 0.0% collision rate amongst 65535 unique 16-bit datasets (0 collisions)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
