@@ -52,7 +52,7 @@ If anyone is able to contribute detailed benchmarks if they have the time, this 
 # Demonstration of control-flow obfuscation:
 
 - "Hello, World!" application before polymorphic type -
-- 
+
 ![IDA view of hello world C++ program before polymorphic engine](crypt2.png)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
