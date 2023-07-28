@@ -348,7 +348,7 @@ To address the reliability of the hashing algorithm(s), i made a collision testi
 * All heap-allocated types such as e_malloc, q_malloc, and h_malloc will automatically free their own memory when they go out of scope, however keep in mind that reading variable length memory with their according get() accessor will return new memory allocated with malloc() which you mut free yourself.
 
 
-* While this library works for all of the compilers i will mention, MSVC produces the least complex control-flow graphing as a compiler - LLVM / CLANG and Intel Compiler always produce the best obfuscated output files and skewed control-flow graphs - here are some examples all from the same basic application with only a main function :
+* While this library works for all of the compilers i will mention, MSVC produces the least complex control-flow graphing as a compiler - LLVM / CLANG and Intel Compiler always produce the best obfuscated output files and skewed control-flow graphs - here are some examples all from the same basic application with only a main function (~20 lines of code using polymorphic types) :
 
 #### CLANG
   ![CFG_clang](clang.png)
