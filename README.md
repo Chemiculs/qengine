@@ -159,7 +159,7 @@ Let's do that below to give a better example of what is exactly happening with a
 
 Both programs above serve the same mathematical function and produce the same output, the one on the left built with qengine and the one on the right built using C++ standard operators / function calls.
 
-Let's take a look at both of the above applications in IDA pseudo-code view (both are built Release x64, optimizations on, MSVC (ewww) )
+Let's take a look at both of the above applications in IDA pseudo-code view (both are built Release x64, optimizations on, MSVC )
 
 [Left = qengine, Right = std]
 ![entrypoints](criticalmain.png)
