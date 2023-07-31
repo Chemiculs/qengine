@@ -164,12 +164,13 @@ Let's take a look at both of the above applications in IDA pseudo-code view (bot
 [Left = qengine, Right = std]
 ![entrypoints](criticalmain.png)
 
-At first glance the entrypoint of both applications appears to be almost identical, with key differences i will highlight from pseudo-code view and others from raw assembly view -
+At first glance the entrypoint of both applications appear to be almost identical, with key differences i will highlight from pseudo-code view and others from raw assembly view -
 
 * The conditional arithmetic in the std application all occurs within the entrypoint function, this will be highlighted in the next screenshot precisely using assembly-code view
+  
 * The conditional arithmetic in the qengine application is detoured to another subroutine , namely sub_140001810 which is compiled taking callback arguments to the functions 'true_' and 'false_'
 
-Below is the relevant region of machine code from both entrypoint fn's which should reveal a JLE instruction (jump if lesser than or equal to), as this is the condition under which this program determines it's functionality:
+Below is the relevant region of machine code from both entrypoint function's, which should reveal a JLE instruction (jump if lesser than or equal to), as this is the condition under which this program determines it's functionality:
 
 ![entrypoints](critical_asm_jle.png)
 
@@ -181,7 +182,7 @@ A quick peak below at the pseudo-code view of both subroutines called from the s
 
 ![entrypoints](criticalsubroutine.png)
 
-As you can see, the std subroutine is easily identifiable as a standard output stream and is anything but complex in it's appearance to a skilled reverse engineer.
+The std subroutine is easily identifiable as a standard output stream and is anything but complex in it's appearance to a skilled reverse engineer.
 
 The qengine-generated subroutine is (almost) incomprehensible - IDA generated 4726 lines of pseudo-code for the sub-routine, and attempted to allocate 1127 local variables on the stack - i wouldn't be having fun if i opened this application in IDA  looking to crack it.
 
