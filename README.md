@@ -175,7 +175,7 @@ Below is the relevant region of machine code from both entrypoint fn's which sho
 
 The std-compiled binary on the right, as expected, contains a JLE instruction plain as day. this can be altered by a reverse engineer easily in a number of ways to alter control flow of the application, or 'crack' it.
 
-The qengine-compiled binary on the left however, contains no such instruction. the instruction is detoured to sub_140001810, and inside of that subroutine, split into dozens of varying, comples comparison operators scatted amongst thousands of lines of obfuscated code.
+The qengine-compiled binary on the left however, contains no such instruction. the instruction is detoured to sub_140001810, and inside of that subroutine, split into dozens of varying, complex comparison operators scattered amongst thousands of lines of obfuscated code.
 
 A quick peak below at the pseudo-code view of both subroutines called from the std-compiled application (sub_140001240) (Right) and the qengine-compiled application(sub_140001810) (Left) :
 
