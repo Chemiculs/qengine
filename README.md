@@ -53,7 +53,7 @@ If anyone is able to contribute detailed benchmarks if they have the time, this 
 
 - "Hello, World!" application before polymorphic type -
 
-![IDA view of hello world C++ program before polymorphic engine](crypt2.png)
+![IDA view of hello world C++ program before polymorphic engine](img/crypt2.png)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
