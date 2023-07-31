@@ -206,7 +206,6 @@ To demonstrate a basic cracking attempt by preventing the call to the subroutine
 
 Now all that is left to do is run the patched binary and see if it produces usable output like the original -
 
-patchedrun.png
 ![track](patchedrun.png)
 
 The 'patched' binary (which now fails to call the subroutine handling conditional callbacks), produces zero output. the program is in a broken and un-usable state.
