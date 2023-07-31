@@ -174,7 +174,7 @@ Below is the relevant region of machine code from both entrypoint function's, wh
 
 ![entrypoints](critical_asm_jle.png)
 
-The std-compiled binary on the right, as expected, contains a JLE instruction plain as day. this can be altered by a reverse engineer easily in a number of ways to alter control flow of the application, or 'crack' it.
+The std-compiled binary on the right, as expected, contains a JLE instruction plain as day. this can be altered by a reverse engineer easily in a number of ways to manipulate control flow of the application, or 'crack' it.
 
 The qengine-compiled binary on the left however, contains no such instruction. the instruction is detoured to sub_140001810, and inside of that subroutine, split into dozens of varying, complex comparison operators scattered amongst thousands of lines of obfuscated code.
 
