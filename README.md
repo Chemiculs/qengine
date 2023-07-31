@@ -186,7 +186,7 @@ The std subroutine is easily identifiable as a standard output stream and is any
 
 The qengine-generated subroutine is (almost) incomprehensible - IDA generated 4726 lines of pseudo-code for the sub-routine, and attempted to allocate 1127 local variables on the stack - i wouldn't be having fun if i opened this application in IDA  looking to crack it.
 
-Let's not be naive however - a thoroughly determined and highly skilled reverse engineer could theoretically spend days - weeks reversing the subroutine and eventually find the critical cmp / test instructions, patch them out, and produce a working permutation of the application. 
+Let's not be naive however - a thoroughly determined and highly skilled reverse engineer could theoretically spend hours / days or perhaps weeks / months reversing the subroutine and eventually find the critical cmp / test instructions, patch them out, and produce a working permutation of the application. 
 
 There is no perfect fix for the issue of reversing - It boils down to a battle of which side can annoy the other the most and demoralize / break them down.
 
