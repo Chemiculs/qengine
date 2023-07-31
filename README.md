@@ -180,7 +180,7 @@ The qengine-compiled binary on the left however, contains no such instruction. t
 
 A quick peak below at the pseudo-code view of both subroutines called from the std-compiled application (sub_140001240) (Right) and the qengine-compiled application(sub_140001810) (Left) :
 
-![entrypoints](criticalsubroutine.png)
+![subroutines](criticalsubroutine.png)
 
 The std subroutine is easily identifiable as a standard output stream and is anything but complex in it's appearance to a skilled reverse engineer.
 
@@ -189,6 +189,16 @@ The qengine-generated subroutine is (almost) incomprehensible - IDA generated 47
 Let's not be naive however - a thoroughly determined and highly skilled reverse engineer could theoretically spend hours / days or perhaps weeks / months reversing the subroutine and eventually find the critical cmp / test instructions, patch them out, and produce a working permutation of the application. 
 
 There is no perfect fix for the issue of reversing - It boils down to a battle of which side can annoy the other the most and demoralize / break them down.
+
+## But couldn't i just NOP the call to sub_140001810 and bypass the security?
+
+![entrypoints](callsub.png)
+
+You could absolutely replace the call to sub_140001810 with a NOP or any other instruction, however with the above program, the consequences of doing so would be -
+
+* Ceasing of further functionality ( if this was a product key input for example, the program would fail to properly execute moving forward )
+  
+* You would have to go inside of sub_140001810 and patch the appropriate cmp / test / jmp instructions (all of which are hash-checked on the stack as well), in order to truly 'crack' the application in a manner which would preserve functionality, this is not a crackme but could easily be converted to one and would appear similar enough.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
