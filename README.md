@@ -60,7 +60,7 @@ If anyone is able to contribute detailed benchmarks if they have the time, this 
 - "Hello, World!" application after polymorphic type -
 (the control flow chart might be hard to see, but there are roughly 1000 sub-routines)
 
-![IDA view of hello world C++ program after polymorphic engine](crypt1.png)
+![IDA view of hello world C++ program after polymorphic engine](img/crypt1.png)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -155,14 +155,14 @@ The above program outputs "condition is true" to the screen - the above example 
 
 Let's do that below to give a better example of what is exactly happening with a non-const example:
 
-![source files](originalcode.png)
+![source files](img/originalcode.png)
 
 Both programs above serve the same mathematical function and produce the same output, the one on the left built with qengine and the one on the right built using C++ standard operators / function calls.
 
 Let's take a look at both of the above applications in IDA pseudo-code view (both are built Release x64, optimizations on, MSVC )
 
 [Left = qengine, Right = std]
-![entrypoints](criticalmain.png)
+![entrypoints](img/criticalmain.png)
 
 At first glance the entrypoint of both applications appear to be almost identical, with key differences i will highlight from pseudo-code view and others from raw assembly view -
 
@@ -172,7 +172,7 @@ At first glance the entrypoint of both applications appear to be almost identica
 
 Below is the relevant region of machine code from both entrypoint function's, which should reveal a JLE instruction (jump if lesser than or equal to), as this is the condition under which this program determines it's functionality:
 
-![entrypoints](critical_asm_jle.png)
+![entrypoints](img/critical_asm_jle.png)
 
 The std-compiled binary on the right, as expected, contains a JLE instruction plain as day. this can be altered by a reverse engineer easily in a number of ways to manipulate control flow of the application, or 'crack' it.
 
@@ -180,7 +180,7 @@ The qengine-compiled binary on the left however, contains no such instruction. t
 
 A quick peak below at the pseudo-code view of both subroutines called from the std-compiled application (sub_140001240) (Right) and the qengine-compiled application(sub_140001810) (Left) :
 
-![subroutines](criticalsubroutine.png)
+![subroutines](img/criticalsubroutine.png)
 
 The std subroutine is easily identifiable as a standard output stream and is anything but complex in it's appearance to a skilled reverse engineer.
 
@@ -192,7 +192,7 @@ There is no perfect fix for the issue of reversing - It boils down to a battle o
 
 ## But couldn't i just NOP the call to sub_140001810 and bypass the security?
 
-![entrypoints](callsub.png)
+![entrypoints](img/callsub.png)
 
 You could absolutely replace the call to sub_140001810 with a NOP or any other instruction, however with the above program, the consequences of doing so would be -
 
@@ -202,11 +202,11 @@ You could absolutely replace the call to sub_140001810 with a NOP or any other i
 
 To demonstrate a basic cracking attempt by preventing the call to the subroutine, i opened up the binary in IDA and tracked it down and binary patched the file on disk
 
-![track](patchview.png)
+![track](img/patchview.png)
 
 Now all that is left to do is run the patched binary and see if it produces usable output like the original -
 
-![track](patchedrun.png)
+![track](img/patchedrun.png)
 
 The 'patched' binary (which now fails to call the subroutine handling conditional callbacks), produces zero output. the program is in a broken and un-usable state.
 
@@ -260,7 +260,7 @@ int main() {
 
 Below is a screenshot of the resulting output from the above code:
 
-![Output from hash check violation](callback_h.png)
+![Output from hash check violation](img/callback_h.png)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -318,21 +318,21 @@ Below are examples, before and after the above functions are called, of the PE h
 
 #### Headers before scramble:
 
-![Headers before scramble](headerbeforescramble.png)
+![Headers before scramble](img/headerbeforescramble.png)
 
 #### Headers after scramble:
 
-![Headers after scramble](headerafterscramble.png)
+![Headers after scramble](img/headerafterscramble.png)
 
 Some fields such as e_magic in the DOS header and SizeOfStackCommit / SizeOfStackReserve fields in the optional header must be preserved as the application will crash elsewise.
 
 #### .text section before scramble:
 
-![.text before scramble](beforescramble.png)
+![.text before scramble](img/beforescramble.png)
 
 #### .text section after scramble:
 
-![.text before scramble](afterscramble.png)
+![.text before scramble](img/afterscramble.png)
 
 I cannot show the whole .text section in one screenshot, so i tracked down a section above from a memory dump which was mutated (note that there are generaally hundreds or thousands of these regions which will be mutated depending on the symbol count / complexity of the binary) .
 
@@ -370,7 +370,7 @@ int main() {
 
 As you can see below, this yields the expected result from calling MessageBoxA with the according arguments:
 
-![import protection](importer.png)
+![import protection](img/importer.png)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -400,13 +400,13 @@ To address the reliability of the hashing algorithm(s), i made a collision testi
 * While this library works for all of the compilers i will mention, MSVC produces the least complex control-flow graphing as a compiler - LLVM / CLANG and Intel Compiler always produce the best obfuscated output files and skewed control-flow graphs - here are some examples all from the same basic application with only a main function (~20 lines of code using polymorphic types) :
 
 #### CLANG
-  ![CFG_clang](clang.png)
+  ![CFG_clang](img/clang.png)
 
 #### INTEL
-  ![CFG_intel](intel.png)
+  ![CFG_intel](img/intel.png)
 
 #### MSVC
-  ![CFG_msvc](MSVC.png)
+  ![CFG_msvc](img/MSVC.png)
 
 
 I am unsure as to exactly why this occurs when i use the same compiler settings for all of the above compilers, my experience would say that MSVC likely does not like to inline functions when you 
@@ -417,7 +417,7 @@ instruct it to, while CLANG / Intel com[pilers are more likely to listen to user
 - Make sure the binary is built for Release mode
 - Here are the most important settings to use for maximum security (In VS 2022):
 
-    ![VS2022 Config](optimization.png)
+    ![VS2022 Config](img/optimization.png)
   
 --------------------------------------------------------------------------------------
 
