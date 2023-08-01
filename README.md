@@ -405,7 +405,81 @@ If not, this likely means a hook has been placed on the method.
 
 Below is an example application which initializes the hook-detection library, and references the designated callback function to it. After this, an example hook is placed at the functions address in memory to demonstrate detection by our library :
 
-![example hook](img/codemain.png)
+```cpp
+#include <iostream>
+
+#include "qengine/engine/qengine.hpp"
+
+using namespace qengine;
+
+__declspec(noinline) void myimportantmethod(long long val) { // add junk code to our dummy method to increase it's size in memory to be viable for hook placement
+
+	auto j = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+
+	auto k = j % val;
+
+	std::cout << k << std::endl;
+}
+
+__declspec(noinline) void __fastcall callback(qexcept::q_fn_alteration alteration) {
+
+	if (alteration.id != qexcept::HOOK_DETECTED)
+		return;
+
+	auto casted_arg = reinterpret_cast<qhook::qhook_detection_t*>(alteration.violation_object_);
+
+	std::cout << "Function hook detected, address: " << std::hex << casted_arg->hook_address << "\n";
+	std::cout << "Hook size: " << casted_arg->hook_length << "\n";
+	std::cout << "Hook data: " << std::endl;
+
+	for (auto i = 0; i < casted_arg->hook_length; ++i)
+		std::cout << std::hex << (int)casted_arg->hook_data[i] << "\n";
+
+	delete casted_arg;
+}
+
+int main() {
+
+	std::cout << "initializing hook scanner..." << std::endl;
+
+	qhook::qhook_t::set_client_callback_fn(&callback);
+
+	qhook::qhook_t((void*)&myimportantmethod);
+
+	// any of the below hooks will be detected - you could change the registers used etc. if you wanted to
+
+	unsigned char hook1[12] = {
+		0x48, 0xB8, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0xFF, 0xE0 // mov rax, 0x1111111111111111 ; jmp rax
+	};
+
+	unsigned char hook2[14] = {
+		0x48, 0xB8, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x50, 0x58, // mov rax, 0x1111111111111111 ; push rax ; pop rax ; jmp rax
+		0xFF, 0xE0
+	};
+
+	unsigned char hook3[12] = {
+		0x48, 0xB8, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x50, 0xC3 // mov rax, 0x1111111111111111 ; push rax ; ret
+	};
+
+	myimportantmethod(4);
+
+	std::cout << "emplacing hook..." << std::endl;
+
+	auto* ptr = (void*)&myimportantmethod;
+
+	DWORD tmp{};
+
+	VirtualProtect(ptr, sizeof(hook2), PAGE_EXECUTE_READWRITE, &tmp);
+
+	memcpy(ptr, &hook2, sizeof(hook2));
+
+	VirtualProtect(ptr, sizeof(hook2), tmp, &tmp);
+
+	std::cin.get();
+
+	return 0;
+}
+```
 
 Here is the output when we execute the above application :
 
