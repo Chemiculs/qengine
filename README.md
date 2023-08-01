@@ -200,7 +200,7 @@ You could absolutely replace the call to sub_140001810 with a NOP or any other i
   
 * You would have to go inside of sub_140001810 and patch the appropriate cmp / test / jmp instructions (all of which are hash-checked on the stack as well), in order to truly 'crack' the application in a manner which would preserve functionality, this is not a crackme but could easily be converted to one and would appear similar enough.
 
-To demonstrate a basic cracking attempt by preventing the call to the subroutine, i opened up the binary in IDA and tracked it down and binary patched the file on disk
+To demonstrate a basic cracking attempt by preventing the call to the subroutine, i opened up the binary in IDA, and patched the call to sub_140001810
 
 ![track](img/patchview.png)
 
