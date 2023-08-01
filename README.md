@@ -374,13 +374,44 @@ As you can see below, this yields the expected result from calling MessageBoxA w
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## - Hashing -
+## Hashing -
 
 To address the reliability of the hashing algorithm(s), i made a collision testing application which tests for collisions amongst all possible permatations of a 2-byte / 16-bit data set using both algorithm's, the results are:
 
 * qhash32 algorithm (32-bit) - 0.0000000233% collision rate amongst 65535 unique 16-bit datasets (1 collision), which is the same rate as crc32
 
 * qhash64 algorithm (64-bit) - 0.0% collision rate amongst 65535 unique 16-bit datasets (0 collisions)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## Expirimental Hook Scanning
+
+People developing certain applications, namely Video Games, struggle with internal game cheats (DLL injection). These cheats (internal) and sometimes external cheats, will hook / detour certain important functions inside of the game / application in order to manipulate output and obtain an advantage or 'crack' certain features of the application.
+
+Detour's are generally speaking, simple blocks of machine code 12+ bytes in length which are placed at a functions pointer in memory, in order to redirect control flow of the function outside of the main module, and into the malicious module.
+
+here is an example of a most basic detour function in X86 assembly 
+
+```asm
+mov rax, 0xDETOUR_ADDRESS    ; move an immediate value ( address of the function we want to execute instead of the original ) into the RAX register
+jmp rax                      ; move the instruction pointer to the address held in the RAX register
+```
+
+Detecting these hooks can be a non-trivial task depending on the complexity of the hook -
+
+I have implemented a rather basic implementation of a hook scanning class inside of qengine in the latest update, the class uses a seperate thread to efficiently scan methods in memory for the placement of hooks inside of the method's body.
+
+The thread searches for flow transfer instructions (ret, jmp, call namely), and when these are found, it checks if the address to which flow is being transfered is within the module's address space.
+If not, this likely means a hook has been placed on the method.
+
+Below is an example application which initializes the hook-detection library, and references the designated callback function to it. After this, an example hook is placed at the functions address in memory to demonstrate detection by our library :
+
+![example hook](img/codemain.png)
+
+Here is the output when we execute the above application :
+
+![import protection](img/main_withhook.png)
+
+I have with the rather brief testing period i have subjected this to, been unable to cause false-positive detections. Anyone willing to test this library to a greater extent to see if they can break it, would be beyond helpful.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -421,8 +452,13 @@ instruct it to, while CLANG / Intel com[pilers are more likely to listen to user
 
     ![VS2022 Config](img/optimization.png)
   
---------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+## Credits
+
+* Huge thank you to the [Capstone Project](https://github.com/capstone-engine/capstone) for making many parts of this library feasible and providing an excellent disassembly library in general
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## How you can help
 
 I don't have much time on my hands at the moment. I am passionate about this project and can see it having a very bright future, however due to these aformentioned reasons i have limited ideas coming to mind as to what the next move will be, how to improve this etc...
