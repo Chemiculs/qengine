@@ -435,7 +435,7 @@ __declspec(noinline) void __fastcall callback(qexcept::q_fn_alteration alteratio
 	for (auto i = 0; i < casted_arg->hook_length; ++i)
 		std::cout << std::hex << (int)casted_arg->hook_data[i] << "\n";
 
-	delete casted_arg;
+	delete casted_arg; // thi was allocated with new , must be deleted inside callback to avoid memory leak
 }
 
 int main() {
