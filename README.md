@@ -380,7 +380,8 @@ As you can see below, this yields the expected result from calling MessageBoxA w
 
 ![import protection](img/importer.png)
 
-If you do not want the overhead of GetProcAddress() being called repeatedly, i have added the ability to store the imported function bound to it's prototype as a local or global object which can be directly invoked for a small performance gain (I have not checked myself, but i doubt the compiler will know precisely what we are doing and will perform Export Table lookup at every GetProcAddress() call).
+If you do not want the overhead of GetProcAddress() being called repeatedly, i have added the ability to store the imported function bound to it's prototype as a local or global object which can be directly invoked for a small performance gain 
+(I have not checked myself, but i doubt the compiler will know precisely what we are doing and will perform Export Table lookup at every GetProcAddress() call).
 
 This is useful if you are calling the imported function in a loop or by any other means calling it repeatedly, below is an example specific to this use case :
 
