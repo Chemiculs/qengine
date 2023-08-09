@@ -420,7 +420,7 @@ Below is an example application which initializes the hook-detection library, an
 
 using namespace qengine;
 
-__declspec(noinline) void myimportantmethod(long long val) { // add junk code to our dummy method to increase it's size in memory to be viable for hook placement
+__declspec(noinline) void __fastcall myimportantmethod(long long val) { // add junk code to our dummy method to increase it's size in memory to be viable for hook placement
 
 	auto j = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 
@@ -429,7 +429,7 @@ __declspec(noinline) void myimportantmethod(long long val) { // add junk code to
 	std::cout << k << std::endl;
 }
 
-__declspec(noinline) void __fastcall callback(qexcept::q_fn_alteration alteration) {
+__declspec(noinline) void __cdecl callback(qexcept::q_fn_alteration alteration) {
 
 	if (alteration.id != qexcept::HOOK_DETECTED)
 		return;
