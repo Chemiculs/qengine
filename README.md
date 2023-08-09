@@ -85,6 +85,7 @@ If anyone is able to contribute detailed benchmarks if they have the time, this 
 * Change the compiler to whichever you prefer (the project is by default set to LLVM / CLANG), make sure C++ language standard is set to 17 or higher and build for desired architecture (leave build as a static library)
   
 * Link against built libraries and include the qengine folder in your project
+(you MUST either extract asmjit_libs.zip in /qengine/extern/ as above or build ASMJIT from source for static library target)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -538,6 +539,10 @@ instruct it to, while CLANG / Intel com[pilers are more likely to listen to user
 ## Credits
 
 * Huge thank you to the [Capstone Project](https://github.com/capstone-engine/capstone) for making many parts of this library feasible and providing an excellent disassembly library in general
+
+* Another huge thank you to the [ASMJIT Project](https://github.com/asmjit/asmjit) for making machine code generation at runtime a feasible prospect for this project
+
+Licenses for both respective libraries are included in the repo and must be upheld.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## How you can help
