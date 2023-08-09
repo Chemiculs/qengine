@@ -342,7 +342,7 @@ Some fields such as e_magic in the DOS header and SizeOfStackCommit / SizeOfStac
 
 ![.text before scramble](img/afterscramblenew.png)
 
-I cannot show the whole .text section in one screenshot, so i tracked down a section above from a memory dump which was mutated (note that there are generaally hundreds or thousands of these regions which will be mutated depending on the symbol count / complexity of the binary) .
+I cannot show the whole .text section in one screenshot, so i tracked down a section above from a memory dump which was mutated (note that there are generally hundreds or thousands of these regions which will be mutated depending on the symbol count / complexity of the binary) .
 
 The interrupt padding (0xCC / INT3 on x86 PE files) between symbols is being tracked and permutated to change the appearance of the executable section in memory.
 
