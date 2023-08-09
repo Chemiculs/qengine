@@ -514,18 +514,18 @@ I have with the rather brief testing period i have subjected this to, been unabl
   
 LLVM / CLANG and Intel Compiler always produce the best obfuscated output files and skewed control-flow graphs - here are some examples all from the same basic application with only a main function (~20 lines of code using polymorphic types) :
 
-#### CLANG
+### CLANG
   ![CFG_clang](img/clang.png)
 
-#### INTEL
+### INTEL
   ![CFG_intel](img/intel.png)
 
-#### MSVC
+### MSVC
   ![CFG_msvc](img/MSVC.png)
 
 
 I am unsure as to exactly why this occurs when i use the same compiler settings for all of the above compilers, my experience would say that MSVC likely does not like to inline functions when you 
-instruct it to, while CLANG / Intel com[pilers are more likely to listen to user commands
+instruct it to, while CLANG / Intel compilers are more likely to listen to user commands / suggestions
 
 
 * Proper compiler settings play a massive role in the output this library will produce.
