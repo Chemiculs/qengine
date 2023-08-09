@@ -380,6 +380,32 @@ As you can see below, this yields the expected result from calling MessageBoxA w
 
 ![import protection](img/importer.png)
 
+If you do not want the overhead of GetProcAddress() being called repeatedly, i have added the ability to store the imported function bound to it's prototype as a local or global object which can be directly invoked for a small performance gain (I have not checked myself, but i doubt the compiler will know precisely what we are doing and will perform Export Table lookup at every GetProcAddress() call).
+
+This is useful if you are calling the imported function in a loop or by any other means calling it repeatedly, below is an example specific to this use case :
+
+```cpp
+
+#include <iostream>
+
+#include "qengine/engine/qengine.hpp"
+
+using namespace qengine;
+
+/* First template argument specifies return type, subsequent template arguments specify argument type list in Left -> Right order for the fn being imported */
+static auto imp_MessageBoxA = qimport::qimp::get_fn_import_object<NTSTATUS, unsigned int, const char*, const char*, unsigned int>(L"user32.dll", "MessageBoxA");
+
+int main() {
+
+	auto status = imp_MessageBoxA(NULL, "Hello World!", "Hello World!", NULL); // call MessageBoxA and assign it's status return to a local 
+
+	std::cout << status << std::endl; // output the return status to the console 
+
+	std::cin.get(); 
+}
+
+```
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Hashing -
