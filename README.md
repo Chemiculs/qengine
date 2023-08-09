@@ -182,7 +182,7 @@ Below is the relevant region of machine code from both entrypoint function's, wh
 
 ![entrypoints](img/critical_asm_jle.png)
 
-The std-compiled binary on the right, as expected, contains a JLE instruction plain as day. this can be altered by a reverse engineer easily in a number of ways to manipulate control flow of the application, or 'crack' it.
+The std-compiled binary on the right, as expected, contains a JLE instruction plain as day. this, or the subsequent cmp instruction can be altered by a reverse engineer easily in a number of ways to manipulate control flow of the application, or 'crack' it.
 
 The qengine-compiled binary on the left however, contains no such instruction. the instruction is detoured to sub_140001810, and inside of that subroutine, split into dozens of varying, complex comparison operators scattered amongst thousands of lines of obfuscated code.
 
@@ -194,9 +194,9 @@ The std subroutine is easily identifiable as a standard output stream and is any
 
 The qengine-generated subroutine is (almost) incomprehensible - IDA generated 4726 lines of pseudo-code for the sub-routine, and attempted to allocate 1127 local variables on the stack - i wouldn't be having fun if i opened this application in IDA  looking to crack it.
 
-Let's not be naive however - a thoroughly determined and highly skilled reverse engineer could theoretically spend hours / days or perhaps weeks / months reversing the subroutine and eventually find the critical cmp / test instructions, patch them out, and produce a working permutation of the application. 
+Let's not be naive however - a thoroughly determined and highly skilled reverse engineer could theoretically spend hours / days or perhaps weeks / months reversing the subroutine and eventually find the critical cmp / test instructions, patch them out, and produce a working crack or modification of the application. 
 
-There is no perfect fix for the issue of reversing - It boils down to a battle of which side can annoy the other the most and demoralize / break them down.
+There is no perfect fix for the issue of reversing - It boils down to a battle of which side can annoy the other the most.
 
 ## But couldn't i just NOP the call to sub_140001810 and bypass the security?
 
