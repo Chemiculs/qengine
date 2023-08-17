@@ -572,6 +572,15 @@ instruct it to, while CLANG / Intel compilers are more likely to listen to user 
 Licenses for both respective libraries are included in the repo and must be upheld.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## Donations
+
+I absolutely do not expect anyone to give me money for this software, please do not feel obligated to. 
+If you do however, wish to support this project at the current time you can feel free to donate using cashapp (haven't been able to get a presentable paypal donation link yet)
+
+[CashApp](https://cash.app/$0xH4X0R)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## How you can help
 
 I don't have much time on my hands at the moment. I am passionate about this project and can see it having a very bright future, however due to these aformentioned reasons i have limited ideas coming to mind as to what the next move will be, how to improve this etc...
