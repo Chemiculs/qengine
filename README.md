@@ -575,7 +575,8 @@ Licenses for both respective libraries are included in the repo and must be uphe
 
 ## Donations
 
-I absolutely do not expect anyone to give me money for this software, please do not feel obligated to. 
+I am extremely limited in my ability to have time working on this project - I work a restaraunt job at the moment to make ends meet as i have had no luck finding a software job as of the time writing, However i absolutely do not expect anyone to give me money for this software, please do not feel obligated to. 
+
 If you do however, wish to support this project at the current time you can feel free to donate using cashapp (haven't been able to get a presentable paypal donation link yet)
 
 [CashApp](https://cash.app/$0xH4X0R)
