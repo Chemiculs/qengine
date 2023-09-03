@@ -569,7 +569,7 @@ instruct it to, while CLANG / Intel compilers are more likely to listen to user 
 
 * Another huge thank you to the [ASMJIT Project](https://github.com/asmjit/asmjit) for making machine code generation at runtime a feasible prospect for this project
 
-* HadockKali ( For helping with this Readme ) 
+* [HadockKali](https://github.com/HadockKali) ( For helping with this Readme ) 
 
 Licenses for both respective libraries are included in the repo and must be upheld.
 
