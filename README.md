@@ -582,6 +582,7 @@ I am extremely limited in my ability to have time to work on this project - I wo
 If you do however, wish to support this project at the current time you can feel free to donate using CashApp (haven't been able to get a presentable PayPal donation link yet)
 
 [CashApp](https://cash.app/$0xH4X0R)
+[Paypal](https://paypal.me/CoDTroll?country.x=US&locale.x=en_US)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## How you can help
