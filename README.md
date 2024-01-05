@@ -56,7 +56,7 @@ i couldn't control the way my binary was obfuscated the ways in which i wanted t
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary> Demonstration of Control-Flow obfuscation </summary>
+<summary> Demonstration of control-flow obfuscation </summary>
 
 
 - "Hello, World!" application before polymorphic type -
@@ -104,7 +104,7 @@ i couldn't control the way my binary was obfuscated the ways in which i wanted t
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary>Compiler-Specific Settings and Output</summary>
+<summary>Compiler-specific settings and output</summary>
 	
 LLVM / CLANG and Intel Compiler always produce the best obfuscated output files and skewed control-flow graphs - Here are some examples all from the same basic application with only a main function (~20 lines of code using polymorphic types) :
 
@@ -132,7 +132,7 @@ instruct it to, while CLANG / Intel compilers are more likely to listen to user 
   
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 <details>
-<summary>Hello World example</summary>
+<summary> " Hello World! " example </summary>
 
 
 Here is the obligatory "Hello World" for qengine:
@@ -166,7 +166,7 @@ int main() {
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary>Cumbersome Conditional Branching</summary>
+<summary>Cumbersome conditional branching</summary>
 
 Here is an example of creating an obfuscated conditional branch that evaluates two variables for the specified condition, and executes the callback function corresponding to the outcome:
 
@@ -336,7 +336,7 @@ To address the reliability of the hashing algorithm(s) used, I made a collision 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary>PE Header manipulation && Executable section Polymorphism</summary>
+<summary>PE Header manipulation && Executable section polymorphism</summary>
 
 This library can disrupt the ability to signature scan the executable sections of the PE file f=in memory / from memory dumps, and corrupt / wipe the header information (it would need to be rebuilt to properly parse through PE-bear / CFF explorer etc.)
 
@@ -417,7 +417,7 @@ The INT3 paddings (0xCC arrays) are regions that the instruction pointer never h
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary>Runtime Imports</summary>
+<summary>Runtime imports</summary>
 
 This library allows you to manually load API libraries at runtime and invoke them from their imported address - This prevents the names of the libraries and functions you are using in your application from being included on the import table of your PE.
 
@@ -478,7 +478,7 @@ int main() {
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 <details>
-<summary> Inline Hook scanning [ Expirimental ] </summary>
+<summary> Inline hook scanning [ EXPIRIMENTAL ] </summary>
 
 People developing certain applications, namely Video Games, struggle with internal game cheats (DLL injection). These cheats (internal) and sometimes external cheats, will hook / detour certain important functions inside of the game/application in order to manipulate output and obtain an advantage or 'crack' certain features of the application.
 
@@ -597,29 +597,7 @@ I have with the rather brief testing period I have subjected this to, been unabl
 * All heap-allocated types such as e_malloc, q_malloc, and h_malloc will automatically free their own memory when they go out of scope, however keep in mind that reading variable length memory with their according get() accessor will return new memory allocated with malloc() which you must free yourself.
 
 * While this library works for all of the compilers I will mention, MSVC produces the least complex control-flow graphing as a compiler and would be the easiest output to reverse-engineer -
-  
-LLVM / CLANG and Intel Compiler always produce the best obfuscated output files and skewed control-flow graphs - Here are some examples all from the same basic application with only a main function (~20 lines of code using polymorphic types) :
 
-### CLANG
-  ![CFG_clang](img/clang.png)
-
-### INTEL
-  ![CFG_intel](img/intel.png)
-
-### MSVC
-  ![CFG_msvc](img/MSVC.png)
-
-
-I am unsure as to exactly why this occurs when I use the same compiler settings for all of the above compilers, my experience would say that MSVC likely does not like to inline functions when you 
-instruct it to, while CLANG / Intel compilers are more likely to listen to user commands/suggestions
-
-
-* Proper compiler settings play a massive role in the output this library will produce.
-- Make sure the binary is built for Release mode
-- Here are the most important settings to use for maximum security (In VS 2022):
-
-    ![VS2022 Config](img/optimization.png)
-  
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Credits
