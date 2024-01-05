@@ -609,8 +609,9 @@ Licenses for both respective libraries are included in the repo and must be uphe
 
 If you wish to support the project or leave a thanks by donating, below are links from which you may donate (thank you so much!) -
 
-[CashApp](https://cash.app/$0xH4X0R)
-[Paypal](https://paypal.me/CoDTroll?country.x=US&locale.x=en_US)
+- [CashApp](https://cash.app/$0xH4X0R)
+
+- [Paypal](https://paypal.me/CoDTroll?country.x=US&locale.x=en_US)
 
 I don't have much time on my hands at the moment. I am passionate about this project and can see it has a very bright future, however due to Economic / Employment issues, i spend nil time recently working on programming.
 
