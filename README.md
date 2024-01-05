@@ -617,5 +617,5 @@ I don't have much time on my hands at the moment. I am passionate about this pro
 
 Please submit any bugs with the library you find, and I encourage you to contribute to the project if you enjoy it or find any use for it.
 
-#@ If you have any questions/inquiries, feel free to contact me on Discord:
+## If you have any questions/inquiries, feel free to contact me on Discord:
 ## 0xH4X0R#0390
