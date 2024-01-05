@@ -1,8 +1,13 @@
 #                                          		qengine 
 
-An easy to use and highly configurable, compiler-independent, fully inlined binary obfuscation toolkit for C++ 17+ Windows applications
+QEngine is a highly configurable, compiler-independent, fully inlined binary obfuscation toolkit designed for C++ Standard 17 (or higher) Windows applications. It offers ease of use while making your code extremely difficult to understand, especially for classic disassemblers like IDA.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<details>
+<summary>What is qengine?</summary>
+
+qengine is a polymorphic engine (meaning an engine that takes multiple forms/permutations) for Windows designed to make reverse engineering significantly harder. It aims to make binaries appear unique and unrecognizable at each independent runtime.
 
 * qengine is fairly well tested (considering I am a one-man team) - I currently am unaware of any bugs for LLVM / CLANG, MSVC, and Intel compiler targets for both x86 and x64 release builds.
 
@@ -14,16 +19,6 @@ qengine is very lightweight and likewise incurs a ~1.70% average performance los
 
 If anyone is able to contribute detailed benchmarks if they have the time, this would be extremely helpful - my hands are tied when it comes to free time for this project at the moment.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-<details>
-<summary>What is qengine?</summary>
-
-qengine is a polymorphic engine (meaning an engine that takes multiple forms/permutations) for Windows with the end goal of making the reverse engineer's day much more difficult and making the binary appear as unique as possible and unrecognizable at each independent runtime.
-
-i couldn't find a good solution - llvm-obfuscator only supports llvm / clang, vmprotect / themida are proprietary solutions which offer little in terms of control over the process of obfuscation and other options tend to have the same issue - 
-i couldn't control the way my binary was obfuscated the ways in which i wanted to.
-
 </details>
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -31,25 +26,25 @@ i couldn't control the way my binary was obfuscated the ways in which i wanted t
 <details>
 <summary>Features</summary>
 
-* Runtime stack polymorphism (locals will be manipulated directly on the stack and appear differently each execution, not really a big deal as this happens in most applications anyways)
+* Runtime stack polymorphism ( locals will be manipulated directly on the stack and appear differently each execution )
 
   
-* Runtime heap polymorphism (dynamic polymorphic allocations are supported, not a big deal as above)
+* Runtime heap polymorphism ( dynamic polymorphic allocations are supported, not a big deal as above )
 
   
-* Thorough control-flow obfuscation (depending on the compiler used and amount of library types used, the IDA control-flow graph will be extremely difficult to read and in many cases fail pseudo-code generation)
+* Thorough control-flow obfuscation ( depending on the compiler used and amount of library types used, the IDA control-flow graph will be extremely difficult to read and in many cases fail pseudo-code generation )
 
   
-* Cumbersome conditional branching (extended memory check control flow branching e.g. create indirection for checking valuable information such as product keys etc.)
+* Cumbersome conditional branching ( extended memory check control flow branching e.g. create indirection for checking valuable information such as product keys etc. )
 
   
-* .text / executable section Polymorphism (.text section dumps will appear different at each runtime which would hypothetically prevent basic static .text dump signature scans by AV's / AC's etc.)
+* .text / executable section Polymorphism ( .text section dumps will appear different at each runtime which would hypothetically prevent basic static .text dump signature scans by AV's / AC's etc. )
 
   
-* PE header wipe/mutation (headers will be wiped or appear differently at each runtime)
+* PE header wipe/mutation ( headers will be wiped or appear differently at each runtime, in memory )
 
   
-* Dynamic / Runtime imports ( hide imports from disk import table )
+* Dynamic / Runtime imports ( hide imports from disk PE image import table )
 
 </details>
 
@@ -78,7 +73,7 @@ i couldn't control the way my binary was obfuscated the ways in which i wanted t
 <summary>Setup / Usage</summary>
 
 
-### Option 1: Add to an existing project:
+## Option 1: Add to an existing project
 
 * Download the repository as a zip file, and extract the /src/qengine folder to your project's main / root directory
   
@@ -88,7 +83,7 @@ i couldn't control the way my binary was obfuscated the ways in which i wanted t
   
 * Add <root_directory>/qengine/extern/ to additional library directories (for linking)
 
-### Option 2: Build from source
+## Option 2: Build from source
 
 * Download the repository as a zip file and extract the /vs/ folder
   
@@ -108,13 +103,13 @@ i couldn't control the way my binary was obfuscated the ways in which i wanted t
 	
 LLVM / CLANG and Intel Compiler always produce the best obfuscated output files and skewed control-flow graphs - Here are some examples all from the same basic application with only a main function (~20 lines of code using polymorphic types) :
 
-### CLANG
+## CLANG
   ![CFG_clang](img/clang.png)
 
-### INTEL
+## INTEL
   ![CFG_intel](img/intel.png)
 
-### MSVC
+## MSVC
   ![CFG_msvc](img/MSVC.png)
 
 
@@ -338,7 +333,7 @@ To address the reliability of the hashing algorithm(s) used, I made a collision 
 <details>
 <summary>PE Header manipulation && Executable section polymorphism</summary>
 
-This library can disrupt the ability to signature scan the executable sections of the PE file f=in memory / from memory dumps, and corrupt / wipe the header information (it would need to be rebuilt to properly parse through PE-bear / CFF explorer etc.)
+This library can disrupt the ability to signature scan the executable sections of the PE file in memory / from memory dumps, and corrupt + wipe the header information (it would need to be rebuilt to properly parse through PE-bear / CFF explorer etc.)
 
 Below is an example of how to mutate the executable sections of the PE and scramble the header information:
 
@@ -388,21 +383,21 @@ The above code will complete successfully and without errors, there are instance
 
 Below are examples, before and after the above functions are called, of the PE headers and .text section of an executable
 
-#### Headers before scramble:
+## Headers before scramble:
 
 ![Headers before scramble](img/headerbeforescramble.png)
 
-#### Headers after scramble:
+## Headers after scramble:
 
 ![Headers after scramble](img/headerafterscramble.png)
 
 Some fields such as e_magic in the DOS header and SizeOfStackCommit / SizeOfStackReserve fields in the optional header must be preserved as the application will crash otherwise.
 
-#### .text section before scramble:
+## .text section before scramble:
 
 ![.text before scramble](img/beforescramblenew.png)
 
-#### .text section after scramble:
+## .text section after scramble:
 
 ![.text before scramble](img/afterscramblenew.png)
 
@@ -612,9 +607,9 @@ Licenses for both respective libraries are included in the repo and must be uphe
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## How you can help
+# How you can help
 
-### - Donations
+## - Donations
 
 If you wish to support the project or leave a thanks by donating, below are links from which you may donate (thank you so much!) -
 
@@ -626,5 +621,5 @@ I don't have much time on my hands at the moment. I am passionate about this pro
 
 Please submit any bugs with the library you find, and I encourage you to contribute to the project if you enjoy it or find any use for it.
 
-## If you have any questions/inquiries, feel free to contact me on Discord:
-## 0xH4X0R#0390
+# If you have any questions/inquiries, feel free to contact me on Discord:
+# 0xH4X0R#0390
