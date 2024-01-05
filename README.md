@@ -4,8 +4,32 @@ An easy to use and highly configurable, compiler-independent, fully inlined bina
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+* qengine is fairly well tested (considering I am a one-man team) - I currently am unaware of any bugs for LLVM / CLANG, MSVC, and Intel compiler targets for both x86 and x64 release builds.
+
+* This will NOT prevent static disk signatures of your executables - however, it will make the task of understanding your code from a classic disassembler such as IDA VERY difficult if used properly, and will prevent memory-dump / memory-scan-based signature detections of your binary.
+
+* This library is fully inlined, employing a minimalist design and maximum performance + reliability --
+
+qengine is very lightweight and likewise incurs a ~1.70% average performance loss vs. standard library / primitive types, likewise you will retain ~98.3% of your application's original performance ( on average )
+
+If anyone is able to contribute detailed benchmarks if they have the time, this would be extremely helpful - my hands are tied when it comes to free time for this project at the moment.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 <details>
-<summary>##Features</summary>
+<summary>What is qengine?</summary>
+
+qengine is a polymorphic engine (meaning an engine that takes multiple forms/permutations) for Windows with the end goal of making the reverse engineer's day much more difficult and making the binary appear as unique as possible and unrecognizable at each independent runtime.
+
+i couldn't find a good solution - llvm-obfuscator only supports llvm / clang, vmprotect / themida are proprietary solutions which offer little in terms of control over the process of obfuscation and other options tend to have the same issue - 
+i couldn't control the way my binary was obfuscated the ways in which i wanted to.
+
+</details>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<details>
+<summary>Features</summary>
 
 * Runtime stack polymorphism (locals will be manipulated directly on the stack and appear differently each execution, not really a big deal as this happens in most applications anyways)
 
@@ -16,7 +40,7 @@ An easy to use and highly configurable, compiler-independent, fully inlined bina
 * Thorough control-flow obfuscation (depending on the compiler used and amount of library types used, the IDA control-flow graph will be extremely difficult to read and in many cases fail pseudo-code generation)
 
   
-* Cumbersome conditional branching (extended memory check obfuscation e.g. create indirection for checking valuable information such as product keys etc.)
+* Cumbersome conditional branching (extended memory check control flow branching e.g. create indirection for checking valuable information such as product keys etc.)
 
   
 * .text / executable section Polymorphism (.text section dumps will appear different at each runtime which would hypothetically prevent basic static .text dump signature scans by AV's / AC's etc.)
@@ -32,28 +56,7 @@ An easy to use and highly configurable, compiler-independent, fully inlined bina
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary>##What is qengine?</summary>
-
-qengine is a polymorphic engine (meaning an engine that takes multiple forms/permutations) for Windows with the end goal of making the reverse engineer's day much more difficult and making the binary appear as unique as possible and unrecognizable at each independent runtime.
-
-i couldn't find a good solution - llvm-obfuscator only supports llvm / clang, vmprotect / themida are proprietary solutions which offer little in terms of control over the process of obfuscation and other options tend to have the same issue - 
-i couldn't control the way my binary was obfuscated the ways in which i wanted to.
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-* qengine is fairly well tested (considering I am a one-man team) - I currently am unaware of any bugs for LLVM / CLANG, MSVC, and Intel compiler targets for both x86 and x64 release builds.
-
-* This will NOT prevent static disk signatures of your executables - however, it will make the task of understanding your code from a classic disassembler such as IDA VERY difficult if used properly, and will prevent memory-dump / memory-scan-based signature detections of your binary.
-
-* This library is fully inlined, employing a minimalist design and maximum performance + reliability --
-
-qengine is very lightweight and likewise incurs a ~1.70% average performance loss vs. standard library / primitive types, likewise you will retain ~98.3% of your application's original performance ( on average )
-
-If anyone is able to contribute detailed benchmarks if they have the time, this would be extremely helpful - my hands are tied when it comes to free time for this project at the moment.
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-# Demonstration of control-flow obfuscation:
+<summary>Demonstration of Control-Flow obfuscation</summary>
 
 - "Hello, World!" application before polymorphic type -
 
@@ -66,9 +69,12 @@ If anyone is able to contribute detailed benchmarks if they have the time, this 
 
 ![IDA view of hello world C++ program after polymorphic engine](img/crypt1.png)
 
+</details>
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Usage
+<details>
+<summary>Setup / Usage</summary>
 
 ### Option 1: Add to an existing project:
 
@@ -91,9 +97,12 @@ If anyone is able to contribute detailed benchmarks if they have the time, this 
 * Link against built libraries and include the qengine folder in your project
 (you MUST either extract asmjit_libs.zip in /qengine/extern/ as above or build ASMJIT from source for static library target)
 
+</details>
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### Hello World
+<details>
+<summary>Hello World example</summary>
 
 Here is the obligatory "Hello World" for qengine:
 
@@ -121,9 +130,12 @@ int main() {
 
 * All types contained in the qhash_t and qenc_h_t namespace's are hashed using a high-performance 32 or 64-bit hashing algorithm I made for this purpose.
 
+</details>
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### Cumbersome Conditional Branching
+<details>
+<summary>Cumbersome Conditional Branching</summary>
 
 Here is an example of creating an obfuscated conditional branch that evaluates two variables for the specified condition, and executes the callback function corresponding to the outcome:
 
@@ -222,9 +234,12 @@ Now all that is left to do is run the patched binary and see if it produces usab
 
 The 'patched' binary (which now fails to call the subroutine handling conditional callbacks), produces zero output. the program is in a broken and unusable state.
 
+</details>
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### Memory Hash-Check Violation Handling
+<details>
+<summary>Memory security, hash-checks, and event handlers</summary>
 
 This library allows you to handle the event where a debugger or external tool attempts to illicitly write data to the stack/heap which corrupts/changes any of your variables. 
 
@@ -274,9 +289,23 @@ Below is a screenshot of the resulting output from the above code:
 
 ![Output from hash check violation](img/callback_h.png)
 
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### Header Manipulation / Executable Section Polymorphism / Permutations
+## Hashing -
+
+To address the reliability of the hashing algorithm(s) used, I made a collision testing application that tests for collisions amongst all possible permutations of a 2-byte / 16-bit data set using both algorithms, the results are:
+
+* qhash32 algorithm (32-bit) - 0.0000000233% collision rate amongst 65535 unique 16-bit datasets (1 collision), which is the same rate as crc32
+
+* qhash64 algorithm (64-bit) - 0.0% collision rate amongst 65535 unique 16-bit datasets (0 collisions)
+  
+</details>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<details>
+<summary>PE Header manipulation && Executable section Polymorphism</summary>
 
 This library can disrupt the ability to signature scan the executable sections of the PE file f=in memory / from memory dumps, and corrupt / wipe the header information (it would need to be rebuilt to properly parse through PE-bear / CFF explorer etc.)
 
@@ -352,9 +381,12 @@ The interrupt padding (0xCC / INT3 on x86 PE files) between symbols is being tra
 
 The INT3 paddings (0xCC arrays) are regions that the instruction pointer never hits, so they are (almost) safely mutable to any form, the engine now mutates these regions to random executable machine code which will make it extremely hard to determine where a function/subroutine ends, and which code is valid and executed.
 
+</details>
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### Runtime imports
+<details>
+<summary>Runtime Imports</summary>
 
 This library allows you to manually load API libraries at runtime and invoke them from their imported address - This prevents the names of the libraries and functions you are using in your application from being included on the import table of your PE.
 
@@ -411,18 +443,11 @@ int main() {
 
 ```
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-## Hashing -
-
-To address the reliability of the hashing algorithm(s), I made a collision testing application that tests for collisions amongst all possible permutations of a 2-byte / 16-bit data set using both algorithms, the results are:
-
-* qhash32 algorithm (32-bit) - 0.0000000233% collision rate amongst 65535 unique 16-bit datasets (1 collision), which is the same rate as crc32
-
-* qhash64 algorithm (64-bit) - 0.0% collision rate amongst 65535 unique 16-bit datasets (0 collisions)
+</details>
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-## Experimental Hook Scanning
+<details>
+<summary> Inline Hook scanning [ Expirimental ] </summary>
 
 People developing certain applications, namely Video Games, struggle with internal game cheats (DLL injection). These cheats (internal) and sometimes external cheats, will hook / detour certain important functions inside of the game/application in order to manipulate output and obtain an advantage or 'crack' certain features of the application.
 
@@ -526,22 +551,21 @@ Here is the output when we execute the above application :
 
 I have with the rather brief testing period I have subjected this to, been unable to cause false-positive detections. Anyone willing to test this library to a greater extent to see if they can break it, would be beyond helpful.
 
+</details>
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Notes
 
 * You must target C++ 17 or higher as your language standard for the library to compile properly
 
-* Manipulating header info and morphing executable section will likely break virtualization tools such as VMProtect and Themida - I have not thoroughly tested this
-
+* Manipulating header info and morphing executable section will likely break virtualization tools such as VMProtect and Themida as they rely on and / or manipulate this information themselves depending on user settings - I have not thoroughly tested this, however.
 
 * Extended types (SSE / AVX) must be enabled in your project settings if you wish to use the derived polymorphic versions of them.
 
-
 * All heap-allocated types such as e_malloc, q_malloc, and h_malloc will automatically free their own memory when they go out of scope, however keep in mind that reading variable length memory with their according get() accessor will return new memory allocated with malloc() which you must free yourself.
 
-
-* While this library works for all of the compilers I will mention, MSVC produces the least complex control-flow graphing as a compiler -
+* While this library works for all of the compilers I will mention, MSVC produces the least complex control-flow graphing as a compiler and would be the easiest output to reverse-engineer -
   
 LLVM / CLANG and Intel Compiler always produce the best obfuscated output files and skewed control-flow graphs - Here are some examples all from the same basic application with only a main function (~20 lines of code using polymorphic types) :
 
