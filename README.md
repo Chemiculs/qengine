@@ -1,11 +1,11 @@
 #                                          		qengine 
 
-Easy to use and highly configurable, compiler-independent, fully inlined binary obfuscation for C++ 17+ Windows applications
+An easy to use and highly configurable, compiler-independent, fully inlined binary obfuscation toolkit for C++ 17+ Windows applications
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary>Features</summary>
+<summary>##Features</summary>
 
 * Runtime stack polymorphism (locals will be manipulated directly on the stack and appear differently each execution, not really a big deal as this happens in most applications anyways)
 
@@ -31,7 +31,8 @@ Easy to use and highly configurable, compiler-independent, fully inlined binary 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## What is qengine?
+<details>
+<summary>##What is qengine?</summary>
 
 qengine is a polymorphic engine (meaning an engine that takes multiple forms/permutations) for Windows with the end goal of making the reverse engineer's day much more difficult and making the binary appear as unique as possible and unrecognizable at each independent runtime.
 
