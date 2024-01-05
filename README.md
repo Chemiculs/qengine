@@ -56,7 +56,7 @@ i couldn't control the way my binary was obfuscated the ways in which i wanted t
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary>Demonstration of Control-Flow obfuscation</summary>
+<summary> Demonstration of Control-Flow obfuscation </summary>
 
 
 - "Hello, World!" application before polymorphic type -
@@ -104,7 +104,7 @@ i couldn't control the way my binary was obfuscated the ways in which i wanted t
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary>Compiler-Specific Output variations && Settings</summary>
+<summary>Compiler-Specific Settings and Output</summary>
 	
 LLVM / CLANG and Intel Compiler always produce the best obfuscated output files and skewed control-flow graphs - Here are some examples all from the same basic application with only a main function (~20 lines of code using polymorphic types) :
 
