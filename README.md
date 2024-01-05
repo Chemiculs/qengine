@@ -603,21 +603,18 @@ Licenses for both respective libraries are included in the repo and must be uphe
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Donations
+## How you can help
 
-I am extremely limited in my ability to have time to work on this project - I work a restaurant job at the moment to make ends meet as I have had no luck finding a software job as of the time writing, However, I absolutely do not expect anyone to give me money for this software, please do not feel obligated to. 
+### - Donations
 
-If you do however, wish to support this project at the current time you can feel free to donate using CashApp (haven't been able to get a presentable PayPal donation link yet)
+If you wish to support the project or leave a thanks by donating, below are links from which you may donate (thank you so much!) -
 
 [CashApp](https://cash.app/$0xH4X0R)
 [Paypal](https://paypal.me/CoDTroll?country.x=US&locale.x=en_US)
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-## How you can help
-
-I don't have much time on my hands at the moment. I am passionate about this project and can see it has a very bright future, however due to these aforementioned reasons I have limited ideas coming to mind as to what the next move will be, how to improve this, etc...
+I don't have much time on my hands at the moment. I am passionate about this project and can see it has a very bright future, however due to Economic / Employment issues, i spend nil time recently working on programming.
 
 Please submit any bugs with the library you find, and I encourage you to contribute to the project if you enjoy it or find any use for it.
 
-#### If you have any questions/inquiries, feel free to contact me on Discord:
-### 0xH4X0R#0390
+#@ If you have any questions/inquiries, feel free to contact me on Discord:
+## 0xH4X0R#0390
