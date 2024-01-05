@@ -58,6 +58,7 @@ i couldn't control the way my binary was obfuscated the ways in which i wanted t
 <details>
 <summary>Demonstration of Control-Flow obfuscation</summary>
 
+
 - "Hello, World!" application before polymorphic type -
 
 ![IDA view of hello world C++ program before polymorphic engine](img/crypt2.png)
@@ -75,6 +76,7 @@ i couldn't control the way my binary was obfuscated the ways in which i wanted t
 
 <details>
 <summary>Setup / Usage</summary>
+
 
 ### Option 1: Add to an existing project:
 
@@ -102,7 +104,36 @@ i couldn't control the way my binary was obfuscated the ways in which i wanted t
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
+<summary>Compiler-Specific Output variations && Settings</summary>
+	
+LLVM / CLANG and Intel Compiler always produce the best obfuscated output files and skewed control-flow graphs - Here are some examples all from the same basic application with only a main function (~20 lines of code using polymorphic types) :
+
+### CLANG
+  ![CFG_clang](img/clang.png)
+
+### INTEL
+  ![CFG_intel](img/intel.png)
+
+### MSVC
+  ![CFG_msvc](img/MSVC.png)
+
+
+I am unsure as to exactly why this occurs when I use the same compiler settings for all of the above compilers, my experience would say that MSVC likely does not like to inline functions when you 
+instruct it to, while CLANG / Intel compilers are more likely to listen to user commands/suggestions
+
+
+* Proper compiler settings play a massive role in the output this library will produce.
+- Make sure the binary is built for Release mode
+- Here are the most important settings to use for maximum security (In VS 2022):
+
+    ![VS2022 Config](img/optimization.png)
+
+  </details>
+  
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<details>
 <summary>Hello World example</summary>
+
 
 Here is the obligatory "Hello World" for qengine:
 
