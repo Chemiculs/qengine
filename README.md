@@ -4,7 +4,8 @@ Easy to use and highly configurable, compiler-independent, fully inlined binary 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Features
+<details>
+<summary>Features</summary>
 
 * Runtime stack polymorphism (locals will be manipulated directly on the stack and appear differently each execution, not really a big deal as this happens in most applications anyways)
 
@@ -25,6 +26,8 @@ Easy to use and highly configurable, compiler-independent, fully inlined binary 
 
   
 * Dynamic / Runtime imports ( hide imports from disk import table )
+
+</details>
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
