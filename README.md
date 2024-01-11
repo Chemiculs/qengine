@@ -1,6 +1,6 @@
 #                                          		qengine 
 
-QEngine is a highly configurable, compiler-independent, fully inlined binary obfuscation toolkit designed for C++ Standard 17 (or higher) Windows applications. It offers ease of use while making your code extremely difficult to understand, especially for classic disassemblers like IDA.
+qengine is a highly configurable, compiler-independent, fully inlined binary obfuscation toolkit designed for C++ Standard 17 (or higher) Windows applications. It offers ease of use while making your code extremely difficult to understand, especially for classic disassemblers like IDA.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
