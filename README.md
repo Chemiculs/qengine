@@ -135,26 +135,31 @@ Here is the obligatory "Hello World" for qengine:
 ```cpp
 #include <iostream>
 
-#include "qengine/engine/qengine.hpp"
+#include "../qengine/qengine/engine/qengine.hpp"
 
 using namespace qengine;
 
 int main() {
-	std::cout << qenc_t::e_string("Hello World!").get() << std::endl; // dynamically encrypted type(s)
 
-	std::cout << qhash_t::h_string("Hello World!").get() << std::endl; // secured / hash-checked type(s)
+	qtype_enc::qe_string my_string_e("Hello World!");
 
-	std::cout << qenc_h_t::q_string("Hello World!").get() << std::endl; // dynamically encrypted AND hash-checked type(s)
+	qtype_hash::qh_string my_string_h("Hello World!");
+
+	qtype_enchash::qeh_string my_string_eh("Hello World!");
+
+	std::cout << my_string_e.get() << std::endl;
+
+	std::cout << my_string_h.get() << std::endl;
+
+	std::cout << my_string_eh.get() << std::endl;
 
 	std::cin.get();
-
-	return 0;
 }
 ```
 
-* All types contained in the qenc_t and qenc_h_t namespace's are encrypted using a polymorphic encryption algorithm and decrypted only when accessed, then re-encrypted. 
+* All types contained in the qtype_enc and qtype_enchash namespace's are encrypted using a polymorphic encryption algorithm and decrypted only when accessed, then re-encrypted. 
 
-* All types contained in the qhash_t and qenc_h_t namespace's are hashed using a high-performance 32 or 64-bit hashing algorithm I made for this purpose.
+* All types contained in the qtype_hash and qtype_enchash namespace's are hashed using a high-performance 32 or 64-bit hashing (dependent upon build target which is used) algorithm I made for this purpose.
 
 </details>
 
