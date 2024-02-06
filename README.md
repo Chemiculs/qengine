@@ -61,9 +61,9 @@ If anyone is able to contribute detailed benchmarks if they have the time, this 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 - "Hello, World!" application after polymorphic type -
-(The control flow chart might be hard to see, but there are roughly 1,000 sub-routines)
+(The control flow chart might be hard to see, but there are 1,000++ sub-routines in the compiled binary)
 
-![IDA view of hello world C++ program after polymorphic engine](img/crypt1.png)
+![IDA view of hello world C++ program after polymorphic engine](img/helloworld_ida.png)
 
 </details>
 
