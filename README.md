@@ -482,7 +482,7 @@ int main() {
 
 People developing certain applications, namely Video Games, struggle with internal game cheats (DLL injection). These cheats (internal) and sometimes external cheats, will hook / detour certain important functions inside of the game/application in order to manipulate output and obtain an advantage or 'crack' certain features of the application.
 
-Detours are generally speaking, simple blocks of machine code 12+ bytes in length which are placed at a functions pointer in memory, in order to redirect control flow of the function outside of the main module, and into the malicious module.
+Detours are generally speaking, simple blocks of machine code 12+ bytes in length which are placed at a functions address in memory, in order to redirect control flow of the function outside of the main module, and into the malicious module.
 
 here is an example of a most basic detour function in X86 assembly 
 
@@ -495,8 +495,8 @@ Detecting these hooks can be a non-trivial task depending on the complexity of t
 
 I have implemented a rather basic implementation of a hook scanning class inside of qengine in the latest update, the class uses a separate thread to efficiently scan methods in memory for the placement of hooks inside of the method's body.
 
-The thread searches for flow transfer instructions (ret, jmp, call namely), and when these are found, it checks if the address to which flow is being transferred is within the module's address space.
-If not, this likely means a hook has been placed on the method.
+The thread searches for control flow transfer instructions (ret, jmp, call namely), and when these are found, it checks if the address to which control flow is being transferred is within the module's address space.
+If not, this likely means a hook has been placed on the method and that your security measures have been breached.
 
 Below is an example application that initializes the hook-detection library, and references the designated callback function to it. After this, an example hook is placed at the functions address in memory to demonstrate detection by our library :
 
@@ -613,6 +613,18 @@ Licenses for both respective libraries are included in the repo and must be uphe
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # How you can help
+
+## - Bug Testing / Debugging
+
+I am one person and only have so much time on my hands, and i have other projects i am working on, and a IRL job. 
+I may be fairly effecient at pumping out code, but i am left with even less time to do the in-depth debugging, reversal and documentation on this project which i would like to achieve for this project ultimately. 
+
+I wouldn't mind help to get there, so if you encounter any bugs please submit a report.
+
+## - Ideas / Collaborators
+
+I'm always looking for new ideas for the future of this project, and most certainly could use some more experienced hands writing this code with me.
+If you think of something you would like to see in qengine, or would like to contribute in any way, my Discord is listed below.
 
 ## - Donations
 
