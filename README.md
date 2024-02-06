@@ -51,25 +51,6 @@ If anyone is able to contribute detailed benchmarks if they have the time, this 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary> Demonstration of control-flow obfuscation </summary>
-
-
-- "Hello, World!" application before polymorphic type -
-
-![IDA view of hello world C++ program before polymorphic engine](img/crypt2.png)
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-- "Hello, World!" application after polymorphic type -
-(The control flow chart might be hard to see, but there are 1,000++ sub-routines in the compiled binary)
-
-![IDA view of hello world C++ program after polymorphic engine](img/helloworld_ida.png)
-
-</details>
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-<details>
 <summary>Setup / Usage</summary>
 
 
@@ -93,6 +74,25 @@ If anyone is able to contribute detailed benchmarks if they have the time, this 
   
 * Link against built libraries and include the qengine folder in your project
 (you MUST either extract asmjit_libs.zip in /qengine/extern/ as above or build ASMJIT from source for static library target)
+
+</details>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<details>
+<summary> Demonstration of control-flow obfuscation </summary>
+
+
+- "Hello, World!" application before polymorphic type -
+
+![IDA view of hello world C++ program before polymorphic engine](img/crypt2.png)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- "Hello, World!" application after polymorphic type -
+(The control flow chart might be hard to see, but there are 1,000++ sub-routines in the compiled binary)
+
+![IDA view of hello world C++ program after polymorphic engine](img/helloworld_ida.png)
 
 </details>
 
@@ -127,7 +127,7 @@ instruct it to, while CLANG / Intel compilers are more likely to listen to user 
   
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 <details>
-<summary> " Hello World! " example </summary>
+<summary> " Hello World! " source example </summary>
 
 
 Here is the obligatory "Hello World" for qengine:
