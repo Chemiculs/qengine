@@ -616,7 +616,8 @@ Licenses for both respective libraries are included in the repo and must be uphe
 
 ## - Bug Testing / Debugging
 
-I am one person and only have so much time on my hands, and i have other projects i am working on, and a IRL job. 
+I am one person and only have so much time on my hands, and i have other projects i am working on + an unrelated IRL job. 
+
 I may be fairly effecient at pumping out code, but i am left with even less time to do the in-depth debugging, reversal and documentation on this project which i would like to achieve for this project ultimately. 
 
 I wouldn't mind help to get there, so if you encounter any bugs please submit a report.
