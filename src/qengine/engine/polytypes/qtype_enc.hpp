@@ -40,8 +40,8 @@
 #ifdef NDEBUG
 
 #pragma optimize("", on)
-#pragma inlinqe_depth(255)
-#pragma inlinqe_recursion(on) 
+#pragma inline_depth(255)
+#pragma inline_recursion(on) 
 
 #endif
 
