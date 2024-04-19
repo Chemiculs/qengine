@@ -629,11 +629,23 @@ If you think of something you would like to see in qengine, or would like to con
 
 ## - Donations
 
-If you wish to support the project or leave a thanks by donating, below are links from which you may donate (thank you so much!) -
+I hate to add this as this as this is free software and i am not trying to charge you, however If you do wish to support the project or leave a thanks by donating, below are links from which you may donate if you so choose (And thank you so much if you do!) -
 
 - [CashApp](https://cash.app/$0xH4X0R)
 
 - [Paypal](https://paypal.me/CoDTroll?country.x=US&locale.x=en_US)
+
+- Bitcoin -
+bc1qx9xsw4hvvqel29au5xy3vqwh48u0yhvsxfsd33
+
+- Litecoin -
+ltc1q0jqcsf83xjqx5x9cj2wag06hpwxc6sv3wczu6v
+
+- Ethereum -
+0x7457875998B35A032c789a10177Bb463fF2F1902
+
+- Dogecoin -
+D5NTFpffw9erwdEbnz7rymBhkgrRzfEigs
 
 I don't have much time on my hands at the moment. I am passionate about this project and can see it has a very bright future, however due to Economic / Employment issues, i spend nil time recently working on programming.
 
