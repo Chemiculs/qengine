@@ -629,7 +629,7 @@ If you think of something you would like to see in qengine, or would like to con
 
 ## - Donations
 
-I hate to add this as this as this is free software and i am not trying to charge you, however If you do wish to support the project or leave a thanks by donating, below are links from which you may donate if you so choose (And thank you so much if you do!) -
+This is free software and i am not trying to charge you for it, however If you do wish to support the project or leave a thanks by donating, below are links from which you may donate if you so choose (And thank you so much if you do!) -
 
 - [CashApp](https://cash.app/$0xH4X0R)
 
