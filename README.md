@@ -300,7 +300,7 @@ using namespace qengine;
 
 __declspec(noinline) std::int32_t main() noexcept {
 
-	qtype_enchash::init_qtype_hash(violation_callback); // assign our callback function to the namespace - all instances will refer to this callback if they detect a violation
+	qtype_enchash::init_qtype_hash(&violation_callback); // assign our callback function to the namespace - all instances will refer to this callback if they detect a violation
 
 	qtype_enchash::qeh_int32 MyInteger(999); // instance a hash-checked integer and set its value to 999
 
