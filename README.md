@@ -298,13 +298,13 @@ using namespace qengine;
 }
 
 
-int main() {
+__declspec(noinline) std::int32_t main() noexcept {
 
-	qhash_t::init_hash_t(violation_callback); // assign our callback function to the namespace - all instances will refer to this callback if they detect a violation
+	qtype_enchash::init_qtype_hash(violation_callback); // assign our callback function to the namespace - all instances will refer to this callback if they detect a violation
 
-	qhash_t::h_int32 MyInteger(999); // instance a hash-checked integer and set its value to 999
+	qtype_enchash::qeh_int32 MyInteger(999); // instance a hash-checked integer and set its value to 999
 
-	(*MyInteger.get_raw_memory_address()) = 998; // use the built-in illegal-accessor for this example to modify the value of the data and trigger our callback
+	(*static_cast<std::uint32_t*>(MyInteger.get_raw_memory_address())) = 998; // use the built-in illegal-accessor for this example to modify the value of the data and trigger our callback
 
 	int32_t value = MyInteger; // store the value held within MyInteger in a normal primitive variable to invoke get() (get() is when the check will occur)
 
@@ -429,7 +429,6 @@ Below is an example of importing a Windows API function using the import tool -
 #include "qengine/engine/qengine.hpp"
 
 using namespace qengine;
-
 
 int main() {
 	// Return type is NTSTATUS (template parameter)
