@@ -13,7 +13,7 @@ qengine is a polymorphic engine (meaning an engine that takes multiple forms/per
 
 * This will NOT prevent static disk signatures of your executables - however, it will make the task of understanding your code from a classic disassembler such as IDA VERY difficult if used properly, and will prevent memory-dump / memory-scan-based signature detections of your binary.
 
-* This library is fully inlined, employing a minimalist design and maximum performance + reliability --
+* This library is (almost) fully inlined, employing a minimalist design and maximum performance + reliability --
 
 qengine is very lightweight and likewise incurs a ~1.70% average performance loss vs. standard library / primitive types, likewise you will retain ~98.3% of your application's original performance ( on average )
 
@@ -160,6 +160,98 @@ int main() {
 * All types contained in the qtype_enc and qtype_enchash namespace's are encrypted using a polymorphic encryption algorithm and decrypted only when accessed, then re-encrypted. 
 
 * All types contained in the qtype_hash and qtype_enchash namespace's are hashed using a high-performance 32 or 64-bit hashing (dependent upon build target which is used) algorithm I made for this purpose.
+
+</details>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<details>
+<summary> Macros, Constants, Redefinitions </summary>
+
+qengine contains some changes in representations to ideas and concepts in the C++ standard library, which were only intended to increase the readability of qengine in relation to the instructions prompted to the compiler.
+
+* Below macro effectively disables inlining optimization for a specific function, if we wish for it to have a single instance per parent object, use in place of __declspec(noinline)
+```cpp
+__singleton 	//	we only want a single instance of the declared fn per object instance, not instanced copies inlined to caller functions
+```
+
+* Below macro disables compiler generation of windows native SEH-related code in relation to the declared function, use in place of __declspec(nothrow)
+```cpp
+__nothrow 	//	explicit instruction to compiler to disable any SEH related code generation (this does happen implicitly anyways (generally?), yes)
+```
+
+* Below macro disables compiler generation of windows native SEH-related code in relation to the declared function whilst compelling the function to be inlined to the caller(s), use in place of ```cpp __forceinline ``` && ```cpp __declspec(nothrow) ```
+```cpp
+__compelled_inline_noseh 	//	compell the highest inlining depth to the compiler and disable windows SEH code generation simultaneously
+```
+
+* Below is a simple name change i made to declare the intention and effect that __fastcall convention actually has on the function more explicitly, it looks and sounds better to me personally. use in place of ```cpp __fastcall ```
+```cpp
+__regcall	//	pass up to two arguments through registers(?) if supported by OS bitwidth vs Variable type
+```
+
+* Below is another change to the naming of __cdecl convention for same reasons as above change
+```cpp
+__stackcall 	//	pass arguments on stack (too large to fit in registers presumably) / no arguments contained -  && allow caller to cleanup stack
+```
+
+* Below is an automatic type deduction i use for function return's myself, use in place of ```cpp decltype(auto) ```
+```cpp
+_auto_type_ 	//	automatic compiler-generated type-deduction for function returns (and variable declarations?), useful
+```
+
+* Below is a generic ctor optimization macro, presuming the ctor takes 1+ arguments which would fit inside registers matching or below the bitwidth of the host OS OR can be inlined. one of these will occur, use in place of ```cpp __compelled_inline_noseh ```, and  ```cpp __regcall ``` in combination.
+```cpp
+__optimized_ctor	//	this forces compiler optimization depending on the argument list, IF the function can be inlined it will be which is arguably the least expensive calling method, however if the compiler fails yet to inline, the argument will be passed through registers if the arguments match the bitwidth of the operating system
+```
+
+* Below is a simple grammar correction to the C++ standard library which should have occured long ago, declaring an inline function is a mere suggestion to the compiler and is explicitly stating that the compiler may inline the function only if it so chooses. nothing more or less than this, use in place of ```cpp inline ```
+```cpp
+__inlineable
+```
+
+* Below is a macro which, dependent upon project settings, will instruct the compiler to pass the arguments through SSE / AVX registers if available on Host CPU architecture. If SSE / AVX are unavailable, __fastcall will be specified rather than __vectorcall in the hopes that the floating point data matches or is under the host OS's bitwidth and can be optimized to fit inside a register.
+```cpp
+__fpcall
+```
+ 
+</details>
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<details>
+<summary>Windows SEH-based obfuscation and Cxx EH-based obfuscation</summary>
+
+Windows SEH (Structured Exception Handling) and Cxx EH (Exception Handling) mechanisms have been exploitable for some time and are relatively well known amongst the blackhat community for being an effecient method of fairly efffecient obfuscation which is entirely compiler-generated
+
+## Windows SEH-based obfuscation macro:
+ 
+```cpp
+//  Dereference a ring -3 pointer rather than call _CxxRaiseException() directly to avoid another import table entry
+//  Basic SEH exception handling callback obfuscation, call WINAPI_SEH_INIT(); at beginning of scope && WINAPI_SEH_END() or ';' at the end of the scope and it will be executed from a statically compiled SEH table entry for x86_64, or SEH handled on stack for x86
+
+WINAPI_SEH_INIT()	//	emplace @ fn beginning to displace the following code within a seperate and (somewhat) hidden windows SEH block inside your output PE
+
+WINAPI_SEH_END()	//	push_back @ fn end to define an endpoint from which no more code inside of the parent fn will be displaced to windows SEH handler
+```
+
+To give a basic diagram of how windows SEH-based obfuscation functions under the hood, i built a (standard library) "Hello World" application with debug information and pdb included which encapsulated the entrypoint inside of this mechanism.
+
+![SEH Hello World Example, Part 1](img/SEH.png)
+
+Windows SEH is actually a fairly effective obfuscation technique in it's own right if used properly, and while my macro implements a rather simple method of triggering it, this could be very easily made much more complex with your own adjustments. below is the closest i bothered going trying to reverse that sam[ple program with symbol / debug info present in IDA
+
+![SEH Hello World Example, Part 2](img/SEH2.png)
+
+## CXX-EH based obfuscation macro:
+
+This is considerably less secure than native windows SEH-based obfuscation while probably being more performant in CPU-intensive applications, this is a (standard library) "Hello World!" application nested within CXX-EH mechanisms w/ debug and symbol / PDB info in IDA:
+
+![EH Hello World Example, Part 1](img/CXXEH1.png)
+
+As you can see something is very obviously red-flaggish and 'off' about this entrypoint from the perspective of a reverse engineer, and this screams obfuscation and not very powerful at that. if we follow the XREF, we will be pointed directly to the original compiled code as opposed to with windows SEH this does not happen as easily:
+
+![EH Hello World Example, Part 2](img/CXXEH2.png)
+
+This could be easily cracked, however may be more performance-biased than windows SEH mechanisms and could probably be made to produce more complex output if modified beyond what has been done in qengine.
 
 </details>
 
