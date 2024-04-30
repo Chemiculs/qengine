@@ -687,7 +687,7 @@ I have with the rather brief testing period I have subjected this to, been unabl
 
 * All heap-allocated types such as qe_malloc, qeh_malloc, and qh_malloc will automatically free their own memory when they go out of scope, however keep in mind that reading variable length memory with their according get() accessor will return new memory allocated with malloc() which you must free yourself.
 
-* While this library works for all of the compilers I will mention, MSVC produces the least complex control-flow graphing as a compiler and would be the easiest output to reverse-engineer (i'm talking to you M$), do yourelf a favor and use LLVM / Clang or Intel's compiler
+* While this library works for all of the compilers I will mention, MSVC produces the least complex control-flow graphing as a compiler and would be the easiest output to reverse-engineer (i'm talking to you M$), do yourself a favor and use LLVM / Clang or Intel's compiler
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
