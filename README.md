@@ -215,10 +215,9 @@ __fpcall
 ```
  
 </details>
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary>Windows SEH-based obfuscation and Cxx EH-based obfuscation</summary>
+<summary> Windows SEH-based obfuscation and Cxx EH-based obfuscation </summary>
 
 Windows SEH (Structured Exception Handling) and Cxx EH (Exception Handling) mechanisms have been exploitable for some time and are relatively well known amongst the blackhat community for being an effecient method of fairly efffecient obfuscation which is entirely compiler-generated
 
