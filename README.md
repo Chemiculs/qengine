@@ -169,22 +169,22 @@ int main() {
 
 qengine contains some changes in representations to ideas and concepts in the C++ standard library, which were only intended to increase the readability of qengine in relation to the instructions prompted to the compiler.
 
-* Below macro effectively disables inlining optimization for a specific function, if we wish for it to have a single instance per parent object, use in place of __declspec(noinline)
+* Below macro effectively disables inlining optimization for a specific function, if we wish for it to have a single instance per parent object, use in place of ``` __declspec(noinline) ```
 ```cpp
 __singleton 	//	we only want a single instance of the declared fn per object instance, not instanced copies inlined to caller functions
 ```
 
-* Below macro disables compiler generation of windows native SEH-related code in relation to the declared function, use in place of __declspec(nothrow)
+* Below macro disables compiler generation of windows native SEH-related code in relation to the declared function, use in place of ``` __declspec(nothrow) ```
 ```cpp
 __nothrow 	//	explicit instruction to compiler to disable any SEH related code generation (this does happen implicitly anyways (generally?), yes)
 ```
 
-* Below macro disables compiler generation of windows native SEH-related code in relation to the declared function whilst compelling the function to be inlined to the caller(s), use in place of ```cpp __forceinline ``` && ```cpp __declspec(nothrow) ```
+* Below macro disables compiler generation of windows native SEH-related code in relation to the declared function whilst compelling the function to be inlined to the caller(s), use in place of ``` __forceinline ``` && ``` __declspec(nothrow) ```
 ```cpp
 __compelled_inline_noseh 	//	compell the highest inlining depth to the compiler and disable windows SEH code generation simultaneously
 ```
 
-* Below is a simple name change i made to declare the intention and effect that __fastcall convention actually has on the function more explicitly, it looks and sounds better to me personally. use in place of ```cpp __fastcall ```
+* Below is a simple name change i made to declare the intention and effect that __fastcall convention actually has on the function more explicitly, it looks and sounds better to me personally. use in place of ``` __fastcall ```
 ```cpp
 __regcall	//	pass up to two arguments through registers(?) if supported by OS bitwidth vs Variable type
 ```
@@ -194,22 +194,22 @@ __regcall	//	pass up to two arguments through registers(?) if supported by OS bi
 __stackcall 	//	pass arguments on stack (too large to fit in registers presumably) / no arguments contained -  && allow caller to cleanup stack
 ```
 
-* Below is an automatic type deduction i use for function return's myself, use in place of ```cpp decltype(auto) ```
+* Below is an automatic type deduction i use for function return's myself, use in place of ``` decltype(auto) ```
 ```cpp
 _auto_type_ 	//	automatic compiler-generated type-deduction for function returns (and variable declarations?), useful
 ```
 
-* Below is a generic ctor optimization macro, presuming the ctor takes 1+ arguments which would fit inside registers matching or below the bitwidth of the host OS OR can be inlined. one of these will occur, use in place of ```cpp __compelled_inline_noseh ```, and  ```cpp __regcall ``` in combination.
+* Below is a generic ctor optimization macro, presuming the ctor takes 1+ arguments which would fit inside registers matching or below the bitwidth of the host OS OR can be inlined. one of these will occur, use in place of ``` __compelled_inline_noseh ```, and  ```cpp __regcall ``` in combination.
 ```cpp
 __optimized_ctor	//	this forces compiler optimization depending on the argument list, IF the function can be inlined it will be which is arguably the least expensive calling method, however if the compiler fails yet to inline, the argument will be passed through registers if the arguments match the bitwidth of the operating system
 ```
 
-* Below is a simple grammar correction to the C++ standard library which should have occured long ago, declaring an inline function is a mere suggestion to the compiler and is explicitly stating that the compiler may inline the function only if it so chooses. nothing more or less than this, use in place of ```cpp inline ```
+* Below is a simple grammar correction to the C++ standard library which should have occured long ago, declaring an inline function is a mere suggestion to the compiler and is explicitly stating that the compiler may inline the function only if it so chooses. nothing more or less than this, use in place of ``` inline ```
 ```cpp
 __inlineable
 ```
 
-* Below is a macro which, dependent upon project settings, will instruct the compiler to pass the arguments through SSE / AVX registers if available on Host CPU architecture. If SSE / AVX are unavailable, __fastcall will be specified rather than __vectorcall in the hopes that the floating point data matches or is under the host OS's bitwidth and can be optimized to fit inside a register.
+* Below is a macro which, dependent upon project settings, will instruct the compiler to pass the arguments through SSE / AVX registers if available on Host CPU architecture. If SSE / AVX are unavailable, ```__fastcall``` will be specified rather than ```__vectorcall``` in the hopes that the floating point data matches or is under the host OS's bitwidth and can be optimized to fit inside a register.
 ```cpp
 __fpcall
 ```
