@@ -13,7 +13,7 @@ qengine is a polymorphic engine (meaning an engine that takes multiple forms/per
 
 * This will NOT prevent static disk signatures of your executables - however, it will make the task of understanding your code from a classic disassembler such as IDA VERY difficult if used properly, and will prevent memory-dump / memory-scan-based signature detections of your binary.
 
-* This library is (almost) fully inlined, employing a minimalist design and maximum performance + reliability --
+* This library is (almost) fully inlined, employing a minimalist design and maximum performance + reliability, function inlining allows qengine to hide the actual code you are executing behind a wall of cryptographic instructions and protected memory regions
 
 qengine is very lightweight and likewise incurs a ~1.70% average performance loss vs. standard library / primitive types, likewise you will retain ~98.3% of your application's original performance ( on average )
 
