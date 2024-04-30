@@ -38,7 +38,7 @@
 
 #pragma region Method Attributes
 
-#define __singleton __declspec(noinline)	//	we only want a static instance of the declared fn, not OOP instancing
+#define __singleton __declspec(noinline)	//	we only want a static instance of the declared fn, not instanced copies into caller functions
 
 #define __nothrow __declspec(nothrow)	//	explicit instruction to compiler to disable any SEH related code generation (this does happen implicitly anyways, yes)
 
