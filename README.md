@@ -1,6 +1,6 @@
 #                                          		qengine 
 
-qengine is a highly configurable, compiler-independent, largely inlined binary obfuscation toolkit designed for C++ Standard 17 (or higher) Windows applications. It offers ease of use while making your code extremely difficult to understand, especially for classic disassemblers like IDA.
+qengine is a highly configurable, compiler-independent, and largely inlined binary obfuscation toolkit designed for C++ Standard 17 (or higher) Windows Applications. It offers ease of use while making your code extremely difficult to understand, especially for classic disassemblers like IDA.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -9,7 +9,7 @@ qengine is a highly configurable, compiler-independent, largely inlined binary o
 
 qengine is a polymorphic engine (meaning an engine that takes multiple forms/permutations) for Windows designed to make reverse engineering significantly harder. It aims to make binaries appear unique and unrecognizable at each independent runtime.
 
-* qengine is fairly well tested (considering I am a one-man team) - I currently am unaware of any bugs for LLVM / CLANG, MSVC, and Intel compiler targets for both x86 and x64 release builds.
+* qengine is fairly well tested (considering we are a small team) - I currently am unaware of any bugs for LLVM / CLANG, MSVC, and Intel compiler targets for both x86 and x64 release builds.
 
 * This will NOT prevent static disk signatures of your executables - however, it will make the task of understanding your code from a classic disassembler such as IDA VERY difficult if used properly, and will prevent memory-dump / memory-scan-based signature detections of your binary.
 
