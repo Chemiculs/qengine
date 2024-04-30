@@ -199,7 +199,7 @@ __stackcall 	//	pass arguments on stack (too large to fit in registers presumabl
 _auto_type_ 	//	automatic compiler-generated type-deduction for function returns (and variable declarations?), useful
 ```
 
-* Below is a generic ctor optimization macro, presuming the ctor takes 1+ arguments which would fit inside registers matching or below the bitwidth of the host OS OR can be inlined. one of these will occur, use in place of ``` __compelled_inline_noseh ```, and  ```cpp __regcall ``` in combination.
+* Below is a generic ctor optimization macro, presuming the ctor takes 1+ arguments which would fit inside registers matching or below the bitwidth of the host OS OR can be inlined. one of these will occur, use in place of ``` __compelled_inline_noseh ```, and  ``` __regcall ``` in combination.
 ```cpp
 __optimized_ctor	//	this forces compiler optimization depending on the argument list, IF the function can be inlined it will be which is arguably the least expensive calling method, however if the compiler fails yet to inline, the argument will be passed through registers if the arguments match the bitwidth of the operating system
 ```
