@@ -51,12 +51,12 @@ namespace qengine {
 
 			unsigned int hash;
 
-			__forceinline bool __fastcall operator==(const qhash32_t other) const {
+			__compelled_inline_noseh bool __regcall operator==(const qhash32_t other) const {
 
 				return (this->hash == other.hash);
 			}
 
-			__forceinline bool __fastcall operator!=(const qhash32_t other) const {
+			__compelled_inline_noseh bool __regcall operator!=(const qhash32_t other) const {
 
 				return this->operator==(other) ? false : true;
 			}
@@ -66,12 +66,12 @@ namespace qengine {
 
 			unsigned long long hash;
 
-			__forceinline bool __fastcall operator==(const qhash64_t other) const {
+			__compelled_inline_noseh bool __regcall operator==(const qhash64_t other) const {
 
 				return (this->hash == other.hash);
 			}
 
-			__forceinline bool __fastcall operator!=(const qhash64_t other) const {
+			__compelled_inline_noseh bool __regcall operator!=(const qhash64_t other) const {
 
 				return this->operator==(other) ? false : true;
 			}
@@ -89,12 +89,12 @@ namespace qengine {
 
 #endif
 
-			__forceinline bool __fastcall operator==(const qhash_cpu_t other) const {
+			__compelled_inline_noseh bool __regcall operator==(const qhash_cpu_t other) const {
 
 				return this->hash_obj == other.hash_obj;
 			}
 
-			__forceinline bool __fastcall operator!=(const qhash_cpu_t other) const {
+			__compelled_inline_noseh bool __regcall operator!=(const qhash_cpu_t other) const {
 
 				return this->operator==(other) ? false : true;
 			}
@@ -140,7 +140,7 @@ namespace qengine {
 
 #pragma region Table Generation
 
-		__forceinline static void qtable32_gen() {
+		__compelled_inline_noseh static void qtable32_gen() {
 			unsigned long seed = 0xFEEDDCCBul;
 
 			unsigned short decrementor = 0xFFFFu;
@@ -154,7 +154,7 @@ namespace qengine {
 
 #ifdef _WIN64
 
-		__forceinline static void qtable64_gen() {
+		__compelled_inline_noseh static void qtable64_gen() {
 			unsigned long long seed = 0xFEEDDCCBBAA99887ull;
 
 			unsigned long decrementor = 0xFFFFFFFF;
@@ -173,7 +173,7 @@ namespace qengine {
 #pragma region Hashing
 
 		// 0.0000000233% collision rate among 65535 unique 2-byte data sets ( 1 out of 4,294,770,690 possible collisions )
-		__forceinline static qhash32_t __fastcall qhash32(void* data, uint32_t length) {
+		__compelled_inline_noseh static qhash32_t __regcall qhash32(void* data, uint32_t length) {
 			/* check if our global variables have been initialized */
 			if (!initialized32) {
 				qtable32_gen();
@@ -232,7 +232,7 @@ namespace qengine {
 
 #ifdef _WIN64
 		//  0.00% collision rate among every possible 2-byte data set ( 0 out of 4,294,770,690 possible collisions )
-		__forceinline static qhash64_t __fastcall qhash64(void* data, size_t length) {
+		__compelled_inline_noseh static qhash64_t __regcall qhash64(void* data, size_t length) {
 			/* check if our global variables have been initialized */
 			if (!initialized64) {
 				qtable64_gen();
@@ -294,7 +294,7 @@ namespace qengine {
 
 #pragma region CPU-Safe Template Accessor
 
-		static __forceinline qhash_cpu_t __fastcall qhash_cpu(void* data, size_t length) {
+		static __compelled_inline_noseh qhash_cpu_t __regcall qhash_cpu(void* data, size_t length) {
 
 #ifdef _WIN64
 
