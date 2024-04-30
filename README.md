@@ -139,7 +139,7 @@ Here is the obligatory "Hello World" for qengine:
 
 using namespace qengine;
 
-int main() {
+__nothrow __singleton std::int32_t main() noexcept {	//	explicit declarators are used as the point of this project is explicit communication with the compiler, however these are not required
 
 	qtype_enc::qe_string my_string_e("Hello World!");
 
@@ -269,18 +269,18 @@ Here is an example of creating an obfuscated conditional branch that evaluates t
 
 using namespace qengine;
 
-void true_() {
+static __singleton void true_() {	//	callback functions should never be declared as implicitly inlineable, so we need to ensure this is explicitly declarated. 
 
 	std::cout << "condition is true" << std::endl;
 }
 
-void false_() {
+static __singleton void false_() 
 
 	std::cout << "condition is false" << std::endl;
 }
 
 
-int main() {
+__nothrow __singleton std::int32_t main() noexcept {
 
 	int x = 1;
 	int y = 1;
