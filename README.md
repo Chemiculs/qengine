@@ -135,7 +135,7 @@ Here is the obligatory "Hello World" for qengine:
 ```cpp
 #include <iostream>
 
-#include "../qengine/qengine/engine/qengine.hpp"
+#include <qengine/engine/qengine.hpp>
 
 using namespace qengine;
 
@@ -220,7 +220,7 @@ __fpcall
 <details>
 <summary> Windows SEH-based obfuscation and Cxx EH-based obfuscation </summary>
 
-Windows SEH (Structured Exception Handling) and Cxx EH (Exception Handling) mechanisms have been exploitable for some time and are relatively well known amongst the blackhat community for being an effecient method of fairly efffecient obfuscation which is entirely compiler-generated
+Windows SEH (Structured Exception Handling) and Cxx EH (Exception Handling) mechanisms have been exploitable for some time and are relatively well known amongst the blackhat community for being an effecient method of mediocre obfuscation which is entirely compiler-generated
 
 ## Windows SEH-based obfuscation macro:
  
@@ -265,29 +265,29 @@ Here is an example of creating an obfuscated conditional branch that evaluates t
 ```cpp
 #include <iostream>
 
-#include "qengine/engine/qengine.hpp"
+#include <qengine/engine/qengine.hpp>
 
 using namespace qengine;
 
-static __singleton void true_() {	//	callback functions should never be declared as implicitly inlineable, so we need to ensure this is explicitly declarated. 
+static __nothrow __singleton void true_() noexcept {	//	callback functions shall never be inlined and should always be explicitly declared as a singleton point of execution, intentions are very important to know
 
 	std::cout << "condition is true" << std::endl;
 }
 
-static __singleton void false_() 
+static __nothrow __singleton void false_() noexcept {	
 
 	std::cout << "condition is false" << std::endl;
 }
 
 
-__nothrow __singleton std::int32_t main() noexcept {
+__nothrow __singleton int main() noexcept {
 
 	int x = 1;
 	int y = 1;
 
 	qcritical::SCRAMBLE_CRITICAL_CONDITION(
-		true_,				// callback if condition evaluates to TRUE
-		false_,				// callback if condition evaluates to FALSE
+		&true_,				// callback if condition evaluates to TRUE
+		&false_,			// callback if condition evaluates to FALSE
 		std::tuple<>{},     // arguments (if any) for TRUE evaluated callback (our callback has no arguments)
 		std::tuple<>{},		// arguments (if any) for FALSE evaluated callback (our callback has no arguments)
 		x, y,				// our condition variables from left -> right order (can be of any primitive type or std::string / std::wstring type for now)
@@ -369,13 +369,14 @@ This library allows you to handle the event where a debugger or external tool at
 Below I will give an example of how to create a callback function to handle this event, assign it to the library, and trigger it yourself to test it -
 
 ```cpp
+
 #include <iostream>
 
 #include "qengine/engine/qengine.hpp"
 
 using namespace qengine;
 
- __declspec(noinline) void __fastcall violation_callback(qexcept::q_rogueaccess except, void* data) {
+__singleton __nothrow void __regcall violation_callback(qexcept::q_rogueaccess except, void* data) noexcept {
 
 	if (except.id != qexcept::MEMORY_ALTERATION) // ensure this callback has been raised due to memory alteration
 		return;
@@ -386,11 +387,11 @@ using namespace qengine;
 
 	std::cout << "Memory address: " << std::hex << reinterpret_cast<uintptr_t>(data) << std::endl; //display the memory address of the data which was altered 
 
-	//Here you would normally flag the user for a ban/violation or force-quit the application
+	//Here you would normally flag the user for a ban/violation of contract or force-quit the application as a security breach has obviously occured
 }
 
 
-__declspec(noinline) std::int32_t main() noexcept {
+__singleton std::int32_t main() noexcept {
 
 	qtype_enchash::init_qtype_hash(&violation_callback); // assign our callback function to the namespace - all instances will refer to this callback if they detect a violation
 
@@ -406,6 +407,7 @@ __declspec(noinline) std::int32_t main() noexcept {
 
 	return 0;
 }
+
 ```
 
 Below is a screenshot of the resulting output from the above code:
