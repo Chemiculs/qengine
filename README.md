@@ -139,7 +139,7 @@ Here is the obligatory "Hello World" for qengine:
 
 using namespace qengine;
 
-__nothrow __singleton std::int32_t main() noexcept {	//	explicit declarators are used as the point of this project is explicit communication with the compiler, however these are not required
+__nothrow __singleton std::int32_t __stackcall main() noexcept {	//	explicit declarators are used as the point of this project is explicit communication with the compiler, however these are not required
 
 	qtype_enc::qe_string my_string_e("Hello World!");
 
@@ -280,7 +280,7 @@ static __nothrow __singleton void false_() noexcept {
 }
 
 
-__nothrow __singleton int main() noexcept {
+__nothrow __singleton std::int32_t __stackcall main() noexcept {
 
 	int x = 1;
 	int y = 1;
@@ -372,7 +372,7 @@ Below I will give an example of how to create a callback function to handle this
 
 #include <iostream>
 
-#include "qengine/engine/qengine.hpp"
+#include <qengine/engine/qengine.hpp>
 
 using namespace qengine;
 
@@ -391,7 +391,7 @@ __singleton __nothrow void __regcall violation_callback(qexcept::q_rogueaccess e
 }
 
 
-__singleton std::int32_t main() noexcept {
+__singleton __nothrow std::int32_t __stackcall main() noexcept {
 
 	qtype_enchash::init_qtype_hash(&violation_callback); // assign our callback function to the namespace - all instances will refer to this callback if they detect a violation
 
@@ -439,12 +439,11 @@ Below is an example of how to mutate the executable sections of the PE and scram
 ```cpp
 #include <iostream>
 
-#include "qengine/engine/qengine.hpp"
+#include <qengine/engine/qengine.hpp>
 
 using namespace qengine;
 
-
-int main() {
+__singleton __nothrow std::int32_t __stackcall main() noexcept {
 
 	// You do not have to use all of the below functions, however analyze_executable_sections() must be called before morph_executable_sections(), and this must be called before manipulating headers as it depends on information from the headers to perform analyzation
 
@@ -520,11 +519,11 @@ Below is an example of importing a Windows API function using the import tool -
 ```cpp
 #include <iostream>
 
-#include "qengine/engine/qengine.hpp"
+#include <qengine/engine/qengine.hpp>
 
 using namespace qengine;
 
-int main() {
+__singleton __nothrow std::int32_t __stackcall main() noexcept {
 	// Return type is NTSTATUS (template parameter)
 	// Argument 1 is the library name (wide / ansi char depend on charset)
 	// Argument 2 is name of function or ordinal number
@@ -549,14 +548,14 @@ This is useful if you are calling the imported function in a loop or by any othe
 
 #include <iostream>
 
-#include "qengine/engine/qengine.hpp"
+#include <qengine/engine/qengine.hpp>
 
 using namespace qengine;
 
 /* First template argument specifies return type, subsequent template arguments specify argument type list in Left -> Right order for the fn being imported */
 static auto imp_MessageBoxA = qimport::qimp::get_fn_import_object<NTSTATUS, unsigned int, const char*, const char*, unsigned int>(L"user32.dll", "MessageBoxA");
 
-int main() {
+__singleton __nothrow std::int32_t __stackcall main() noexcept {
 
 	auto status = imp_MessageBoxA(NULL, "Hello World!", "Hello World!", NULL); // call MessageBoxA and assign it's status return to a local 
 
@@ -596,11 +595,11 @@ Below is an example application that initializes the hook-detection library, and
 ```cpp
 #include <iostream>
 
-#include "qengine/engine/qengine.hpp"
+#include <qengine/engine/qengine.hpp>
 
 using namespace qengine;
 
-__declspec(noinline) void __fastcall myimportantmethod(long long val) { // add junk code to our dummy method to increase it's size in memory to be viable for hook placement
+static __singleton __nothrow void __regcall myimportantmethod(long long val) noexcept { // add junk code to our dummy method to increase it's size in memory to be viable for hook placement
 
 	auto j = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 
@@ -609,7 +608,7 @@ __declspec(noinline) void __fastcall myimportantmethod(long long val) { // add j
 	std::cout << k << std::endl;
 }
 
-__declspec(noinline) void __cdecl callback(qexcept::q_fn_alteration alteration) {
+__singleton __nothrow void __stackcall callback(qexcept::q_fn_alteration alteration) noexcept {	//	callbacks are never inlined nor inlineable, therefore in this example i am explicitly declaring these things
 
 	if (alteration.id != qexcept::HOOK_DETECTED)
 		return;
@@ -626,7 +625,7 @@ __declspec(noinline) void __cdecl callback(qexcept::q_fn_alteration alteration) 
 	delete casted_arg; // thi was allocated with new, must be deleted inside callback to avoid memory leak
 }
 
-int main() {
+__singleton __nothrow std::int32_t __stackcall main() noexcept {
 
 	std::cout << "initializing hook scanner..." << std::endl;
 
