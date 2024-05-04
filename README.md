@@ -1,5 +1,3 @@
-![qengine](img/qengine_icon_256256.png)
-
 <p align="center">
   <img src="img/qengine_icon_256256.png" alt="qengine">
 </p>
