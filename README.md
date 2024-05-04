@@ -771,4 +771,7 @@ Feel free to submit any bugs with the library you find, and I encourage you to c
 
 # If you have any Questions or Inquiries regarding qengine, feel free to contact me on Discord:
 
-# 0xH4X0R#0390
+
+<p align="center" style="font-size: 20px; font-weight: bold;">
+                                         		0xH4X0R#0390 
+</p>
