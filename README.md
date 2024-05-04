@@ -753,6 +753,8 @@ D5NTFpffw9erwdEbnz7rymBhkgrRzfEigs
 
 </details>
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 I don't have much time on my hands at the moment. I am passionate about this project and can see it has a very bright future, however due to Economic / Employment issues, i spend nil time recently working on programming.
 
 Please submit any bugs with the library you find, and I encourage you to contribute to the project if you enjoy it or find any use for it.
