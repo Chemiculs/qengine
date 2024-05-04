@@ -713,6 +713,10 @@ Licenses for both respective libraries are included in the repo and must be uphe
 <details>
 <summary> Contributing to qengine </summary>
 
+qengine has a separate repository available, which contains the current official Research, Development, and Security testing tools available for the engine - 
+
+[ qengine Research & Development ](https://github.com/Chemiculs/qengine-researchanddevelopment)
+
 ## - Bug Testing / Debugging
 
 I am one person and only have so much time on my hands, and i have other projects i am working on + an unrelated IRL job. 
