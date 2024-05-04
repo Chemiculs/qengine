@@ -678,7 +678,8 @@ I have with the rather brief testing period I have subjected this to, been unabl
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Notes
+<details>
+<summary> Notes </summary>
 
 * You must target C++ 17 or higher as your language standard for the library to compile properly
 
@@ -690,9 +691,12 @@ I have with the rather brief testing period I have subjected this to, been unabl
 
 * While this library works for all of the compilers I will mention, MSVC produces the least complex control-flow graphing as a compiler and would be the easiest output to reverse-engineer (i'm talking to you M$), do yourself a favor and use LLVM / Clang or Intel's compiler
 
+</details>
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Credits
+<details>
+<summary> Credits </summary>
 
 * Huge thank you to the [Capstone Project](https://github.com/capstone-engine/capstone) for making many parts of this library feasible and providing an excellent disassembly library in general
 
@@ -702,9 +706,12 @@ I have with the rather brief testing period I have subjected this to, been unabl
 
 Licenses for both respective libraries are included in the repo and must be upheld.
 
+</details>
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# How you can help
+<details>
+<summary> Contributing to qengine </summary>
 
 ## - Bug Testing / Debugging
 
@@ -719,9 +726,14 @@ I wouldn't mind help to get there, so if you encounter any bugs please submit a 
 I'm always looking for new ideas for the future of this project, and most certainly could use some more experienced hands writing this code with me.
 If you think of something you would like to see in qengine, or would like to contribute in any way, my Discord is listed below.
 
-## - Donations
+</details>
 
-This is free software and i am not trying to charge you for it, however If you do wish to support the project or leave a thanks by donating, below are links from which you may donate if you so choose (And thank you so much if you do!) -
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<details>
+<summary> Donations </summary>
+
+This is free software and i am not trying to charge you for it, however If you do wish to support the project or leave a thanks by donating, below are links through which you may donate if you so choose (And thank you very much if you do!) -
 
 - [CashApp](https://cash.app/$0xH4X0R)
 
@@ -738,6 +750,8 @@ ltc1q0jqcsf83xjqx5x9cj2wag06hpwxc6sv3wczu6v
 
 - Dogecoin -
 D5NTFpffw9erwdEbnz7rymBhkgrRzfEigs
+
+</details>
 
 I don't have much time on my hands at the moment. I am passionate about this project and can see it has a very bright future, however due to Economic / Employment issues, i spend nil time recently working on programming.
 
