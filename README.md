@@ -446,6 +446,8 @@ Below is a screenshot of the resulting output from the above code:
 
 ![Output from hash check violation](img/callback_h.png)
 
+</details>
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
