@@ -14,6 +14,7 @@ qengine is a highly configurable, compiler-independent, and largely inlined bina
 <summary>What is qengine?</summary>
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 qengine is a polymorphic engine (meaning an engine that takes multiple forms/permutations) created for the Microsoft Windows operating system, designed to make reverse engineering significantly harder. 
 
 This project aims to make binaries appear as unique and unrecognizable as possible at each independent execution.
@@ -35,6 +36,8 @@ If anyone is able to contribute further detailed benchmarks if they have the tim
 
 <details>
 <summary>Features</summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 * Runtime stack polymorphism ( locals will be manipulated directly on the stack and appear differently each execution )
 
@@ -62,6 +65,8 @@ If anyone is able to contribute further detailed benchmarks if they have the tim
 
 <details>
 <summary>Setup / Usage</summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Option 1: Add to an existing project 
 
@@ -96,6 +101,8 @@ If anyone is able to contribute further detailed benchmarks if they have the tim
 <details>
 <summary> Demonstration of control-flow obfuscation </summary>
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 - "Hello, World!" application before polymorphic type -
 
@@ -114,6 +121,8 @@ If anyone is able to contribute further detailed benchmarks if they have the tim
 
 <details>
 <summary>Compiler-specific settings and output</summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 LLVM / CLANG and Intel Compiler always produce the best obfuscated output files and skewed control-flow graphs - Here are some examples all from the same basic application with only a main function (~20 lines of code using polymorphic types) :
 
@@ -143,6 +152,7 @@ instruct it to, while CLANG / Intel compilers are more likely to listen to user 
 <details>
 <summary> " Hello World! " source example </summary>
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Here is the obligatory "Hello World" for qengine:
 
@@ -180,6 +190,8 @@ __nothrow __singleton std::int32_t __stackcall main() noexcept {	//	explicit dec
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 <details>
 <summary> Macros, Constants, Redefinitions </summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 qengine contains some changes in representations to ideas and concepts in the C++ standard library, which were only intended to increase the readability of qengine in relation to the instructions prompted to the compiler.
 
@@ -232,7 +244,9 @@ __fpcall
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 <details>
-<summary> Windows SEH-based obfuscation and Cxx EH-based obfuscation </summary>
+<summary> Windows SEH-based obfuscation and CXX EH-based obfuscation </summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Windows SEH (Structured Exception Handling) and Cxx EH (Exception Handling) mechanisms have been exploitable for some time and are relatively well known amongst the blackhat community for being an effecient method of mediocre obfuscation which is entirely compiler-generated
 
@@ -275,6 +289,8 @@ This could be easily cracked, however may be more performance-biased than window
 <summary>Cumbersome conditional branching</summary>
 
 Here is an example of creating an obfuscated conditional branch that evaluates two variables for the specified condition, and executes the callback function corresponding to the outcome:
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ```cpp
 #include <iostream>
@@ -378,6 +394,8 @@ The 'patched' binary (which now fails to call the subroutine handling conditiona
 <details>
 <summary>Memory security, hash-checks, and event handlers</summary>
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 This library allows you to handle the event where a debugger or external tool attempts to illicitly write data to the stack/heap which corrupts/changes any of your variables. 
 
 Below I will give an example of how to create a callback function to handle this event, assign it to the library, and trigger it yourself to test it -
@@ -427,19 +445,6 @@ __singleton __nothrow std::int32_t __stackcall main() noexcept {
 Below is a screenshot of the resulting output from the above code:
 
 ![Output from hash check violation](img/callback_h.png)
-
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-## Hashing -
-
-To address the reliability of the hashing algorithm(s) used, I made a collision testing application that tests for collisions amongst all possible permutations of a 2-byte / 16-bit data set using both algorithms, the results are:
-
-* qhash32 algorithm (32-bit) - 0.0000000233% collision rate amongst 65535 unique 16-bit datasets (1 collision), which is the same rate as crc32
-
-* qhash64 algorithm (64-bit) - 0.0% collision rate amongst 65535 unique 16-bit datasets (0 collisions)
-  
-</details>
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -526,6 +531,8 @@ The INT3 paddings (0xCC arrays) are regions that the instruction pointer never h
 <details>
 <summary>Runtime imports</summary>
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 This library allows you to manually load API libraries at runtime and invoke them from their imported address - This prevents the names of the libraries and functions you are using in your application from being included on the import table of your PE.
 
 Below is an example of importing a Windows API function using the import tool -
@@ -585,6 +592,8 @@ __singleton __nothrow std::int32_t __stackcall main() noexcept {
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 <details>
 <summary> Inline hook scanning [ EXPIRIMENTAL ] </summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 People developing certain applications, namely Video Games, struggle with internal game cheats (DLL injection). These cheats (internal) and sometimes external cheats, will hook / detour certain important functions inside of the game/application in order to manipulate output and obtain an advantage or 'crack' certain features of the application.
 
@@ -695,6 +704,8 @@ I have with the rather brief testing period I have subjected this to, been unabl
 <details>
 <summary> Notes </summary>
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 * You must target C++ 17 or higher as your language standard for the library to compile properly
 
 * Manipulating header info and morphing executable section will likely break virtualization tools such as VMProtect and Themida as they rely on and / or manipulate this information themselves depending on user settings - I have not thoroughly tested this, however.
@@ -712,6 +723,8 @@ I have with the rather brief testing period I have subjected this to, been unabl
 <details>
 <summary> Credits </summary>
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 * Huge thank you to the [Capstone Project](https://github.com/capstone-engine/capstone) for making many parts of this library feasible and providing an excellent disassembly library in general
 
 * Another huge thank you to the [ASMJIT Project](https://github.com/asmjit/asmjit) for making machine code generation at runtime a feasible prospect for this project
@@ -728,6 +741,8 @@ Licenses for both respective libraries are included in the repo and must be uphe
 
 <details>
 <summary> Contributing to qengine </summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 qengine has a separate repository available, which contains the current official Research, Development, and Security testing tools available for the engine - 
 
@@ -752,6 +767,8 @@ If you think of something you would like to see in qengine, or would like to con
 
 <details>
 <summary> Donations </summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 This is free software and i am not trying to charge you for it, however If you do wish to support the project or leave a thanks by donating, below are links through which you may donate if you so choose (And thank you very much if you do!) -
 
