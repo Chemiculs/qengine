@@ -13,7 +13,7 @@ qengine is a highly configurable, compiler-independent, and largely inlined bina
 <details>
 <summary>What is qengine?</summary>
 
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 qengine is a polymorphic engine (meaning an engine that takes multiple forms/permutations) created for the Microsoft Windows operating system, designed to make reverse engineering significantly harder. 
 
 This project aims to make binaries appear as unique and unrecognizable as possible at each independent execution.
