@@ -30,7 +30,7 @@ This project aims to make binaries appear as unique and unrecognizable as possib
 
 * This library is (almost) fully inlined, employing a minimalist design and maximum performance + reliability, function inlining allows qengine to hide the actual code you are executing behind a wall of cryptographic instructions and protected memory regions
 
-qengine is very lightweight and likewise incurs a ~1.70% average performance loss vs. standard library / primitive types, likewise you will retain ~98.3% of your application's original performance ( on average ) while simultaneously generating thousands or even millions of junk instructions dilluting your meaningful compiled codebase 
+qengine is very lightweight and incurs a ~1.70% average performance loss vs. standard library / primitive types, likewise you will retain ~98.3% of your application's original performance ( on average ) while simultaneously generating thousands or even millions of junk instructions dilluting your meaningful compiled codebase 
 
 If anyone is able to contribute further detailed benchmarks if they have the time, this would be extremely helpful - my hands are tied when it comes to free time for this project at the moment.
 
@@ -103,18 +103,18 @@ If anyone is able to contribute further detailed benchmarks if they have the tim
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary> Demonstration of control-flow obfuscation </summary>
+<summary> Demonstration of Control-Flow Obfuscation </summary>
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-- "Hello, World!" application before polymorphic type -
+- "Hello, World!" application BEFORE Polymorphic type -
 
 ![IDA view of hello world C++ program before polymorphic engine](img/crypt2.png)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-- "Hello, World!" application after polymorphic type -
+- "Hello, World!" application AFTER Polymorphic type -
 (The control flow chart might be hard to see, but there are 1,000++ sub-routines in the compiled binary)
 
 ![IDA view of hello world C++ program after polymorphic engine](img/helloworld_ida.png)
@@ -124,7 +124,7 @@ If anyone is able to contribute further detailed benchmarks if they have the tim
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary>Compiler-specific settings and output</summary>
+<summary>Compiler-specific Settings and Output</summary>
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
@@ -154,9 +154,11 @@ instruct it to, while CLANG / Intel compilers are more likely to listen to user 
   
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 <details>
-<summary> " Hello World! " source example </summary>
+<summary> " Hello World! " Source / Example </summary>
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+[Link to below sample project](https://github.com/Chemiculs/qengine-researchanddevelopment/tree/master/qengine-hello-world)
 
 Here is the obligatory "Hello World" for qengine:
 
@@ -255,6 +257,8 @@ __fpcall
 Windows SEH (Structured Exception Handling) and Cxx EH (Exception Handling) mechanisms have been exploitable for some time and are relatively well known amongst the blackhat community for being an effecient method of mediocre obfuscation which is entirely compiler-generated
 
 ## Windows SEH-based obfuscation macro:
+
+[Link to below sample project](https://github.com/Chemiculs/qengine-researchanddevelopment/tree/master/qengine-windows-SEH-test)
  
 ```cpp
 //  Dereference a ring -3 pointer rather than call _CxxRaiseException() directly to avoid another import table entry
@@ -275,6 +279,8 @@ Windows SEH is actually a fairly effective obfuscation technique in it's own rig
 
 ## CXX-EH based obfuscation macro:
 
+[Link to below sample project](https://github.com/Chemiculs/qengine-researchanddevelopment/tree/master/qengine-CXX-EH-test)
+
 This is considerably less secure than native windows SEH-based obfuscation while probably being more performant in CPU-intensive applications, this is a (standard library) "Hello World!" application nested within CXX-EH mechanisms w/ debug and symbol / PDB info in IDA:
 
 ![EH Hello World Example, Part 1](img/CXXEH1.png)
@@ -290,7 +296,9 @@ This could be easily cracked, however may be more performance-biased than window
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary>Cumbersome conditional branching</summary>
+<summary>Cumbersome Conditional Branching</summary>
+
+[Link to below sample project](https://github.com/Chemiculs/qengine-researchanddevelopment/tree/master/qengine-conditional-branching-test)
 
 Here is an example of creating an obfuscated conditional branch that evaluates two variables for the specified condition, and executes the callback function corresponding to the outcome:
 
@@ -396,7 +404,9 @@ The 'patched' binary (which now fails to call the subroutine handling conditiona
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary>Memory security, hash-checks, and event handlers</summary>
+<summary>Memory-related Security, Hash-Checks, and Event Handlers</summary>
+
+[Link to below sample project](https://github.com/Chemiculs/qengine-researchanddevelopment/tree/master/qengine-memory-integrity-test)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -456,6 +466,10 @@ Below is a screenshot of the resulting output from the above code:
 
 <details>
 <summary>PE Header manipulation && Executable section polymorphism</summary>
+
+[Link to below sample project](https://github.com/Chemiculs/qengine-researchanddevelopment/tree/master/qengine-pe-manipulation-test)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 This library can disrupt the ability to signature scan the executable sections of the PE file in memory / from memory dumps, and corrupt + wipe the header information (it would need to be rebuilt to properly parse through PE-bear / CFF explorer etc.)
 
@@ -535,7 +549,9 @@ The INT3 paddings (0xCC arrays) are regions that the instruction pointer never h
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary>Runtime imports</summary>
+<summary>Runtime Imports</summary>
+
+[Link to below sample project](https://github.com/Chemiculs/qengine-researchanddevelopment/tree/master/qengine-runtime-imports-test)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -598,6 +614,8 @@ __singleton __nothrow std::int32_t __stackcall main() noexcept {
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 <details>
 <summary> Inline hook scanning [ EXPIRIMENTAL ] </summary>
+
+[Link to below sample project](https://github.com/Chemiculs/qengine-researchanddevelopment/tree/master/qengine-hookscanner-test)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
