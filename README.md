@@ -708,7 +708,9 @@ I have with the rather brief testing period I have subjected this to, been unabl
 
 * Another huge thank you to the [ASMJIT Project](https://github.com/asmjit/asmjit) for making machine code generation at runtime a feasible prospect for this project
 
-* [HadockKali](https://github.com/HadockKali) ( For helping with this Readme ) 
+* [HadockKali](https://github.com/HadockKali) ( For helping with this Readme )
+
+* My dear friend [slow-call](https://github.com/slow-call), whom has helped me with generating ideas for this project from it's inception and whom also helped create the beautiful icon which qengine now bears.
 
 Licenses for both respective libraries are included in the repo and must be upheld.
 
