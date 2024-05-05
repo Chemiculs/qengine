@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="img/qengine_icon_256256.png" alt="qengine">
+  <img src="https://i.imgur.com/vKDluJm.png" alt="qengine">
 </p>
 <p align="center" style="font-size: 20px; font-weight: bold;">
                                          		qengine 
