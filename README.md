@@ -59,8 +59,11 @@ If anyone is able to contribute further detailed benchmarks if they have the tim
 <details>
 <summary>Setup / Usage</summary>
 
+## Option 1: Add to an existing project 
 
-## Option 1: Add to an existing project
+
+### ** NOTE: THIS SETUP OPTION ONLY WORKS targetting the MSVC v143 compiler WITH the "Runtime Library" Option set to the default " Multi-threaded DLL (/MD) " build target, if you wish to target another compiler or Runtime Library version, you must compile qengine from source with the according settings applied.
+
 
 * Download the repository as a zip file, and extract the /src/qengine folder to your project's main / root directory
   
@@ -69,6 +72,7 @@ If anyone is able to contribute further detailed benchmarks if they have the tim
 * Include the qengine header file contained in <root_directory>/qengine/engine/
   
 * Add <root_directory>/qengine/extern/ to additional library directories (for linking)
+
 
 ## Option 2: Build from source
 
