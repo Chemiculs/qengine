@@ -1,5 +1,3 @@
-WARNING: THIS REPOSITORY IS BEING HEAVILY UPDATED FOR THE NEXT 12+ HOURS, DOWNLOADS MAY BE BROKEN / NON_FUNCTIONAL DURING THIS TIME IF NOT FROM AN OFFICIAL RELEASE
-
 <p align="center">
   <img src="https://i.imgur.com/vKDluJm.png" alt="qengine">
 </p>
@@ -76,7 +74,7 @@ If anyone is able to contribute further detailed benchmarks if they have the tim
 
 ### ** NOTE: This setup option only works out of the box targetting the MSVC v143 compiler WITH the "Runtime Library" Option set to the default " Multi-threaded DLL (/MD) " build target.
 
-if you wish to target another compiler or Runtime Library version, you MUST first compile [ASMJIT](https://github.com/asmjit/asmjit) and [Capstone](https://github.com/capstone-engine/capstone) from their source(s), with the according compiler settings from your target project applied and then replace the library files output with the according target output filename(s) in the /src/qengine/engine/extern/ folder :
+if you wish to target another compiler or Runtime Library version, you MUST first compile [ASMJIT](https://github.com/asmjit/asmjit) and [Capstone](https://github.com/capstone-engine/capstone) from their source(s), with the according compiler settings from your target project applied and then replace the library files output with the according target output filename(s) in the <root_directory>/qengine/engine/extern/ folder :
 
 ```cpp
 
