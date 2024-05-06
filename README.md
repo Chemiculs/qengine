@@ -612,7 +612,7 @@ __singleton  std::int32_t __stackcall main() noexcept {
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 <details>
-<summary> Inline hook scanning [ EXPIRIMENTAL ] </summary>
+<summary> Inline Function Hook Scanning </summary>
 
 [Link to below sample project](https://github.com/Chemiculs/qengine-researchanddevelopment/tree/master/qengine-hookscanner-test)
 
