@@ -39,6 +39,23 @@ If anyone is able to contribute further detailed benchmarks if they have the tim
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
+<summary> Is qengine Malicious? </summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+This is a perpective i have been approached with several times to date and will likely wind up being subject to criticism of eventually (should this project continue to thrive and advance, ofcourse).
+
+I will say that at the moment, while this engine is interesting and powerful, it is not really currently much more effective than many other ( Virtualized ) obfuscation software(s) with VMProtect and Themida likely out-doing qengine in terms of protection of original code by a decent margin.
+
+qengine employ's it's own methods of mutation and polymorphism similar to other Obfuscation / Virtualization software(s), albeit much less aggressively and entirely optionally, currently only in very specific manners as well which could probably be constrained to a heuristic trait detection eventually.
+
+If this project does however, if it has the potential which i believe it may, this could end up becoming something capable of significantly polluting the software ecosystem for a good while - whether thi ends up happening or not only time will tell.
+
+</details>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<details>
 <summary>Features</summary>
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
