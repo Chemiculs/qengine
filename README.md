@@ -8,7 +8,7 @@ WARNING: THIS REPOSITORY IS BEING HEAVILY UPDATED FOR THE NEXT 12+ HOURS, DOWNLO
 </p>
 
 
-qengine is a highly configurable, compiler-independent, and largely inlined binary obfuscation toolkit designed for C++ Standard 17 (or higher) Windows Applications. It offers ease of use while making your code extremely difficult to understand, especially for classic disassemblers like IDA.
+qengine is a Header-Only, Highly Configurable, Compiler-Independent, and largely Inlined Binary Obfuscation Toolkit designed for C++ Standard 17 (or higher) Applications for Microsoft Windows. qengine offers ease of use while making your code extremely difficult to understand, especially for classic disassemblers like IDA.
 
 If you are interested in security testing qengine, or downloading further example usage of qengine, please refer to the Research and Development Repository which contains official template projects for these purposes:
 
@@ -74,11 +74,27 @@ If anyone is able to contribute further detailed benchmarks if they have the tim
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Option 1: Add to an existing project 
+### ** NOTE: This setup option only works out of the box targetting the MSVC v143 compiler WITH the "Runtime Library" Option set to the default " Multi-threaded DLL (/MD) " build target.
 
+if you wish to target another compiler or Runtime Library version, you MUST first compile [ASMJIT](https://github.com/asmjit/asmjit) and [Capstone](https://github.com/capstone-engine/capstone) from their source(s), with the according compiler settings from your target project applied and then replace the library files output with the according target output filename(s) in the /src/qengine/engine/extern/ folder :
 
-### ** NOTE: THIS SETUP OPTION ONLY WORKS targetting the MSVC v143 compiler WITH the "Runtime Library" Option set to the default " Multi-threaded DLL (/MD) " build target, if you wish to target another compiler or Runtime Library version, you must compile qengine from source with the according settings applied.
+```cpp
 
+asmjit32.lib	//	32-bit release static library build for asmjit
+
+asmjit64.lib	//	32-bit release static library build for asmjit
+
+asmjit_d32.lib	//	32-bit release static library build for asmjit
+
+asmjit_d64.lib	//	32-bit release static library build for asmjit
+
+capstone32.lib	//	32-bit release static library build for capstone
+
+capstone64.lib	//	64-bit release static library build for capstone
+
+```
+
+IF you are simply using MSVC Compiler v143 or higher, you will NOT need to worry about the above step.
 
 * Download the repository as a zip file, and extract the /src/qengine folder to your project's main / root directory
   
@@ -87,18 +103,6 @@ If anyone is able to contribute further detailed benchmarks if they have the tim
 * Include the qengine header file contained in <root_directory>/qengine/engine/
   
 * Add <root_directory>/qengine/extern/ to additional library directories (for linking)
-
-
-## Option 2: Build from source
-
-* Download the repository as a zip file and extract the /vs/ folder
-  
-* Open the Project in Visual Studio 2022
-  
-* Change the compiler to whichever you prefer (the project is by default set to LLVM / CLANG), make sure C++ language standard is set to 17 or higher and build for desired architecture (leave build as a static library)
-  
-* Link against built libraries and include the qengine folder in your project
-(you MUST either extract asmjit_libs.zip in /qengine/extern/ as above or build ASMJIT from source for static library target)
 
 </details>
 
