@@ -49,7 +49,7 @@ I will say that at the moment, while this engine is interesting and powerful, it
 
 qengine employ's it's own methods of mutation and polymorphism similar to other Obfuscation / Virtualization software(s), albeit much less aggressively and entirely optionally, currently only in very specific manners as well which could probably be constrained to a heuristic trait detection eventually.
 
-If this project does however, if it has the potential which i believe it may, this could end up becoming something capable of significantly polluting the software ecosystem for a good while - whether thi ends up happening or not only time will tell.
+This project does however, if it has the potential which i believe it may, this could end up becoming something capable of significantly polluting the software ecosystem for a good while - whether this ends up happening or not only time will tell.
 
 </details>
 
