@@ -1,9 +1,15 @@
 /*
-Change
+
+qengine's main include header
+
 */
+
+#pragma region Header Guard
 
 #ifndef QENGINE_H
 #define QENGINE_H
+
+#pragma endregion
 
 #pragma region Imports
 
