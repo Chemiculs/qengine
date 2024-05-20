@@ -1165,7 +1165,7 @@ namespace qengine {
 	#pragma endregion
 		};
 
-		class qeh_uint64_t {
+		class qeh_uint64 {
 		private:
 
 	#pragma region Encrypted value
@@ -1178,7 +1178,7 @@ namespace qengine {
 
 	#pragma region CTOR
 
-			__compelled_inline __regcall qeh_uint64_t(const std::uint64_t value = 0) noexcept : _value(algo_t_inst(value)) {
+			__compelled_inline __regcall qeh_uint64(const std::uint64_t value = 0) noexcept : _value(algo_t_inst(value)) {
 
 				if (!is_init)
 					init_qtype_hash();
@@ -1205,107 +1205,107 @@ namespace qengine {
 
 	#pragma region Operators
 
-			__compelled_inline qeh_uint64_t __regcall operator+(const std::uint64_t value) const noexcept {
-				return qeh_uint64_t(algo_t_inst(_value.get()) + value);
+			__compelled_inline qeh_uint64 __regcall operator+(const std::uint64_t value) const noexcept {
+				return qeh_uint64(algo_t_inst(_value.get()) + value);
 			};
 
-			__compelled_inline qeh_uint64_t __regcall operator-(const std::uint64_t value) const noexcept {
-				return qeh_uint64_t(algo_t_inst(_value.get()) - value);
+			__compelled_inline qeh_uint64 __regcall operator-(const std::uint64_t value) const noexcept {
+				return qeh_uint64(algo_t_inst(_value.get()) - value);
 			}
 
-			__compelled_inline qeh_uint64_t __regcall operator/(const std::uint64_t value) const noexcept {
-				return qeh_uint64_t(algo_t_inst(_value.get()) / value);
+			__compelled_inline qeh_uint64 __regcall operator/(const std::uint64_t value) const noexcept {
+				return qeh_uint64(algo_t_inst(_value.get()) / value);
 			}
 
-			__compelled_inline qeh_uint64_t __regcall operator*(const std::uint64_t value) const noexcept {
-				return qeh_uint64_t(algo_t_inst(_value.get()) * value);
+			__compelled_inline qeh_uint64 __regcall operator*(const std::uint64_t value) const noexcept {
+				return qeh_uint64(algo_t_inst(_value.get()) * value);
 			}
 
-			__compelled_inline qeh_uint64_t __regcall operator&(const std::uint64_t value) const noexcept {
-				return qeh_uint64_t(algo_t_inst(_value.get()) & value);
+			__compelled_inline qeh_uint64 __regcall operator&(const std::uint64_t value) const noexcept {
+				return qeh_uint64(algo_t_inst(_value.get()) & value);
 			}
 
-			__compelled_inline qeh_uint64_t __regcall operator|(const std::uint64_t value) const noexcept {
-				return qeh_uint64_t(algo_t_inst(_value.get()) | value);
+			__compelled_inline qeh_uint64 __regcall operator|(const std::uint64_t value) const noexcept {
+				return qeh_uint64(algo_t_inst(_value.get()) | value);
 			}
 
-			__compelled_inline qeh_uint64_t __regcall operator%(const std::uint64_t value) const noexcept {
-				return qeh_uint64_t(algo_t_inst(_value.get()) % value);
+			__compelled_inline qeh_uint64 __regcall operator%(const std::uint64_t value) const noexcept {
+				return qeh_uint64(algo_t_inst(_value.get()) % value);
 			}
 
-			__compelled_inline qeh_uint64_t __regcall operator^(const std::uint64_t value) const noexcept {
-				return qeh_uint64_t(algo_t_inst(_value.get()) ^ value);
+			__compelled_inline qeh_uint64 __regcall operator^(const std::uint64_t value) const noexcept {
+				return qeh_uint64(algo_t_inst(_value.get()) ^ value);
 			}
 
-			__compelled_inline qeh_uint64_t __regcall operator<<(const std::uint64_t value) const noexcept {
-				return qeh_uint64_t(algo_t_inst(_value.get()) << value);
+			__compelled_inline qeh_uint64 __regcall operator<<(const std::uint64_t value) const noexcept {
+				return qeh_uint64(algo_t_inst(_value.get()) << value);
 			}
 
-			__compelled_inline qeh_uint64_t __regcall operator>>(const std::uint64_t value) const noexcept {
-				return qeh_uint64_t(algo_t_inst(_value.get()) >> value);
+			__compelled_inline qeh_uint64 __regcall operator>>(const std::uint64_t value) const noexcept {
+				return qeh_uint64(algo_t_inst(_value.get()) >> value);
 			}
 
-			__compelled_inline qeh_uint64_t& __regcall operator+=(const std::uint64_t value) noexcept {
+			__compelled_inline qeh_uint64& __regcall operator+=(const std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint64_t>(algo_t_inst(_value.get()) + value));
 				return *this;
 			}
 
-			__compelled_inline qeh_uint64_t& __regcall operator-=(const std::uint64_t value) noexcept {
+			__compelled_inline qeh_uint64& __regcall operator-=(const std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint64_t>(algo_t_inst(_value.get()) - value));
 				return *this;
 			}
 
-			__compelled_inline qeh_uint64_t& __stackcall operator++() noexcept {
+			__compelled_inline qeh_uint64& __stackcall operator++() noexcept {
 				operator+=(1ui64);
 				return *this;
 			}
 
-			__compelled_inline qeh_uint64_t& __stackcall operator--() noexcept {
+			__compelled_inline qeh_uint64& __stackcall operator--() noexcept {
 				operator-=(1ui64);
 				return *this;
 			}
 
-			__compelled_inline qeh_uint64_t& __regcall operator*=(const std::uint64_t value) noexcept {
+			__compelled_inline qeh_uint64& __regcall operator*=(const std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint64_t>(algo_t_inst(_value.get()) * value));
 				return *this;
 			}
 
-			__compelled_inline qeh_uint64_t& __regcall operator/=(const std::uint64_t value) noexcept {
+			__compelled_inline qeh_uint64& __regcall operator/=(const std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint64_t>(algo_t_inst(_value.get()) / value));
 				return *this;
 			}
 
-			__compelled_inline qeh_uint64_t& __regcall operator%=(const std::uint64_t value) noexcept {
+			__compelled_inline qeh_uint64& __regcall operator%=(const std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint64_t>(algo_t_inst(_value.get()) % value));
 				return *this;
 			}
 
-			__compelled_inline qeh_uint64_t& __regcall operator^=(const std::uint64_t value) noexcept {
+			__compelled_inline qeh_uint64& __regcall operator^=(const std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint64_t>(algo_t_inst(_value.get()) ^ value));
 				return *this;
 			}
 
-			__compelled_inline qeh_uint64_t& __regcall operator&=(const std::uint64_t value) noexcept {
+			__compelled_inline qeh_uint64& __regcall operator&=(const std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint64_t>(algo_t_inst(_value.get()) & value));
 				return *this;
 			}
 
-			__compelled_inline qeh_uint64_t& __regcall operator|=(const std::uint64_t value) noexcept {
+			__compelled_inline qeh_uint64& __regcall operator|=(const std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint64_t>(algo_t_inst(_value.get()) | value));
 				return *this;
 			}
 
-			__compelled_inline qeh_uint64_t& __regcall operator<<=(const std::uint64_t value) noexcept {
+			__compelled_inline qeh_uint64& __regcall operator<<=(const std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint64_t>(algo_t_inst(_value.get()) << value));
 				return *this;
 			}
 
-			__compelled_inline qeh_uint64_t& __regcall operator>>=(const std::uint64_t value) noexcept {
+			__compelled_inline qeh_uint64& __regcall operator>>=(const std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint64_t>(algo_t_inst(_value.get()) >> value));
 				return *this;
 			}
 
-			__compelled_inline qeh_uint64_t& __regcall operator=(const std::uint64_t value) noexcept {
+			__compelled_inline qeh_uint64& __regcall operator=(const std::uint64_t value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
@@ -1314,7 +1314,7 @@ namespace qengine {
 				return algo_t_inst(_value.get());
 			}
 
-			__compelled_inline __stackcall ~qeh_uint64_t() noexcept { }
+			__compelled_inline __stackcall ~qeh_uint64() noexcept { }
 	#pragma endregion
 		};
 
@@ -2454,6 +2454,23 @@ namespace qengine {
 		};
 
 	#pragma endregion
+
+	#pragma region Extended Typedefs
+
+	#ifdef _WIN64
+
+			typedef qeh_uint64 qeh_uintptr_t;
+			typedef qeh_uint64 qeh_size_t;
+
+	#else
+
+			typedef qeh_uint32 qeh_uintptr_t;
+			typedef qeh_uint32 qeh_size_t;
+
+	#endif
+
+	#pragma endregion
+
 	} 
 
 #pragma region Static Declarators

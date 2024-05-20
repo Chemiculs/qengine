@@ -15,7 +15,6 @@ qengine's main include header
 
 #pragma region qengine
 
-#include "polytypes/qtype_enc.hpp"
 #include  "hashtypes/qtype_hash.hpp"
 #include  "polyhashtypes/qtype_enchash.hpp"
 #include "../qhook/qhook.hpp"
@@ -24,6 +23,7 @@ qengine's main include header
 #include "../qmorph/qdisasm.hpp"
 #include "../qbase/qcallback.hpp"
 #include "../qbase/qexcept.hpp"
+#include "../qmemory/qptr_table.hpp"    
 
 #pragma endregion
 

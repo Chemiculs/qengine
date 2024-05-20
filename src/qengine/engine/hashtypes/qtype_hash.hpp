@@ -2842,6 +2842,22 @@ namespace qengine {
 
 	#pragma endregion
 
+	#pragma region Extended Typedefs
+
+	#ifdef _WIN64
+
+			typedef qh_uint64 qh_uintptr_t;
+			typedef qh_uint64 qh_size_t;
+
+	#else
+
+			typedef qh_uint32 qh_uintptr_t;
+			typedef qh_uint32 qh_size_t;
+
+	#endif
+
+	#pragma endregion
+
 	}  
 
 #pragma region Static Declarators
