@@ -1,3 +1,5 @@
 src/qengine/extern/asmjit32.lib
 src/qengine/extern/asmjit64.lib
 src/qengine/qmemory/qptr_table.hpp
+
+src/qengine_c_wrapper/

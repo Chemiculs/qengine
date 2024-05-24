@@ -1,14 +1,33 @@
+#pragma region Header Guard
+
 #ifndef QGEN_H
 #define QGEN_H
+
+#pragma endregion
+
+#pragma region Imports
 
 #include <random>
 #include <chrono>
 #include <climits>
 #include <unordered_map>
 
-#define ASMJIT_STATIC
+#pragma region qengine
 
+#include "../qbase/qdef.hpp"
+
+#pragma endregion
+
+#pragma region ASMJIT
+
+#define ASMJIT_STATIC
 #include "../extern/asmjit/asmjit.h"
+
+#pragma endregion
+
+#pragma endregion
+
+#pragma region Preprocessor
 
 #ifdef NDEBUG
 
@@ -35,6 +54,8 @@
 #endif
 
 #endif
+
+#pragma endregion
 
 namespace qengine {
 
