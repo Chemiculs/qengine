@@ -47,7 +47,7 @@ This is a perpective i have been approached with several times to date and will 
 
 I will say that at the moment, while this engine is interesting and powerful, it is not really currently much more effective than many other ( Virtualized ) obfuscation software(s) with VMProtect and Themida likely out-doing qengine in terms of protection of original code by a decent margin.
 
-qengine employ's it's own methods of mutation and polymorphism similar to other Obfuscation / Virtualization software(s), albeit much less aggressively and entirely optionally, currently only in very specific manners as well which could probably be constrained to a heuristic trait detection eventually.
+qengine employ's it's own methods of mutation and  similar to other Obfuscation / Virtualization software(s), albeit much less aggressively and entirely optionally, currently only in very specific manners as well which could probably be constrained to a heuristic trait detection eventually.
 
 This project does however, if it has the potential which i believe it may, this could end up becoming something capable of significantly polluting the software ecosystem for a good while - whether this ends up happening or not only time will tell.
 
@@ -60,10 +60,10 @@ This project does however, if it has the potential which i believe it may, this 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-* Runtime stack polymorphism ( locals will be manipulated directly on the stack and appear differently each execution )
+* Runtime stack  ( locals will be manipulated directly on the stack through compiler-generated junk code, and will be encrypted with a dynamic key and algorithm decided at each execution )
 
   
-* Runtime heap polymorphism ( dynamic polymorphic allocations are supported, not a big deal as above )
+* Runtime heap polymorphism ( polymorphic heap allocations are supported )
 
   
 * Thorough control-flow obfuscation ( depending on the compiler used and amount of library types used, the IDA control-flow graph will be extremely difficult to read and in many cases fail pseudo-code generation )
@@ -481,7 +481,7 @@ Below is a screenshot of the resulting output from the above code:
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary>PE Header manipulation && Executable section polymorphism</summary>
+<summary>PE Header Manipulation && Executable Section Polymorphism</summary>
 
 [Link to below sample project](https://github.com/Chemiculs/qengine-researchanddevelopment/tree/master/qengine-pe-manipulation-test)
 
