@@ -43,7 +43,7 @@ If anyone is able to contribute further detailed benchmarks if they have the tim
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-This is a perpective i have been approached with several times to date and will likely wind up being subject to criticism of eventually (should this project continue to thrive and advance, ofcourse).
+This is a perspective which i have been approached with several times to date and will likely wind up being subject to criticism of eventually (should this project continue to thrive and advance, ofcourse).
 
 I will say that at the moment, while this engine is interesting and powerful, it is not really currently much more effective than many other ( Virtualized ) obfuscation software(s) with VMProtect and Themida likely out-doing qengine in terms of protection of original code by a decent margin.
 
