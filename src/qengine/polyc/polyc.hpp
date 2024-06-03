@@ -142,7 +142,7 @@ namespace qengine {
 				/* run our third pass on the data */
 
 				for (auto z = 0; z < sizeof(_indice_map_z); ++z)
-					__XORBYTE__(data_c[i], _ciph_x[_indice_map_z[z]]);
+					__XORBYTE__(data_c[i], _ciph_z[_indice_map_z[z]]);
 
 			}
 		}
