@@ -115,7 +115,7 @@ namespace qengine {
 
 #pragma region Algorithm
 
-		static __singleton void __regcall algo(void* data, imut size_t length) noexcept {
+		static __compelled_inline void __regcall algo(void* data, imut size_t length) noexcept {
 
 			if (!_polyc_initialized)
 				polyc_init();
