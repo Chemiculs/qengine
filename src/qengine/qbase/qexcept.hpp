@@ -11,11 +11,12 @@ namespace qengine {
 #pragma region Interface Prototype
 
 		struct qexcept_t {
-			std::string message;
 
-			unsigned long id;
+			mut std::string message;
 
-			bool iserror;
+			mut std::uint32_t id;
+
+			mut bool iserror;
 		};
 
 #pragma endregion
@@ -25,6 +26,7 @@ namespace qengine {
 #pragma region Preset Exceptions
 
 		enum qexcept_mem_e {
+
 			BAD_ALLOC,
 
 			BAD_ACCESS,
@@ -42,7 +44,8 @@ namespace qengine {
 			FN_HASH_CORRUPT
 		};
 
-		static constexpr const char* qexcept_mem_str[8]{
+		static constexpr imut char* qexcept_mem_str[8]{
+
 			"BAD_ALLOC",
 
 			"BAD_ACCESS",
@@ -66,37 +69,48 @@ namespace qengine {
 
 		struct qexcept_mem : qexcept_t {
 
-			qexcept_mem(qexcept_mem_e except_t) {
+			__optimized_ctor qexcept_mem(qexcept_mem_e except_t) noexcept {
+
 				message = std::string(qexcept_mem_str[except_t]) ;
 
 				id = except_t;
 
+				// Unnecessary placeholder switch statement, but it's here for future expansion
+
 				switch (except_t) {
+
 					case BAD_ALLOC: {
+
 						iserror = true;
 						break;
 					}
 					case BAD_ACCESS: {
+
 						iserror = true;
 						break;
 					}
 					case ACCESS_VIOLATION: {
+
 						iserror = true;
 						break;
 					}
 					case THREAD_VIOLATION: {
+
 						iserror = true;
 						break;
 					}
 					case HOOK_DETECTED: {
+
 						iserror = true;
 						break;
 					}
 					case FN_HASH_CORRUPT: {
+
 						iserror = true;
 						break;
 					}
 					default: {
+
 						iserror = false;
 						break;
 					}

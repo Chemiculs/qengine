@@ -1,5 +1,9 @@
+#pragma region Header Guard
+
 #ifndef QCRITICAL_H
 #define QCRITICAL_H
+
+#pragma endregion
 
 #pragma region Imports
 
@@ -11,9 +15,15 @@
 
 #pragma endregion
 
+#pragma region Namespacing
+
 namespace qengine {
 
 	namespace qcritical {
+
+		#pragma endregion
+
+#pragma region Conditional Descriptor
 
 		enum condition_t {
 			GREATERTHAN,
@@ -24,7 +34,9 @@ namespace qengine {
 			EQUALTO
 		};
 
-#pragma region Generic Definitions
+#pragma endregion
+
+#pragma region Templatized Comparison Scramblers
 
 		/* scrambled comparison operation */
 		template<typename T, typename T2>
@@ -222,7 +234,16 @@ namespace qengine {
 		}
 
 #pragma endregion
+
+#pragma region Namespacing
+
 	}
 }
 
+#pragma endregion
+
+#pragma region Header Guard
+
 #endif
+
+#pragma endregion

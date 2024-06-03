@@ -6,48 +6,50 @@
 *********************************************************************
 */
 
+#pragma region Header Guard
+
 #ifndef POLYC_H
 #define POLYC_H
+
+#pragma endregion
+
+#pragma region Imports
+
+#pragma region std
 
 #include <chrono>
 #include <random>
 #include <string>
 
+#pragma endregion 
+
+#pragma region qengine
+
 #include "../qbase/qdef.hpp"
+
+#pragma endregion 
+
+#pragma endregion
+
+#pragma region Preprocessor
 
 #pragma optimize("", on)
 #pragma inline_depth(255)
 #pragma inline_recursion(on)
 
+#pragma endregion 
+
+#pragma region Namespacing
+
 namespace qengine {
 
 	namespace polyc {
-		/*
-		/****************************************************************************************
-		*                                                                                      *
-		*  seeding arrays to be initialized at runtime if intended use is polymorphism		   *
-		*  static initialization if this is to be maintained outside of runtime / reproducable *
-		*                                                                                      *
-		*****************************************************************************************
-		*/
-
-#pragma region Algorithm Constants
-
-#ifdef _WIN64
-
-#define BIT_ACTIVE 0x0101010101010101ui64
-
-#else
-
-#define BIT_ACTIVE 0x01010101ui32
-
-#endif
 
 #pragma endregion
 
 #pragma region Other Globals
 
-		extern bool initialized;
+		extern bool _polyc_initialized;
 
 #pragma endregion
 
@@ -55,21 +57,21 @@ namespace qengine {
 
 #pragma region Raw arrays
 
-		extern uintptr_t ciph_x[16];
+		extern std::uintptr_t _ciph_x[16];
 
-		extern uintptr_t ciph_y[16];
+		extern std::uintptr_t _ciph_y[16];
 
-		extern uintptr_t ciph_z[16];
+		extern std::uintptr_t _ciph_z[16];
 
 #pragma endregion
 
 #pragma region Used Indice(s)
 
-		extern unsigned char indice_map_x[4];
+		extern std::uint8_t _indice_map_x[4];
 
-		extern unsigned char indice_map_y[8];
+		extern std::uint8_t _indice_map_y[8];
 
-		extern unsigned char indice_map_z[12];
+		extern std::uint8_t _indice_map_z[12];
 
 #pragma endregion
 
@@ -78,49 +80,44 @@ namespace qengine {
 #pragma region Pseudo-Ctor
 
 		static __compelled_inline void __stackcall polyc_init() noexcept {
-			/* fill our seeding values */
+
+			/* provide a proper pseudo-random seed to rand()  */
+
+			srand(
+				std::chrono::high_resolution_clock().now().time_since_epoch().count() ^ BYTE_SET ^ QCTIME_SEED // inverse the bits, then xor by compile-time constant
+			);
+
+			/* Determine algorithm key value(s) */
 
 			for (auto i = 0; i < 16; ++i) {
 
-				auto time_n = std::chrono::high_resolution_clock::now();
-				ciph_x[i] = ((static_cast<uintptr_t>(time_n.time_since_epoch().count() % __RAND__(16, 1)) ^ 16ui64) * 1024) | BIT_ACTIVE;
+				_ciph_x[i] = ((static_cast<uintptr_t>(std::chrono::high_resolution_clock::now().time_since_epoch().count() % __RAND__(16, 1)) ^ 16ui64) * 1024) | BIT_SCRAMBLE;
 
-				time_n = std::chrono::high_resolution_clock::now();
-				ciph_y[i] = ((static_cast<uintptr_t>(time_n.time_since_epoch().count() % __RAND__(32, 1)) ^ 32ui64) * 2048) | BIT_ACTIVE;
+				_ciph_y[i] = ((static_cast<uintptr_t>(std::chrono::high_resolution_clock::now().time_since_epoch().count() % __RAND__(32, 1)) ^ 32ui64) * 2048) | BIT_SCRAMBLE;
 
-				time_n = std::chrono::high_resolution_clock::now();
-				ciph_z[i] = ((static_cast<uintptr_t>(time_n.time_since_epoch().count() % __RAND__(64, 1)) ^ 64ui64) * 4096) | BIT_ACTIVE;
+				_ciph_z[i] = ((static_cast<uintptr_t>(std::chrono::high_resolution_clock::now().time_since_epoch().count() % __RAND__(64, 1)) ^ 64ui64) * 4096) | BIT_SCRAMBLE;
 			}
-
-			/* seed for our indice maps */
-			auto time_n_s = std::chrono::high_resolution_clock::now();
-
 			/* determine indices in x vector to use */
 
-			for (auto x = 0; x < sizeof(indice_map_x); ++x)
-				indice_map_x[x] = static_cast<char>(time_n_s.time_since_epoch().count() % static_cast<char>(__RAND__(16, 1)));
+			for (auto x = 0; x < sizeof(_indice_map_x); ++x)
+				_indice_map_x[x] = static_cast<char>(std::chrono::high_resolution_clock::now().time_since_epoch().count() % static_cast<char>(__RAND__(16, 1)));
 
-			/* determine indices in y vector to use + refresh seed */
-			time_n_s = std::chrono::high_resolution_clock::now();
+			for (auto y = 0; y < sizeof(_indice_map_y); ++y)
+				_indice_map_y[y] = static_cast<char>(std::chrono::high_resolution_clock::now().time_since_epoch().count() % static_cast<char>(__RAND__(16, 1)));
 
-			for (auto y = 0; y < sizeof(indice_map_y); ++y)
-				indice_map_y[y] = static_cast<char>(time_n_s.time_since_epoch().count() % static_cast<char>(__RAND__(16, 1)));
+			for (auto z = 0; z < sizeof(_indice_map_z); ++z)
+				_indice_map_z[z] = static_cast<char>(std::chrono::high_resolution_clock::now().time_since_epoch().count() % static_cast<char>(__RAND__(16, 1)));
 
-			/* determine indices in z vector to use + refresh seed*/
-			time_n_s = std::chrono::high_resolution_clock::now();
-
-			for (auto z = 0; z < sizeof(indice_map_z); ++z)
-				indice_map_z[z] = static_cast<char>(time_n_s.time_since_epoch().count() % static_cast<char>(__RAND__(16, 1)));
-
-			initialized = true;
+			_polyc_initialized = true;
 		}
 
 #pragma endregion
 
 #pragma region Algorithm
 
-		static __compelled_inline void __regcall algo(void* data, const size_t length) noexcept {
-			if (!initialized)
+		static __singleton void __regcall algo(void* data, imut size_t length) noexcept {
+
+			if (!_polyc_initialized)
 				polyc_init();
 
 			/* obvious */
@@ -134,28 +131,28 @@ namespace qengine {
 			for (auto i = 0; i < length; ++i) {
 				/* run our first pass on the data */
 
-				for (auto x = 0; x < sizeof(indice_map_x); ++x)
-					__XORWORD__(data_c[i], ciph_x[indice_map_x[x]]);
+				for (auto x = 0; x < sizeof(_indice_map_x); ++x)
+					__XORBYTE__(data_c[i], _ciph_x[_indice_map_x[x]]);
 
 				/* run our second pass on the data */
 
-				for (auto y = 0; y < sizeof(indice_map_y); ++y)
-					__XORWORD__(data_c[i], ciph_y[indice_map_y[y]]);
+				for (auto y = 0; y < sizeof(_indice_map_y); ++y)
+					__XORBYTE__(data_c[i], _ciph_y[_indice_map_y[y]]);
 
 				/* run our third pass on the data */
 
-				for (auto z = 0; z < sizeof(indice_map_z); ++z)
-					__XORWORD__(data_c[i], ciph_x[indice_map_z[z]]);
+				for (auto z = 0; z < sizeof(_indice_map_z); ++z)
+					__XORBYTE__(data_c[i], _ciph_x[_indice_map_z[z]]);
 
 			}
 		}
 
-		static __compelled_inline void* __regcall algo_inst(void* data, size_t length) noexcept {
+		static __compelled_inline void* __regcall algo_inst(void* data, imut std::size_t length) noexcept {
 
 			if (!data || !length)
 				return nullptr;
 
-			auto copy_d = reinterpret_cast<std::uint8_t*>(malloc(length));
+			auto* copy_d = reinterpret_cast<std::uint8_t*>(malloc(length));
 
 			if (!copy_d)
 				return nullptr;
@@ -183,12 +180,12 @@ namespace qengine {
 			return copy_t;
 		}
 
-		static __compelled_inline void __stackcall algo_str(const std::string& data) noexcept {
+		static __compelled_inline void __stackcall algo_str(imut std::string& data) noexcept {
 
 			algo(const_cast<char*>(data.c_str()), data.length());
 		}
 
-		static __compelled_inline std::string __stackcall algo_str_inst(const std::string& data) noexcept {
+		static __compelled_inline std::string __stackcall algo_str_inst(imut std::string& data) noexcept {
 
 			std::string copy_str = data;
 
@@ -197,12 +194,12 @@ namespace qengine {
 			return copy_str;
 		}
 
-		static __compelled_inline void __stackcall algo_wstr(const std::wstring& data) noexcept {
+		static __compelled_inline void __stackcall algo_wstr(imut std::wstring& data) noexcept {
 
 			algo(const_cast<wchar_t*>(data.c_str()), data.size() * sizeof(wchar_t));
 		}
 
-		static __compelled_inline std::wstring __stackcall algo_wstr_inst(const std::wstring& data) noexcept {
+		static __compelled_inline std::wstring __stackcall algo_wstr_inst(imut std::wstring& data) noexcept {
 
 			std::wstring copy_wstr = data;
 
@@ -212,24 +209,36 @@ namespace qengine {
 		}
 
 #pragma endregion
+
+#pragma region Namespacing
+
 	}
-
-	/* have our globals been initialized? */
-	bool polyc::initialized = false;
-
-	/*Singleton instance(s) of seeding values*/
-	std::uintptr_t polyc::ciph_x[16]{};
-
-	std::uintptr_t polyc::ciph_y[16]{};
-
-	std::uintptr_t polyc::ciph_z[16]{};
-
-	std::uint8_t polyc::indice_map_x[4]{};
-
-	std::uint8_t polyc::indice_map_y[8]{};
-
-	std::uint8_t polyc::indice_map_z[12]{};
 
 }
 
+#pragma endregion
+
+#pragma region Static Declarators
+
+	/* have our globals been _polyc_initialized? */
+	bool qengine::polyc::_polyc_initialized = false;
+	/*Singleton instance(s) of seeding values*/
+	std::uintptr_t qengine::polyc::_ciph_x[16]{};
+
+	std::uintptr_t qengine::polyc::_ciph_y[16]{};
+
+	std::uintptr_t qengine::polyc::_ciph_z[16]{};
+
+	std::uint8_t qengine::polyc::_indice_map_x[4]{};
+
+	std::uint8_t qengine::polyc::_indice_map_y[8]{};
+
+	std::uint8_t qengine::polyc::_indice_map_z[12]{};
+
+#pragma endregion
+
+#pragma region Header Guard
+
 #endif
+
+#pragma endregion

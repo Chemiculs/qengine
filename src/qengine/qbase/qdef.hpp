@@ -35,6 +35,39 @@
 
 #pragma endregion
 
+#pragma region Ulterior Qualifier References
+
+// I like Rust's syntax as far as the explicit qualifiers go, it's more verbose but it's explicit and clear
+
+typedef void* c_void;
+
+#define mut mutable
+
+#define imut const
+
+// It gets old retyping noexcept
+#define nex noexcept
+
+#pragma endregion
+
+#pragma region Polyc Algorithm Constants
+
+static imut constexpr auto QCTIME_SEED = __TIME__[7];
+
+#define BYTE_SET 0xFFui8
+
+#ifdef _WIN64
+
+#define BIT_SCRAMBLE 0x0101010101010101ui64
+
+#else
+
+#define BIT_SCRAMBLE 0x01010101ui32
+
+#endif
+
+#pragma endregion
+
 #pragma region Method Attributes
 
 #define __singleton __declspec(noinline)	//	we only want a single instance of the declared fn per object, not instanced copies into caller functions
@@ -84,32 +117,27 @@
 
 #pragma endregion 
 
-	namespace qengine {
-
-#pragma region Constants
-
-#ifndef NULL
-
-#define NULL 0x0
-
-#endif
-
-#pragma endregion
-
-
 #pragma region Macros
 
 #define __RAND__(_high_, _low_) rand() % _high_ + _low_ 
 
 #pragma region Memory
 
-#define __XORWORD__(_word_, _xval_) for(auto _m_ = 0; _m_ < sizeof(decltype(_xval_)); ++_m_) _word_ ^= reinterpret_cast<unsigned char*>(&_xval_)[_m_] 
+#pragma region Old Code Backup
+
+// backup of old and deprecated __XORWORD__ macro
+// #define __XORWORD__(_word_, _xval_) for(auto _m_ = 0; _m_ < sizeof(decltype(_xval_)); ++_m_) _word_ ^= reinterpret_cast<std::uint8_t*>(&_xval_)[_m_] 
+
+#pragma endregion
+
+#define __XORBYTE__(_byte_, _xval_) for(auto _m_ = 0; _m_ < sizeof(decltype(_xval_)); ++_m_) _byte_ ^= reinterpret_cast<std::uint8_t*>(&_xval_)[_m_] 
+
+#define __XORWORD__(_word_, __xval__) for(auto _n_ = 0; _n_ < sizeof(decltype(_word_)); ++_n_) __XORBYTE__( reinterpret_cast<std::uint8_t*>(&_word_)[_n_], __xval__ )
 
 #pragma endregion
 
 #pragma endregion
 
 #pragma endregion
-	}
 
 #endif

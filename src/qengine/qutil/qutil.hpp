@@ -24,11 +24,17 @@
 
 #pragma endregion
 
+#pragma region Namespacing
+
 namespace qengine {
 
 	namespace qutil {
 
-		__singleton std::wstring __regcall get_hex_wstring(const void* data, const std::size_t length) noexcept {
+#pragma endregion
+
+#pragma region (UNUSED) Binary -> Hex String Conversion
+
+		static __compelled_inline std::wstring __regcall get_hex_wstring(const void* data, const std::size_t length) noexcept {
 			std::wstringstream ss;
 			ss << std::hex << std::uppercase;
 
@@ -38,7 +44,7 @@ namespace qengine {
 			return ss.str();
 		}
 
-		__singleton std::string __regcall get_hex_string(const void* data, const int length) noexcept {
+		static __compelled_inline std::string __regcall get_hex_string(const void* data, const int length) noexcept {
 			std::stringstream ss;
 			ss << std::hex << std::uppercase;
 
@@ -47,8 +53,30 @@ namespace qengine {
 
 			return ss.str();
 		}
-	}
 
+#pragma endregion
+
+#pragma region Safe Integer Inversion
+
+		template <typename T>
+		static __compelled_inline T inverse_integral_t(T value) noexcept {
+
+			static_assert(std::is_integral<T>::value && std::is_signed<T>::value, "T must be a signed integral type");
+
+			return -value;
+		}
+
+#pragma endregion
+
+#pragma region Namespacing
+
+	}
 }
 
+#pragma endregion
+
+#pragma region Header Guard
+
 #endif
+
+#pragma endregion

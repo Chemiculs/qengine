@@ -1,3 +1,4 @@
+
 /*
 
 qengine's main include header
@@ -20,10 +21,10 @@ qengine's main include header
 #include  "polyhashtypes/qtype_enchash.hpp"
 #include "../qhook/qhook.hpp"
 #include  "../qutil/qcritical.hpp"
-#include "../qimport/qimport.hpp"
 #include "../qmorph/qdisasm.hpp"
 #include "../qbase/qcallback.hpp"
 #include "../qbase/qexcept.hpp"  
+#include "../qbase/qstr.hpp"
 
 #pragma endregion
 

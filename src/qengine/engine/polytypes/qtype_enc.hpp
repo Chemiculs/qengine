@@ -27,7 +27,6 @@
 
 #pragma region qengine
 
-#include "../../qbase/qdef.hpp"
 #include "../../polyc/polyc.hpp"
 
 #pragma endregion
@@ -146,7 +145,7 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__optimized_ctor qe_int8(const std::int8_t value = 0) noexcept {
+			__optimized_ctor qe_int8(imut std::int8_t value = 0) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -154,11 +153,11 @@ namespace qengine{
 
 	#pragma region Accessors
 
-			__compelled_inline std::int8_t __stackcall get() const noexcept {
+			__compelled_inline std::int8_t __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
-			__compelled_inline void __regcall set(const std::int8_t value) noexcept {
+			__compelled_inline void __regcall set(imut std::int8_t value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -166,102 +165,102 @@ namespace qengine{
 
 	#pragma region Operators
 
-			__compelled_inline qe_int8 __regcall operator+(const std::int8_t value) const noexcept {
+			__compelled_inline qe_int8 __regcall operator+(imut std::int8_t value) imut noexcept {
 				return qe_int8(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_int8 __regcall operator-(const std::int8_t value) const noexcept {
+			__compelled_inline qe_int8 __regcall operator-(imut std::int8_t value) imut noexcept {
 				return qe_int8(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator/(const std::int8_t value) const noexcept {
+			__compelled_inline qe_int8 __regcall operator/(imut std::int8_t value) imut noexcept {
 				return qe_int8(algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator*(const std::int8_t value) const noexcept {
+			__compelled_inline qe_int8 __regcall operator*(imut std::int8_t value) imut noexcept {
 				return qe_int8(algo_t_inst(_value) * value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator&(const std::int8_t value) const noexcept {
+			__compelled_inline qe_int8 __regcall operator&(imut std::int8_t value) imut noexcept {
 				return qe_int8(algo_t_inst(_value) & value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator|(const std::int8_t value) const noexcept {
+			__compelled_inline qe_int8 __regcall operator|(imut std::int8_t value) imut noexcept {
 				return qe_int8(algo_t_inst(_value) | value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator%(const std::int8_t value) const noexcept {
+			__compelled_inline qe_int8 __regcall operator%(imut std::int8_t value) imut noexcept {
 				return qe_int8(algo_t_inst(_value) % value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator^(const std::int8_t value) const noexcept {
+			__compelled_inline qe_int8 __regcall operator^(imut std::int8_t value) imut noexcept {
 				return qe_int8(algo_t_inst(_value) ^ value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator<<(const std::int8_t value) const noexcept {
+			__compelled_inline qe_int8 __regcall operator<<(imut std::int8_t value) imut noexcept {
 				return qe_int8(algo_t_inst(_value) << value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator>>(const std::int8_t value) const noexcept {
+			__compelled_inline qe_int8 __regcall operator>>(imut std::int8_t value) imut noexcept {
 				return qe_int8(algo_t_inst(_value) >> value);
 			}
 
-			__compelled_inline qe_int8& __regcall operator+=(const std::int8_t value) {
+			__compelled_inline qe_int8& __regcall operator+=(imut std::int8_t value) {
 				this->_value = algo_t_inst(static_cast<std::int8_t>(algo_t_inst(_value) + value));
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator-=(const std::int8_t value) noexcept {
+			__compelled_inline qe_int8& __regcall operator-=(imut std::int8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int8_t>(algo_t_inst(_value) - value));
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator*=(const std::int8_t value) noexcept {
+			__compelled_inline qe_int8& __regcall operator*=(imut std::int8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int8_t>(algo_t_inst(_value) * value));
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator/=(const std::int8_t value) noexcept {
+			__compelled_inline qe_int8& __regcall operator/=(imut std::int8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int8_t>(algo_t_inst(_value) / value));
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator%=(const std::int8_t value) noexcept {
+			__compelled_inline qe_int8& __regcall operator%=(imut std::int8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int8_t>(algo_t_inst(_value) % value));
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator^=(const std::int8_t value) noexcept {
+			__compelled_inline qe_int8& __regcall operator^=(imut std::int8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int8_t>(algo_t_inst(_value) ^ value));
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator&=(const std::int8_t value) noexcept {
+			__compelled_inline qe_int8& __regcall operator&=(imut std::int8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int8_t>(algo_t_inst(_value) & value));
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator|=(const std::int8_t value) noexcept {
+			__compelled_inline qe_int8& __regcall operator|=(imut std::int8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int8_t>(algo_t_inst(_value) | value));
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator<<=(const std::int8_t value) noexcept {
+			__compelled_inline qe_int8& __regcall operator<<=(imut std::int8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int8_t>(algo_t_inst(_value) << value));
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator>>=(const std::int8_t value) noexcept {
+			__compelled_inline qe_int8& __regcall operator>>=(imut std::int8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int8_t>(algo_t_inst(_value) >> value));
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator=(const std::int8_t value) noexcept {
+			__compelled_inline qe_int8& __regcall operator=(imut std::int8_t value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __regcall operator std::int8_t() const noexcept {
+			__compelled_inline __regcall operator std::int8_t() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
@@ -282,7 +281,7 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__optimized_ctor qe_uint8(const std::uint8_t value = 0) noexcept {
+			__optimized_ctor qe_uint8(imut std::uint8_t value = 0) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -290,11 +289,11 @@ namespace qengine{
 
 	#pragma region Accessors
 
-			__compelled_inline std::uint8_t __stackcall get() const noexcept {
+			__compelled_inline std::uint8_t __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
-			__compelled_inline void __regcall set(const std::uint8_t value) noexcept {
+			__compelled_inline void __regcall set(imut std::uint8_t value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -302,102 +301,102 @@ namespace qengine{
 
 	#pragma region Operators
 
-			__compelled_inline qe_uint8 __regcall operator+(const std::uint8_t value) const noexcept {
+			__compelled_inline qe_uint8 __regcall operator+(imut std::uint8_t value) imut noexcept {
 				return qe_uint8(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_uint8 __regcall operator-(const std::uint8_t value) const noexcept {
+			__compelled_inline qe_uint8 __regcall operator-(imut std::uint8_t value) imut noexcept {
 				return qe_uint8(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator/(const std::uint8_t value) const noexcept {
+			__compelled_inline qe_uint8 __regcall operator/(imut std::uint8_t value) imut noexcept {
 				return qe_uint8(algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator*(const std::uint8_t value) const noexcept {
+			__compelled_inline qe_uint8 __regcall operator*(imut std::uint8_t value) imut noexcept {
 				return qe_uint8(algo_t_inst(_value) * value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator&(const std::uint8_t value) const noexcept {
+			__compelled_inline qe_uint8 __regcall operator&(imut std::uint8_t value) imut noexcept {
 				return qe_uint8(algo_t_inst(_value) & value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator|(const std::uint8_t value) const noexcept {
+			__compelled_inline qe_uint8 __regcall operator|(imut std::uint8_t value) imut noexcept {
 				return qe_uint8(algo_t_inst(_value) | value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator%(const std::uint8_t value) const noexcept {
+			__compelled_inline qe_uint8 __regcall operator%(imut std::uint8_t value) imut noexcept {
 				return qe_uint8(algo_t_inst(_value) % value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator^(const std::uint8_t value) const noexcept {
+			__compelled_inline qe_uint8 __regcall operator^(imut std::uint8_t value) imut noexcept {
 				return qe_uint8(algo_t_inst(_value) ^ value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator<<(const std::uint8_t value) const noexcept {
+			__compelled_inline qe_uint8 __regcall operator<<(imut std::uint8_t value) imut noexcept {
 				return qe_uint8(algo_t_inst(_value) << value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator>>(const std::uint8_t value) const noexcept {
+			__compelled_inline qe_uint8 __regcall operator>>(imut std::uint8_t value) imut noexcept {
 				return qe_uint8(algo_t_inst(_value) >> value);
 			}
 
-			__compelled_inline qe_uint8& __regcall operator+=(const std::uint8_t value) noexcept {
+			__compelled_inline qe_uint8& __regcall operator+=(imut std::uint8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint8_t>(algo_t_inst(_value) + value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator-=(const std::uint8_t value) noexcept {
+			__compelled_inline qe_uint8& __regcall operator-=(imut std::uint8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint8_t>(algo_t_inst(_value) - value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator*=(const std::uint8_t value) noexcept {
+			__compelled_inline qe_uint8& __regcall operator*=(imut std::uint8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint8_t>(algo_t_inst(_value) * value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator/=(const std::uint8_t value) noexcept {
+			__compelled_inline qe_uint8& __regcall operator/=(imut std::uint8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint8_t>(algo_t_inst(_value) / value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator%=(const std::uint8_t value) noexcept {
+			__compelled_inline qe_uint8& __regcall operator%=(imut std::uint8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint8_t>(algo_t_inst(_value) % value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator^=(const std::uint8_t value) noexcept {
+			__compelled_inline qe_uint8& __regcall operator^=(imut std::uint8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint8_t>(algo_t_inst(_value) ^ value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator&=(const std::uint8_t value) noexcept {
+			__compelled_inline qe_uint8& __regcall operator&=(imut std::uint8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint8_t>(algo_t_inst(_value) & value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator|=(const std::uint8_t value) noexcept {
+			__compelled_inline qe_uint8& __regcall operator|=(imut std::uint8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint8_t>(algo_t_inst(_value) | value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator<<=(const std::uint8_t value) noexcept {
+			__compelled_inline qe_uint8& __regcall operator<<=(imut std::uint8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint8_t>(algo_t_inst(_value) << value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator>>=(const std::uint8_t value) noexcept {
+			__compelled_inline qe_uint8& __regcall operator>>=(imut std::uint8_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint8_t>(algo_t_inst(_value) >> value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator=(const std::uint8_t value) noexcept {
+			__compelled_inline qe_uint8& __regcall operator=(imut std::uint8_t value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __regcall operator std::uint8_t() const noexcept {
+			__compelled_inline __regcall operator std::uint8_t() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
@@ -422,7 +421,7 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__optimized_ctor qe_int16(const std::int16_t value = 0) noexcept {
+			__optimized_ctor qe_int16(imut std::int16_t value = 0) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -430,11 +429,11 @@ namespace qengine{
 
 	#pragma region Accessors
 
-			__compelled_inline std::int16_t __stackcall get() const noexcept {
+			__compelled_inline std::int16_t __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
-			__compelled_inline void __regcall set(const std::int16_t value) noexcept {
+			__compelled_inline void __regcall set(imut std::int16_t value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -442,102 +441,102 @@ namespace qengine{
 
 	#pragma region Operators
 
-			__compelled_inline qe_int16 __regcall operator+(const std::int16_t value) const noexcept {
+			__compelled_inline qe_int16 __regcall operator+(imut std::int16_t value) imut noexcept {
 				return qe_int16(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_int16 __regcall operator-(const std::int16_t value) const noexcept {
+			__compelled_inline qe_int16 __regcall operator-(imut std::int16_t value) imut noexcept {
 				return qe_int16(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator/(const std::int16_t value) const noexcept {
+			__compelled_inline qe_int16 __regcall operator/(imut std::int16_t value) imut noexcept {
 				return qe_int16(algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator*(const std::int16_t value) const noexcept {
+			__compelled_inline qe_int16 __regcall operator*(imut std::int16_t value) imut noexcept {
 				return qe_int16(algo_t_inst(_value) * value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator&(const std::int16_t value) const noexcept {
+			__compelled_inline qe_int16 __regcall operator&(imut std::int16_t value) imut noexcept {
 				return qe_int16(algo_t_inst(_value) & value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator|(const std::int16_t value) const noexcept {
+			__compelled_inline qe_int16 __regcall operator|(imut std::int16_t value) imut noexcept {
 				return qe_int16(algo_t_inst(_value) | value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator%(const std::int16_t value) const noexcept {
+			__compelled_inline qe_int16 __regcall operator%(imut std::int16_t value) imut noexcept {
 				return qe_int16(algo_t_inst(_value) % value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator^(const std::int16_t value) const noexcept {
+			__compelled_inline qe_int16 __regcall operator^(imut std::int16_t value) imut noexcept {
 				return qe_int16(algo_t_inst(_value) ^ value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator<<(const std::int16_t value) const noexcept {
+			__compelled_inline qe_int16 __regcall operator<<(imut std::int16_t value) imut noexcept {
 				return qe_int16(algo_t_inst(_value) << value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator>>(const std::int16_t value) const noexcept {
+			__compelled_inline qe_int16 __regcall operator>>(imut std::int16_t value) imut noexcept {
 				return qe_int16(algo_t_inst(_value) >> value);
 			}
 
-			__compelled_inline qe_int16& __regcall operator+=(const std::int16_t value) noexcept {
+			__compelled_inline qe_int16& __regcall operator+=(imut std::int16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int16_t>(algo_t_inst(_value) + value));
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator-=(const std::int16_t value) noexcept {
+			__compelled_inline qe_int16& __regcall operator-=(imut std::int16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int16_t>(algo_t_inst(_value) - value));
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator*=(const std::int16_t value) noexcept {
+			__compelled_inline qe_int16& __regcall operator*=(imut std::int16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int16_t>(algo_t_inst(_value) * value));
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator/=(const std::int16_t value) noexcept {
+			__compelled_inline qe_int16& __regcall operator/=(imut std::int16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int16_t>(algo_t_inst(_value) / value));
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator%=(const std::int16_t value) noexcept {
+			__compelled_inline qe_int16& __regcall operator%=(imut std::int16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int16_t>(algo_t_inst(_value) % value));
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator^=(const std::int16_t value) noexcept {
+			__compelled_inline qe_int16& __regcall operator^=(imut std::int16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int16_t>(algo_t_inst(_value) ^ value));
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator&=(const std::int16_t value) noexcept {
+			__compelled_inline qe_int16& __regcall operator&=(imut std::int16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int16_t>(algo_t_inst(_value) & value));
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator|=(const std::int16_t value) noexcept {
+			__compelled_inline qe_int16& __regcall operator|=(imut std::int16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int16_t>(algo_t_inst(_value) | value));
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator<<=(const std::int16_t value) noexcept {
+			__compelled_inline qe_int16& __regcall operator<<=(imut std::int16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int16_t>(algo_t_inst(_value) << value));
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator>>=(const std::int16_t value) noexcept {
+			__compelled_inline qe_int16& __regcall operator>>=(imut std::int16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::int16_t>(algo_t_inst(_value) >> value));
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator=(const std::int16_t value) noexcept {
+			__compelled_inline qe_int16& __regcall operator=(imut std::int16_t value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __regcall operator std::int16_t() const noexcept {
+			__compelled_inline __regcall operator std::int16_t() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
@@ -558,7 +557,7 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__optimized_ctor qe_uint16(const std::uint16_t value = 0) noexcept {
+			__optimized_ctor qe_uint16(imut std::uint16_t value = 0) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -566,11 +565,11 @@ namespace qengine{
 
 	#pragma region Accessors
 
-			__compelled_inline std::uint16_t __stackcall get() const noexcept {
+			__compelled_inline std::uint16_t __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
-			__compelled_inline void __regcall set(const std::uint16_t value) noexcept {
+			__compelled_inline void __regcall set(imut std::uint16_t value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -578,102 +577,102 @@ namespace qengine{
 
 	#pragma region Operators
 
-			__compelled_inline qe_uint16 __regcall operator+(const std::uint16_t value) const noexcept {
+			__compelled_inline qe_uint16 __regcall operator+(imut std::uint16_t value) imut noexcept {
 				return qe_uint16(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_uint16 __regcall operator-(const std::uint16_t value) const noexcept {
+			__compelled_inline qe_uint16 __regcall operator-(imut std::uint16_t value) imut noexcept {
 				return qe_uint16(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator/(const std::uint16_t value) const noexcept {
+			__compelled_inline qe_uint16 __regcall operator/(imut std::uint16_t value) imut noexcept {
 				return qe_uint16(algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator*(const std::uint16_t value) const noexcept {
+			__compelled_inline qe_uint16 __regcall operator*(imut std::uint16_t value) imut noexcept {
 				return qe_uint16(algo_t_inst(_value) * value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator&(const std::uint16_t value) const noexcept {
+			__compelled_inline qe_uint16 __regcall operator&(imut std::uint16_t value) imut noexcept {
 				return qe_uint16(algo_t_inst(_value) & value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator|(const std::uint16_t value) const noexcept {
+			__compelled_inline qe_uint16 __regcall operator|(imut std::uint16_t value) imut noexcept {
 				return qe_uint16(algo_t_inst(_value) | value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator%(const std::uint16_t value) const noexcept {
+			__compelled_inline qe_uint16 __regcall operator%(imut std::uint16_t value) imut noexcept {
 				return qe_uint16(algo_t_inst(_value) % value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator^(const std::uint16_t value) const noexcept {
+			__compelled_inline qe_uint16 __regcall operator^(imut std::uint16_t value) imut noexcept {
 				return qe_uint16(algo_t_inst(_value) ^ value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator<<(const std::uint16_t value) const noexcept {
+			__compelled_inline qe_uint16 __regcall operator<<(imut std::uint16_t value) imut noexcept {
 				return qe_uint16(algo_t_inst(_value) << value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator>>(const std::uint16_t value) const noexcept {
+			__compelled_inline qe_uint16 __regcall operator>>(imut std::uint16_t value) imut noexcept {
 				return qe_uint16(algo_t_inst(_value) >> value);
 			}
 
-			__compelled_inline qe_uint16& __regcall operator+=(const std::uint16_t value) noexcept {
+			__compelled_inline qe_uint16& __regcall operator+=(imut std::uint16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint16_t>(algo_t_inst(_value) + value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator-=(const std::uint16_t value) noexcept {
+			__compelled_inline qe_uint16& __regcall operator-=(imut std::uint16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint16_t>(algo_t_inst(_value) - value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator*=(const std::uint16_t value) noexcept {
+			__compelled_inline qe_uint16& __regcall operator*=(imut std::uint16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint16_t>(algo_t_inst(_value) * value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator/=(const std::uint16_t value) noexcept {
+			__compelled_inline qe_uint16& __regcall operator/=(imut std::uint16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint16_t>(algo_t_inst(_value) / value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator%=(const std::uint16_t value) noexcept {
+			__compelled_inline qe_uint16& __regcall operator%=(imut std::uint16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint16_t>(algo_t_inst(_value) % value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator^=(const std::uint16_t value) noexcept {
+			__compelled_inline qe_uint16& __regcall operator^=(imut std::uint16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint16_t>(algo_t_inst(_value) ^ value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator&=(const std::uint16_t value) noexcept {
+			__compelled_inline qe_uint16& __regcall operator&=(imut std::uint16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint16_t>(algo_t_inst(_value) & value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator|=(const std::uint16_t value) noexcept {
+			__compelled_inline qe_uint16& __regcall operator|=(imut std::uint16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint16_t>(algo_t_inst(_value) | value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator<<=(const std::uint16_t value) noexcept {
+			__compelled_inline qe_uint16& __regcall operator<<=(imut std::uint16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint16_t>(algo_t_inst(_value) << value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator>>=(const std::uint16_t value) noexcept {
+			__compelled_inline qe_uint16& __regcall operator>>=(imut std::uint16_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<std::uint16_t>(algo_t_inst(_value) >> value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator=(const std::uint16_t value) noexcept {
+			__compelled_inline qe_uint16& __regcall operator=(imut std::uint16_t value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __regcall operator std::uint16_t() const noexcept {
+			__compelled_inline __regcall operator std::uint16_t() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
@@ -698,7 +697,7 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__optimized_ctor qe_int32(const int value = 0) noexcept {
+			__optimized_ctor qe_int32(imut int value = 0) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -706,11 +705,11 @@ namespace qengine{
 
 	#pragma region Accessors
 
-			__compelled_inline int __stackcall get() const noexcept {
+			__compelled_inline int __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
-			__compelled_inline void __regcall set(const int value) noexcept {
+			__compelled_inline void __regcall set(imut int value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -718,102 +717,102 @@ namespace qengine{
 
 	#pragma region Operators
 
-			__compelled_inline qe_int32 __regcall operator+(const int value) const noexcept {
+			__compelled_inline qe_int32 __regcall operator+(imut int value) imut noexcept {
 				return qe_int32(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_int32 __regcall operator-(const int value) const noexcept {
+			__compelled_inline qe_int32 __regcall operator-(imut int value) imut noexcept {
 				return qe_int32(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator/(const int value) const noexcept {
+			__compelled_inline qe_int32 __regcall operator/(imut int value) imut noexcept {
 				return qe_int32(algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator*(const int value) const noexcept {
+			__compelled_inline qe_int32 __regcall operator*(imut int value) imut noexcept {
 				return qe_int32(algo_t_inst(_value) * value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator&(const int value) const noexcept {
+			__compelled_inline qe_int32 __regcall operator&(imut int value) imut noexcept {
 				return qe_int32(algo_t_inst(_value) & value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator|(const int value) const noexcept {
+			__compelled_inline qe_int32 __regcall operator|(imut int value) imut noexcept {
 				return qe_int32(algo_t_inst(_value) | value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator%(const int value) const noexcept {
+			__compelled_inline qe_int32 __regcall operator%(imut int value) imut noexcept {
 				return qe_int32(algo_t_inst(_value) % value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator^(const int value) const noexcept {
+			__compelled_inline qe_int32 __regcall operator^(imut int value) imut noexcept {
 				return qe_int32(algo_t_inst(_value) ^ value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator<<(const int value) const noexcept {
+			__compelled_inline qe_int32 __regcall operator<<(imut int value) imut noexcept {
 				return qe_int32(algo_t_inst(_value) << value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator>>(const int value) const noexcept {
+			__compelled_inline qe_int32 __regcall operator>>(imut int value) imut noexcept {
 				return qe_int32(algo_t_inst(_value) >> value);
 			}
 
-			__compelled_inline qe_int32& __regcall operator+=(const int value) noexcept {
+			__compelled_inline qe_int32& __regcall operator+=(imut int value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) + value));
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator-=(const int value) noexcept {
+			__compelled_inline qe_int32& __regcall operator-=(imut int value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) - value));
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator*=(const int value) noexcept {
+			__compelled_inline qe_int32& __regcall operator*=(imut int value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) * value));
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator/=(const int value) noexcept {
+			__compelled_inline qe_int32& __regcall operator/=(imut int value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) / value));
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator%=(const int value) noexcept {
+			__compelled_inline qe_int32& __regcall operator%=(imut int value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) % value));
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator^=(const int value) noexcept {
+			__compelled_inline qe_int32& __regcall operator^=(imut int value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) ^ value));
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator&=(const int value) noexcept {
+			__compelled_inline qe_int32& __regcall operator&=(imut int value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) & value));
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator|=(const int value) noexcept {
+			__compelled_inline qe_int32& __regcall operator|=(imut int value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) | value));
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator<<=(const int value) noexcept {
+			__compelled_inline qe_int32& __regcall operator<<=(imut int value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) << value));
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator>>=(const int value) noexcept {
+			__compelled_inline qe_int32& __regcall operator>>=(imut int value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) >> value));
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator=(const int value) noexcept {
+			__compelled_inline qe_int32& __regcall operator=(imut int value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __regcall operator int() const noexcept {
+			__compelled_inline __regcall operator int() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
@@ -834,7 +833,7 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__optimized_ctor qe_uint32(const std::uint32_t value = 0) noexcept {
+			__optimized_ctor qe_uint32(imut std::uint32_t value = 0) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -842,7 +841,7 @@ namespace qengine{
 
 	#pragma region Accessors
 
-			__compelled_inline std::uint32_t __stackcall get() const noexcept {
+			__compelled_inline std::uint32_t __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
@@ -854,102 +853,102 @@ namespace qengine{
 
 	#pragma region Operators
 
-			__compelled_inline qe_uint32 __regcall operator+(const std::uint32_t value) const noexcept {
+			__compelled_inline qe_uint32 __regcall operator+(imut std::uint32_t value) imut noexcept {
 				return qe_uint32(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_uint32 __regcall operator-(const std::uint32_t value) const noexcept {
+			__compelled_inline qe_uint32 __regcall operator-(imut std::uint32_t value) imut noexcept {
 				return qe_uint32(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator/(const std::uint32_t value) const noexcept {
+			__compelled_inline qe_uint32 __regcall operator/(imut std::uint32_t value) imut noexcept {
 				return qe_uint32(algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator*(const std::uint32_t value) const noexcept {
+			__compelled_inline qe_uint32 __regcall operator*(imut std::uint32_t value) imut noexcept {
 				return qe_uint32(algo_t_inst(_value) * value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator&(const std::uint32_t value) const noexcept {
+			__compelled_inline qe_uint32 __regcall operator&(imut std::uint32_t value) imut noexcept {
 				return qe_uint32(algo_t_inst(_value) & value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator|(const std::uint32_t value) const noexcept {
+			__compelled_inline qe_uint32 __regcall operator|(imut std::uint32_t value) imut noexcept {
 				return qe_uint32(algo_t_inst(_value) | value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator%(const std::uint32_t value) const noexcept {
+			__compelled_inline qe_uint32 __regcall operator%(imut std::uint32_t value) imut noexcept {
 				return qe_uint32(algo_t_inst(_value) % value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator^(const std::uint32_t value) const noexcept {
+			__compelled_inline qe_uint32 __regcall operator^(imut std::uint32_t value) imut noexcept {
 				return qe_uint32(algo_t_inst(_value) ^ value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator<<(const std::uint32_t value) const noexcept {
+			__compelled_inline qe_uint32 __regcall operator<<(imut std::uint32_t value) imut noexcept {
 				return qe_uint32(algo_t_inst(_value) << value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator>>(const std::uint32_t value) const noexcept {
+			__compelled_inline qe_uint32 __regcall operator>>(imut std::uint32_t value) imut noexcept {
 				return qe_uint32(algo_t_inst(_value) >> value);
 			}
 
-			__compelled_inline qe_uint32& __regcall operator+=(const std::uint32_t value) noexcept {
+			__compelled_inline qe_uint32& __regcall operator+=(imut std::uint32_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) + value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator-=(const std::uint32_t value) noexcept {
+			__compelled_inline qe_uint32& __regcall operator-=(imut std::uint32_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) - value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator*=(const std::uint32_t value) noexcept {
+			__compelled_inline qe_uint32& __regcall operator*=(imut std::uint32_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) * value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator/=(const std::uint32_t value) noexcept {
+			__compelled_inline qe_uint32& __regcall operator/=(imut std::uint32_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) / value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator%=(const std::uint32_t value) noexcept {
+			__compelled_inline qe_uint32& __regcall operator%=(imut std::uint32_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) % value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator^=(const std::uint32_t value) noexcept {
+			__compelled_inline qe_uint32& __regcall operator^=(imut std::uint32_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) ^ value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator&=(const std::uint32_t value) noexcept {
+			__compelled_inline qe_uint32& __regcall operator&=(imut std::uint32_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) & value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator|=(const std::uint32_t value) noexcept {
+			__compelled_inline qe_uint32& __regcall operator|=(imut std::uint32_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) | value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator<<=(const std::uint32_t value) noexcept {
+			__compelled_inline qe_uint32& __regcall operator<<=(imut std::uint32_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) << value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator>>=(const std::uint32_t value) noexcept {
+			__compelled_inline qe_uint32& __regcall operator>>=(imut std::uint32_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) >> value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator=(const std::uint32_t value) noexcept {
+			__compelled_inline qe_uint32& __regcall operator=(imut std::uint32_t value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __regcall operator std::uint32_t() const noexcept {
+			__compelled_inline __regcall operator std::uint32_t() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
@@ -974,7 +973,7 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__optimized_ctor qe_int64(const std::int64_t value = 0) noexcept {
+			__optimized_ctor qe_int64(imut std::int64_t value = 0) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -982,11 +981,11 @@ namespace qengine{
 
 	#pragma region Accessors
 
-			__compelled_inline std::int64_t __stackcall get() const noexcept {
+			__compelled_inline std::int64_t __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
-			__compelled_inline void __regcall set(const std::int64_t value) noexcept {
+			__compelled_inline void __regcall set(imut std::int64_t value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -994,102 +993,102 @@ namespace qengine{
 
 	#pragma region Operators
 
-			__compelled_inline qe_int64 __regcall operator+(const std::int64_t value) const noexcept {
+			__compelled_inline qe_int64 __regcall operator+(imut std::int64_t value) imut noexcept {
 				return qe_int64(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_int64 __regcall operator-(const std::int64_t value) const noexcept {
+			__compelled_inline qe_int64 __regcall operator-(imut std::int64_t value) imut noexcept {
 				return qe_int64(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator/(const std::int64_t value) const noexcept {
+			__compelled_inline qe_int64 __regcall operator/(imut std::int64_t value) imut noexcept {
 				return qe_int64(algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator*(const std::int64_t value) const noexcept {
+			__compelled_inline qe_int64 __regcall operator*(imut std::int64_t value) imut noexcept {
 				return qe_int64(algo_t_inst(_value) * value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator&(const std::int64_t value) const noexcept {
+			__compelled_inline qe_int64 __regcall operator&(imut std::int64_t value) imut noexcept {
 				return qe_int64(algo_t_inst(_value) & value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator|(const std::int64_t value) const noexcept {
+			__compelled_inline qe_int64 __regcall operator|(imut std::int64_t value) imut noexcept {
 				return qe_int64(algo_t_inst(_value) | value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator%(const std::int64_t value) const noexcept {
+			__compelled_inline qe_int64 __regcall operator%(imut std::int64_t value) imut noexcept {
 				return qe_int64(algo_t_inst(_value) % value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator^(const std::int64_t value) const noexcept {
+			__compelled_inline qe_int64 __regcall operator^(imut std::int64_t value) imut noexcept {
 				return qe_int64(algo_t_inst(_value) ^ value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator<<(const std::int64_t value) const noexcept {
+			__compelled_inline qe_int64 __regcall operator<<(imut std::int64_t value) imut noexcept {
 				return qe_int64(algo_t_inst(_value) << value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator>>(const std::int64_t value) const noexcept {
+			__compelled_inline qe_int64 __regcall operator>>(imut std::int64_t value) imut noexcept {
 				return qe_int64(algo_t_inst(_value) >> value);
 			}
 
-			__compelled_inline qe_int64& __regcall operator+=(const std::int64_t value) noexcept {
+			__compelled_inline qe_int64& __regcall operator+=(imut std::int64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) + value));
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator-=(const std::int64_t value) noexcept {
+			__compelled_inline qe_int64& __regcall operator-=(imut std::int64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) - value));
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator*=(const std::int64_t value) noexcept {
+			__compelled_inline qe_int64& __regcall operator*=(imut std::int64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) * value));
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator/=(const std::int64_t value) noexcept {
+			__compelled_inline qe_int64& __regcall operator/=(imut std::int64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) / value));
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator%=(const std::int64_t value) noexcept {
+			__compelled_inline qe_int64& __regcall operator%=(imut std::int64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) % value));
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator^=(const std::int64_t value) noexcept {
+			__compelled_inline qe_int64& __regcall operator^=(imut std::int64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) ^ value));
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator&=(const std::int64_t value) noexcept {
+			__compelled_inline qe_int64& __regcall operator&=(imut std::int64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) & value));
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator|=(const std::int64_t value) noexcept {
+			__compelled_inline qe_int64& __regcall operator|=(imut std::int64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) | value));
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator<<=(const std::int64_t value) noexcept {
+			__compelled_inline qe_int64& __regcall operator<<=(imut std::int64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) << value));
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator>>=(const std::int64_t value) noexcept {
+			__compelled_inline qe_int64& __regcall operator>>=(imut std::int64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) >> value));
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator=(const std::int64_t value) noexcept {
+			__compelled_inline qe_int64& __regcall operator=(imut std::int64_t value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator std::int64_t() const noexcept {
+			__compelled_inline __stackcall operator std::int64_t() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
@@ -1110,7 +1109,7 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__optimized_ctor qe_uint64(const std::uint64_t value = 0) {
+			__optimized_ctor qe_uint64(imut std::uint64_t value = 0) {
 				_value = algo_t_inst(value);
 			}
 
@@ -1118,11 +1117,11 @@ namespace qengine{
 
 	#pragma region Accessors
 
-			__compelled_inline std::uint64_t __stackcall get() const noexcept {
+			__compelled_inline std::uint64_t __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
-			__compelled_inline void __regcall set(const std::uint64_t value) noexcept {
+			__compelled_inline void __regcall set(imut std::uint64_t value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -1130,102 +1129,102 @@ namespace qengine{
 
 	#pragma region Operators
 
-			__compelled_inline qe_uint64 __regcall operator+(const std::uint64_t value) const noexcept {
+			__compelled_inline qe_uint64 __regcall operator+(imut std::uint64_t value) imut noexcept {
 				return qe_uint64(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_uint64 __regcall operator-(const std::uint64_t value) const noexcept {
+			__compelled_inline qe_uint64 __regcall operator-(imut std::uint64_t value) imut noexcept {
 				return qe_uint64(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator/(const std::uint64_t value) const noexcept {
+			__compelled_inline qe_uint64 __regcall operator/(imut std::uint64_t value) imut noexcept {
 				return qe_uint64(algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator*(const std::uint64_t value) const noexcept {
+			__compelled_inline qe_uint64 __regcall operator*(imut std::uint64_t value) imut noexcept {
 				return qe_uint64(algo_t_inst(_value) * value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator&(const std::uint64_t value) const noexcept {
+			__compelled_inline qe_uint64 __regcall operator&(imut std::uint64_t value) imut noexcept {
 				return qe_uint64(algo_t_inst(_value) & value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator|(const std::uint64_t value) const noexcept {
+			__compelled_inline qe_uint64 __regcall operator|(imut std::uint64_t value) imut noexcept {
 				return qe_uint64(algo_t_inst(_value) | value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator%(const std::uint64_t value) const noexcept {
+			__compelled_inline qe_uint64 __regcall operator%(imut std::uint64_t value) imut noexcept {
 				return qe_uint64(algo_t_inst(_value) % value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator^(const std::uint64_t value) const noexcept {
+			__compelled_inline qe_uint64 __regcall operator^(imut std::uint64_t value) imut noexcept {
 				return qe_uint64(algo_t_inst(_value) ^ value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator<<(const std::uint64_t value) const noexcept {
+			__compelled_inline qe_uint64 __regcall operator<<(imut std::uint64_t value) imut noexcept {
 				return qe_uint64(algo_t_inst(_value) << value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator>>(const std::uint64_t value) const noexcept {
+			__compelled_inline qe_uint64 __regcall operator>>(imut std::uint64_t value) imut noexcept {
 				return qe_uint64(algo_t_inst(_value) >> value);
 			}
 
-			__compelled_inline qe_uint64& __regcall operator+=(const std::uint64_t value) noexcept {
+			__compelled_inline qe_uint64& __regcall operator+=(imut std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) + value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator-=(const std::uint64_t value) noexcept {
+			__compelled_inline qe_uint64& __regcall operator-=(imut std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) - value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator*=(const std::uint64_t value) noexcept {
+			__compelled_inline qe_uint64& __regcall operator*=(imut std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) * value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator/=(const std::uint64_t value) noexcept {
+			__compelled_inline qe_uint64& __regcall operator/=(imut std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) / value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator%=(const std::uint64_t value) noexcept {
+			__compelled_inline qe_uint64& __regcall operator%=(imut std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) % value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator^=(const std::uint64_t value) noexcept {
+			__compelled_inline qe_uint64& __regcall operator^=(imut std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) ^ value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator&=(const std::uint64_t value) noexcept {
+			__compelled_inline qe_uint64& __regcall operator&=(imut std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) & value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator|=(const std::uint64_t value) noexcept {
+			__compelled_inline qe_uint64& __regcall operator|=(imut std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) | value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator<<=(const std::uint64_t value) noexcept {
+			__compelled_inline qe_uint64& __regcall operator<<=(imut std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) << value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator>>=(const std::uint64_t value) noexcept {
+			__compelled_inline qe_uint64& __regcall operator>>=(imut std::uint64_t value) noexcept {
 				this->_value = algo_t_inst(static_cast<int>(algo_t_inst(_value) >> value));
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator=(const std::uint64_t value) noexcept {
+			__compelled_inline qe_uint64& __regcall operator=(imut std::uint64_t value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator std::uint64_t() const noexcept {
+			__compelled_inline __stackcall operator std::uint64_t() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
@@ -1250,7 +1249,7 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__compelled_inline __fpcall qe_float(const float value) noexcept {
+			__compelled_inline __fpcall qe_float(imut float value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -1258,11 +1257,11 @@ namespace qengine{
 
 	#pragma region Accessors
 
-			__compelled_inline float __stackcall get() const noexcept {
+			__compelled_inline float __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
-			__compelled_inline void __fpcall set(const float value) noexcept {
+			__compelled_inline void __fpcall set(imut float value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -1270,48 +1269,48 @@ namespace qengine{
 
 	#pragma region Operators
 
-			__compelled_inline qe_float __fpcall operator+(const float value) const noexcept {
+			__compelled_inline qe_float __fpcall operator+(imut float value) imut noexcept {
 				return qe_float(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_float __fpcall operator-(const float value) const noexcept {
+			__compelled_inline qe_float __fpcall operator-(imut float value) imut noexcept {
 				return qe_float(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_float __fpcall operator/(const float value) const noexcept {
+			__compelled_inline qe_float __fpcall operator/(imut float value) imut noexcept {
 				return qe_float(algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_float __fpcall operator*(const float value) const noexcept {
+			__compelled_inline qe_float __fpcall operator*(imut float value) imut noexcept {
 				return qe_float(algo_t_inst(_value) * value);
 			}
 
-			__compelled_inline qe_float& __fpcall operator+=(const float value) noexcept {
+			__compelled_inline qe_float& __fpcall operator+=(imut float value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) + value);
 				return *this;
 			}
 
-			__compelled_inline qe_float& __fpcall operator-=(const float value) noexcept {
+			__compelled_inline qe_float& __fpcall operator-=(imut float value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) - value);
 				return *this;
 			}
 
-			__compelled_inline qe_float& __fpcall operator*=(const float value) noexcept {
+			__compelled_inline qe_float& __fpcall operator*=(imut float value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) * value);
 				return *this;
 			}
 
-			__compelled_inline qe_float& __fpcall operator/=(const float value) noexcept {
+			__compelled_inline qe_float& __fpcall operator/=(imut float value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) / value);
 				return *this;
 			}
 
-			__compelled_inline qe_float& __fpcall operator=(const float value) noexcept {
+			__compelled_inline qe_float& __fpcall operator=(imut float value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator float() const noexcept {
+			__compelled_inline __stackcall operator float() imut noexcept {
 				return get();
 			}
 
@@ -1332,7 +1331,7 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__compelled_inline __fpcall qe_double(const double value = static_cast<double>(0.0f)) {
+			__compelled_inline __fpcall qe_double(imut double value = static_cast<double>(0.0f)) {
 				_value = algo_t_inst(value);
 			}
 
@@ -1340,11 +1339,11 @@ namespace qengine{
 
 	#pragma region Accessors
 
-			__compelled_inline double __stackcall get() const noexcept {
+			__compelled_inline double __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
 
-			__compelled_inline void __fpcall set(const double value) noexcept {
+			__compelled_inline void __fpcall set(imut double value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -1352,48 +1351,48 @@ namespace qengine{
 
 	#pragma region Operators
 
-			__compelled_inline qe_double __fpcall operator+(const double value) const noexcept {
+			__compelled_inline qe_double __fpcall operator+(imut double value) imut noexcept {
 				return qe_double(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_double __fpcall operator-(const double value) const noexcept {
+			__compelled_inline qe_double __fpcall operator-(imut double value) imut noexcept {
 				return qe_double(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_double __fpcall operator/(const double value) const noexcept {
+			__compelled_inline qe_double __fpcall operator/(imut double value) imut noexcept {
 				return qe_double(algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_double __fpcall operator*(const double value) const noexcept {
+			__compelled_inline qe_double __fpcall operator*(imut double value) imut noexcept {
 				return qe_double(algo_t_inst(_value) * value);
 			}
 
-			__compelled_inline qe_double& __fpcall operator+=(const double value) noexcept {
+			__compelled_inline qe_double& __fpcall operator+=(imut double value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) + value);
 				return *this;
 			}
 
-			__compelled_inline qe_double& __fpcall operator-=(const double value) noexcept {
+			__compelled_inline qe_double& __fpcall operator-=(imut double value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) - value);
 				return *this;
 			}
 
-			__compelled_inline qe_double& __fpcall operator*=(const double value) noexcept {
+			__compelled_inline qe_double& __fpcall operator*=(imut double value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) * value);
 				return *this;
 			}
 
-			__compelled_inline qe_double& __fpcall operator/=(const double value) noexcept {
+			__compelled_inline qe_double& __fpcall operator/=(imut double value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) / value);
 				return *this;
 			}
 
-			__compelled_inline qe_double& __fpcall operator=(const double value) noexcept {
+			__compelled_inline qe_double& __fpcall operator=(imut double value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator double() const noexcept {
+			__compelled_inline __stackcall operator double() imut noexcept {
 				return get();
 			}
 
@@ -1419,17 +1418,17 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__compelled_inline __fpcall qe_m128(const __m128 value) noexcept {
+			__compelled_inline __fpcall qe_m128(imut __m128 value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
 	#pragma endregion
 
 	#pragma region Accessors
-			__compelled_inline __m128 __stackcall get() const noexcept {
+			__compelled_inline __m128 __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
-			__compelled_inline void __fpcall set(const __m128 value) noexcept {
+			__compelled_inline void __fpcall set(imut __m128 value) noexcept {
 				_value = algo_t_inst(value);
 			}
 	#pragma endregion
@@ -1437,19 +1436,19 @@ namespace qengine{
 	#pragma region Operators
 	#ifdef __clang__ // msvc does not support math operators on vector types
 
-			__compelled_inline qe_m128 __fpcall operator+(const __m128 value) const noexcept {
+			__compelled_inline qe_m128 __fpcall operator+(imut __m128 value) imut noexcept {
 				return qe_m128(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_m128 __fpcall operator-(const __m128 value) const noexcept {
+			__compelled_inline qe_m128 __fpcall operator-(imut __m128 value) imut noexcept {
 				return qe_m128(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_m128 __fpcall operator/(const __m128 value) const noexcept {
-				return qe_m128((const __m128)algo_t_inst(_value) / value);
+			__compelled_inline qe_m128 __fpcall operator/(imut __m128 value) imut noexcept {
+				return qe_m128((imut __m128)algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_m128 __fpcall operator*(const __m128 value) const noexcept {
+			__compelled_inline qe_m128 __fpcall operator*(imut __m128 value) imut noexcept {
 				return qe_m128(algo_t_inst(_value) * value);
 			}
 
@@ -1457,34 +1456,34 @@ namespace qengine{
 
 	#ifdef __clang__
 
-			__compelled_inline qe_m128& __fpcall operator+=(const __m128 value) noexcept {
+			__compelled_inline qe_m128& __fpcall operator+=(imut __m128 value) noexcept {
 				_value = algo_t_inst(algo_t_inst(value) + value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128& __fpcall operator-=(const __m128 value) noexcept {
+			__compelled_inline qe_m128& __fpcall operator-=(imut __m128 value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) - value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128& __fpcall operator*=(const __m128 value) noexcept {
+			__compelled_inline qe_m128& __fpcall operator*=(imut __m128 value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) * value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128& __fpcall operator/=(const __m128 value) noexcept {
+			__compelled_inline qe_m128& __fpcall operator/=(imut __m128 value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) / value);
 				return *this;
 			}
 
 	#endif
 
-			__compelled_inline qe_m128& __fpcall operator=(const __m128 value) noexcept {
+			__compelled_inline qe_m128& __fpcall operator=(imut __m128 value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator __m128() const noexcept {
+			__compelled_inline __stackcall operator __m128() imut noexcept {
 				return get();
 			}
 
@@ -1503,17 +1502,17 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__compelled_inline __fpcall qe_m128i(const __m128i value) noexcept {
+			__compelled_inline __fpcall qe_m128i(imut __m128i value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
 	#pragma endregion
 
 	#pragma region Accessors
-			__compelled_inline __m128i __stackcall get() const noexcept {
+			__compelled_inline __m128i __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
-			__compelled_inline void __fpcall set(const __m128i value) noexcept {
+			__compelled_inline void __fpcall set(imut __m128i value) noexcept {
 				_value = algo_t_inst(value);
 			}
 	#pragma endregion
@@ -1522,19 +1521,19 @@ namespace qengine{
 
 	#ifdef __clang__ // msvc does not support math operators on vector types
 
-			__compelled_inline qe_m128i __fpcall operator+(const __m128i value) const noexcept {
+			__compelled_inline qe_m128i __fpcall operator+(imut __m128i value) imut noexcept {
 				return qe_m128i(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_m128i __fpcall operator-(const __m128i value) const noexcept {
+			__compelled_inline qe_m128i __fpcall operator-(imut __m128i value) imut noexcept {
 				return qe_m128i(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_m128i __fpcall operator/(const __m128i value) const noexcept {
-				return qe_m128i((const __m128i)algo_t_inst(_value) / value);
+			__compelled_inline qe_m128i __fpcall operator/(imut __m128i value) imut noexcept {
+				return qe_m128i((imut __m128i)algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_m128i __fpcall operator*(const __m128i value) const noexcept {
+			__compelled_inline qe_m128i __fpcall operator*(imut __m128i value) imut noexcept {
 				return qe_m128i(algo_t_inst(_value) * value);
 			}
 
@@ -1542,34 +1541,34 @@ namespace qengine{
 
 	#ifdef __clang__
 
-			__compelled_inline qe_m128i& __fpcall operator+=(const __m128i value) noexcept {
+			__compelled_inline qe_m128i& __fpcall operator+=(imut __m128i value) noexcept {
 				_value = algo_t_inst(algo_t_inst(value) + value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128i& __fpcall operator-=(const __m128i value) noexcept {
+			__compelled_inline qe_m128i& __fpcall operator-=(imut __m128i value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) - value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128i& __fpcall operator*=(const __m128i value) noexcept {
+			__compelled_inline qe_m128i& __fpcall operator*=(imut __m128i value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) * value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128i& __fpcall operator/=(const __m128i value) noexcept {
+			__compelled_inline qe_m128i& __fpcall operator/=(imut __m128i value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) / value);
 				return *this;
 			}
 
 	#endif
 
-			__compelled_inline qe_m128i& __fpcall operator=(const __m128i value) noexcept {
+			__compelled_inline qe_m128i& __fpcall operator=(imut __m128i value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator __m128i() const noexcept {
+			__compelled_inline __stackcall operator __m128i() imut noexcept {
 				return get();
 			}
 
@@ -1586,17 +1585,17 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__compelled_inline __fpcall qe_m128d(const __m128d value) noexcept {
+			__compelled_inline __fpcall qe_m128d(imut __m128d value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
 	#pragma endregion
 
 	#pragma region Accessors
-			__compelled_inline __m128d __stackcall get() const noexcept {
+			__compelled_inline __m128d __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
-			__compelled_inline void __fpcall set(const __m128d value) noexcept {
+			__compelled_inline void __fpcall set(imut __m128d value) noexcept {
 				_value = algo_t_inst(value);
 			}
 	#pragma endregion
@@ -1604,19 +1603,19 @@ namespace qengine{
 	#pragma region Operators
 	#ifdef __clang__ // msvc does not support math operators on vector types
 
-			__compelled_inline qe_m128d __fpcall operator+(const __m128d value) const noexcept {
+			__compelled_inline qe_m128d __fpcall operator+(imut __m128d value) imut noexcept {
 				return qe_m128d(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_m128d __fpcall operator-(const __m128d value) const noexcept {
+			__compelled_inline qe_m128d __fpcall operator-(imut __m128d value) imut noexcept {
 				return qe_m128d(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_m128d __fpcall operator/(const __m128d value) const noexcept {
-				return qe_m128d((const __m128d)algo_t_inst(_value) / value);
+			__compelled_inline qe_m128d __fpcall operator/(imut __m128d value) imut noexcept {
+				return qe_m128d((imut __m128d)algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_m128d __fpcall operator*(const __m128d value) const noexcept {
+			__compelled_inline qe_m128d __fpcall operator*(imut __m128d value) imut noexcept {
 				return qe_m128d(algo_t_inst(_value) * value);
 			}
 
@@ -1624,34 +1623,34 @@ namespace qengine{
 
 	#ifdef __clang__
 
-			__compelled_inline qe_m128d& __fpcall operator+=(const __m128d value) noexcept {
+			__compelled_inline qe_m128d& __fpcall operator+=(imut __m128d value) noexcept {
 				_value = algo_t_inst(algo_t_inst(value) + value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128d& __fpcall operator-=(const __m128d value) noexcept {
+			__compelled_inline qe_m128d& __fpcall operator-=(imut __m128d value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) - value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128d& __fpcall operator*=(const __m128d value) noexcept {
+			__compelled_inline qe_m128d& __fpcall operator*=(imut __m128d value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) * value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128d& __fpcall operator/=(const __m128d value) noexcept {
+			__compelled_inline qe_m128d& __fpcall operator/=(imut __m128d value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) / value);
 				return *this;
 			}
 
 	#endif
 
-			__compelled_inline qe_m128d& __fpcall operator=(const __m128d value) noexcept {
+			__compelled_inline qe_m128d& __fpcall operator=(imut __m128d value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator __m128d() const noexcept {
+			__compelled_inline __stackcall operator __m128d() imut noexcept {
 				return get();
 			}
 
@@ -1677,16 +1676,16 @@ namespace qengine{
 		public:
 
 	#pragma region CTOR
-			__compelled_inline __fpcall qe_m256(const __m256 value) noexcept {
+			__compelled_inline __fpcall qe_m256(imut __m256 value) noexcept {
 				_value = algo_t_inst(value);
 			}
 	#pragma endregion
 
 	#pragma region Accessors
-			__compelled_inline __m256 __stackcall get() const noexcept {
+			__compelled_inline __m256 __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
-			__compelled_inline void __fpcall set(const __m256 value) noexcept {
+			__compelled_inline void __fpcall set(imut __m256 value) noexcept {
 				_value = algo_t_inst(value);
 			}
 	#pragma endregion
@@ -1695,19 +1694,19 @@ namespace qengine{
 
 	#ifdef __clang__ // msvc does not support math operators on vector types
 
-			__compelled_inline qe_m256 __fpcall operator+(const __m256 value) const noexcept {
+			__compelled_inline qe_m256 __fpcall operator+(imut __m256 value) imut noexcept {
 				return qe_m256(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_m256 __fpcall operator-(const __m256 value) const noexcept {
+			__compelled_inline qe_m256 __fpcall operator-(imut __m256 value) imut noexcept {
 				return qe_m256(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_m256 __fpcall operator/(const __m256 value) const noexcept {
-				return qe_m256((const __m256)algo_t_inst(_value) / value);
+			__compelled_inline qe_m256 __fpcall operator/(imut __m256 value) imut noexcept {
+				return qe_m256((imut __m256)algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_m256 __fpcall operator*(const __m256 value) const noexcept {
+			__compelled_inline qe_m256 __fpcall operator*(imut __m256 value) imut noexcept {
 				return qe_m256(algo_t_inst(_value) * value);
 			}
 
@@ -1715,34 +1714,34 @@ namespace qengine{
 
 	#ifdef __clang__
 
-			__compelled_inline qe_m256& __fpcall operator+=(const __m256 value) noexcept {
+			__compelled_inline qe_m256& __fpcall operator+=(imut __m256 value) noexcept {
 				_value = algo_t_inst(algo_t_inst(value) + value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256& __fpcall operator-=(const __m256 value) noexcept {
+			__compelled_inline qe_m256& __fpcall operator-=(imut __m256 value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) - value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256& __fpcall operator*=(const __m256 value) noexcept {
+			__compelled_inline qe_m256& __fpcall operator*=(imut __m256 value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) * value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256& __fpcall operator/=(const __m256 value) noexcept {
+			__compelled_inline qe_m256& __fpcall operator/=(imut __m256 value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) / value);
 				return *this;
 			}
 
 	#endif
 
-			__compelled_inline qe_m256& __fpcall operator=(const __m256 value) noexcept {
+			__compelled_inline qe_m256& __fpcall operator=(imut __m256 value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator __m256() const noexcept {
+			__compelled_inline __stackcall operator __m256() imut noexcept {
 				return get();
 			}
 
@@ -1758,16 +1757,16 @@ namespace qengine{
 		public:
 
 	#pragma region CTOR
-			__compelled_inline __fpcall qe_m256i(const __m256i value) noexcept {
+			__compelled_inline __fpcall qe_m256i(imut __m256i value) noexcept {
 				_value = algo_t_inst(value);
 			}
 	#pragma endregion
 
 	#pragma region Accessors
-			__compelled_inline __m256i __stackcall get() const noexcept {
+			__compelled_inline __m256i __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
-			__compelled_inline void __fpcall set(const __m256i value) noexcept {
+			__compelled_inline void __fpcall set(imut __m256i value) noexcept {
 				_value = algo_t_inst(value);
 			}
 	#pragma endregion
@@ -1775,19 +1774,19 @@ namespace qengine{
 	#pragma region Operators
 	#ifdef __clang__ // msvc does not support math operators on vector types
 
-			__compelled_inline qe_m256i __fpcall operator+(const __m256i value) const noexcept {
+			__compelled_inline qe_m256i __fpcall operator+(imut __m256i value) imut noexcept {
 				return qe_m256i(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_m256i __fpcall operator-(const __m256i value) const noexcept {
+			__compelled_inline qe_m256i __fpcall operator-(imut __m256i value) imut noexcept {
 				return qe_m256i(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_m256i __fpcall operator/(const __m256i value) const noexcept {
-				return qe_m256i((const __m256i)algo_t_inst(_value) / value);
+			__compelled_inline qe_m256i __fpcall operator/(imut __m256i value) imut noexcept {
+				return qe_m256i((imut __m256i)algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_m256i __fpcall operator*(const __m256i value) const noexcept {
+			__compelled_inline qe_m256i __fpcall operator*(imut __m256i value) imut noexcept {
 				return qe_m256i(algo_t_inst(_value) * value);
 			}
 
@@ -1795,34 +1794,34 @@ namespace qengine{
 
 	#ifdef __clang__
 
-			__compelled_inline qe_m256i& __fpcall operator+=(const __m256i value) noexcept {
+			__compelled_inline qe_m256i& __fpcall operator+=(imut __m256i value) noexcept {
 				_value = algo_t_inst(algo_t_inst(value) + value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256i& __fpcall operator-=(const __m256i value) noexcept {
+			__compelled_inline qe_m256i& __fpcall operator-=(imut __m256i value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) - value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256i& __fpcall operator*=(const __m256i value) noexcept {
+			__compelled_inline qe_m256i& __fpcall operator*=(imut __m256i value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) * value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256i& __fpcall operator/=(const __m256i value) noexcept {
+			__compelled_inline qe_m256i& __fpcall operator/=(imut __m256i value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) / value);
 				return *this;
 			}
 
 	#endif
 
-			__compelled_inline qe_m256i& __fpcall operator=(const __m256i value) noexcept {
+			__compelled_inline qe_m256i& __fpcall operator=(imut __m256i value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator __m256i() const noexcept {
+			__compelled_inline __stackcall operator __m256i() imut noexcept {
 				return get();
 			}
 
@@ -1839,7 +1838,7 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__compelled_inline __fpcall qe_m256d(const __m256d value) noexcept {
+			__compelled_inline __fpcall qe_m256d(imut __m256d value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -1847,10 +1846,10 @@ namespace qengine{
 
 	#pragma region Accessors
 
-			__compelled_inline __m256d __stackcall get() const noexcept {
+			__compelled_inline __m256d __stackcall get() imut noexcept {
 				return algo_t_inst(_value);
 			}
-			__compelled_inline void __fpcall set(const __m256d value) noexcept {
+			__compelled_inline void __fpcall set(imut __m256d value) noexcept {
 				_value = algo_t_inst(value);
 			}
 
@@ -1860,19 +1859,19 @@ namespace qengine{
 
 	#ifdef __clang__ // msvc does not support math operators on vector types
 
-			__compelled_inline qe_m256d __fpcall operator+(const __m256d value) const noexcept {
+			__compelled_inline qe_m256d __fpcall operator+(imut __m256d value) imut noexcept {
 				return qe_m256d(algo_t_inst(_value) + value);
 			};
 
-			__compelled_inline qe_m256d __fpcall operator-(const __m256d value) const noexcept {
+			__compelled_inline qe_m256d __fpcall operator-(imut __m256d value) imut noexcept {
 				return qe_m256d(algo_t_inst(_value) - value);
 			}
 
-			__compelled_inline qe_m256d __fpcall operator/(const __m256d value) const noexcept {
-				return qe_m256d((const __m256d)algo_t_inst(_value) / value);
+			__compelled_inline qe_m256d __fpcall operator/(imut __m256d value) imut noexcept {
+				return qe_m256d((imut __m256d)algo_t_inst(_value) / value);
 			}
 
-			__compelled_inline qe_m256d __fpcall operator*(const __m256d value) const noexcept {
+			__compelled_inline qe_m256d __fpcall operator*(imut __m256d value) imut noexcept {
 				return qe_m256d(algo_t_inst(_value) * value);
 			}
 
@@ -1880,34 +1879,34 @@ namespace qengine{
 
 	#ifdef __clang__
 
-			__compelled_inline qe_m256d& __fpcall operator+=(const __m256d value) noexcept {
+			__compelled_inline qe_m256d& __fpcall operator+=(imut __m256d value) noexcept {
 				_value = algo_t_inst(algo_t_inst(value) + value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256d& __fpcall operator-=(const __m256d value) noexcept {
+			__compelled_inline qe_m256d& __fpcall operator-=(imut __m256d value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) - value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256d& __fpcall operator*=(const __m256d value) noexcept {
+			__compelled_inline qe_m256d& __fpcall operator*=(imut __m256d value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) * value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256d& __fpcall operator/=(const __m256d value) noexcept {
+			__compelled_inline qe_m256d& __fpcall operator/=(imut __m256d value) noexcept {
 				_value = algo_t_inst(algo_t_inst(_value) / value);
 				return *this;
 			}
 
 	#endif
 
-			__compelled_inline qe_m256d& __fpcall operator=(const __m256d value) noexcept {
+			__compelled_inline qe_m256d& __fpcall operator=(imut __m256d value) noexcept {
 				_value = algo_t_inst(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator __m256d() const noexcept {
+			__compelled_inline __stackcall operator __m256d() imut noexcept {
 				return get();
 			}
 
@@ -1936,11 +1935,11 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__compelled_inline __stackcall qe_string(const std::string value) noexcept {
+			__compelled_inline __stackcall qe_string(imut std::string value) noexcept {
 				_value = algo_str_inst(value);
 			}
 
-			__optimized_ctor __regcall qe_string(const char* value = "") {
+			__optimized_ctor qe_string(imut char* value = "") noexcept {
 				if (!is_init) {
 					init_constants();
 				}
@@ -1952,29 +1951,29 @@ namespace qengine{
 
 	#pragma region Accessors
 
-			__compelled_inline std::string __stackcall get() const noexcept {
+			__compelled_inline std::string __stackcall get() imut noexcept {
 				return algo_str_inst(std::string(_value));
 			}
 
-			__compelled_inline void __stackcall set(const std::string& value) noexcept {
+			__compelled_inline void __stackcall set(imut std::string& value) noexcept {
 				_value = algo_str_inst(value);
 			}
 
-			__compelled_inline qe_string __stackcall operator+(const std::string& value) const noexcept {
+			__compelled_inline qe_string __stackcall operator+(imut std::string& value) imut noexcept {
 				return qe_string(algo_str_inst(std::string(_value)) + value);
 			};
 
-			__compelled_inline qe_string& __stackcall operator+=(const std::string& value) noexcept {
+			__compelled_inline qe_string& __stackcall operator+=(imut std::string& value) noexcept {
 				_value = algo_str_inst(static_cast<std::string>(algo_str_inst(_value) + value));
 				return *this;
 			}
 
-			__compelled_inline qe_string& __stackcall operator=(const std::string& value) noexcept {
+			__compelled_inline qe_string& __stackcall operator=(imut std::string& value) noexcept {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator std::string() const noexcept {
+			__compelled_inline __stackcall operator std::string() imut noexcept {
 				return get();
 			}
 
@@ -2005,11 +2004,11 @@ namespace qengine{
 
 	#pragma region CTOR
 
-			__compelled_inline __stackcall qe_wstring(const std::wstring value) noexcept {
+			__compelled_inline __stackcall qe_wstring(imut std::wstring value) noexcept {
 				_value = algo_wstr_inst(value);
 			}
 
-			__optimized_ctor qe_wstring(const wchar_t* value = L"") noexcept {
+			__optimized_ctor qe_wstring(imut wchar_t* value = L"") noexcept {
 				if (!is_init) {
 					init_constants();
 				}
@@ -2021,11 +2020,11 @@ namespace qengine{
 
 	#pragma region Accessors
 
-			__compelled_inline std::wstring __stackcall get() const noexcept {
+			__compelled_inline std::wstring __stackcall get() imut noexcept {
 				return algo_wstr_inst(std::wstring(_value));
 			}
 
-			__compelled_inline void __stackcall set(const std::wstring value) noexcept {
+			__compelled_inline void __stackcall set(imut std::wstring value) noexcept {
 				_value = algo_wstr_inst(value);
 			}
 
@@ -2033,29 +2032,29 @@ namespace qengine{
 				_value.reserve(count);
 			}
 
-			__compelled_inline bool __stackcall empty() const noexcept {
+			__compelled_inline bool __stackcall empty() imut noexcept {
 				return _value.empty();
 			}
 
-			__compelled_inline qe_wstring __stackcall operator+(const std::wstring& value) const noexcept {
+			__compelled_inline qe_wstring __stackcall operator+(imut std::wstring& value) imut noexcept {
 				return qe_wstring(algo_wstr_inst(_value) + value);
 			};
 
-			__compelled_inline qe_wstring& __stackcall operator+=(const std::wstring& value) noexcept {
+			__compelled_inline qe_wstring& __stackcall operator+=(imut std::wstring& value) noexcept {
 				_value = algo_wstr_inst(static_cast<std::wstring>(algo_wstr_inst(_value) + value));
 				return *this;
 			}
 
-			__compelled_inline qe_wstring& __stackcall operator=(const std::wstring& value) noexcept {
+			__compelled_inline qe_wstring& __stackcall operator=(imut std::wstring& value) noexcept {
 				set(value);
 				return *this;
 			}
 			// to-do use a subscript proxy to allow get set access through indexing
-			__compelled_inline wchar_t& __regcall operator[](const int index) noexcept {
+			__compelled_inline wchar_t& __regcall operator[](imut int index) noexcept {
 				return algo_wstr_inst(_value)[index];
 			}
 
-			__compelled_inline __stackcall operator std::wstring() const noexcept {
+			__compelled_inline __stackcall operator std::wstring() imut noexcept {
 				return algo_wstr_inst(_value);
 			}
 
@@ -2105,7 +2104,7 @@ namespace qengine{
 			public:
 	#pragma region Ctor
 
-				index_proxy(const std::size_t index_, qe_malloc& instance) noexcept : index(index_), parent(instance) { }
+				index_proxy(imut std::size_t index_, qe_malloc& instance) noexcept : index(index_), parent(instance) { }
 
 	#pragma endregion
 
@@ -2118,7 +2117,7 @@ namespace qengine{
 					return value;   // return the passed assignment value rather than using up absurd resources to decrypt, re-encrypt everything using get()
 				}
 
-				__compelled_inline __stackcall operator uint8_t() const noexcept {
+				__compelled_inline __stackcall operator uint8_t() imut noexcept {
 
 					return parent.get(index);
 				}
@@ -2132,7 +2131,7 @@ namespace qengine{
 
 	#pragma region Ctor
 
-			__optimized_ctor qe_malloc(const std::size_t size)
+			__optimized_ctor qe_malloc(imut std::size_t size)
 				: 
 				alloc_size(size),
 				local_alloc(malloc(size))
@@ -2164,7 +2163,7 @@ namespace qengine{
 				return algo_inst(local_alloc, alloc_size);
 			}
 
-			__compelled_inline void* __regcall get(const std::uintptr_t pos, const std::size_t length) noexcept {
+			__compelled_inline void* __regcall get(imut std::uintptr_t pos, imut std::size_t length) noexcept {
 				auto dec_alloc = reinterpret_cast<uint8_t*>(get());
 
 				auto get_alloc = malloc(length);
@@ -2180,7 +2179,7 @@ namespace qengine{
 				return get_alloc;
 			}
 
-			__compelled_inline std::uint8_t __regcall get(const std::size_t index) noexcept {
+			__compelled_inline std::uint8_t __regcall get(imut std::size_t index) noexcept {
 				auto dec_alloc = reinterpret_cast<uint8_t*>(get());
 
 				auto _return = dec_alloc[index];
@@ -2192,7 +2191,7 @@ namespace qengine{
 			}
 
 			template<typename T>
-			__compelled_inline T& __regcall get_t(const std::uintptr_t pos) noexcept {
+			__compelled_inline T& __regcall get_t(imut std::uintptr_t pos) noexcept {
 
 				auto value_r = reinterpret_cast<T*>(get(pos, sizeof(T)));
 
@@ -2221,8 +2220,8 @@ namespace qengine{
 			__compelled_inline void __regcall set(
 				
 				void* src,
-				const std::uintptr_t pos,
-				const std::size_t length,
+				imut std::uintptr_t pos,
+				imut std::size_t length,
 				bool free_src = false
 			) noexcept {
 
@@ -2248,9 +2247,9 @@ namespace qengine{
 
 			__compelled_inline void __regcall set(
 
-				const std::uintptr_t pos,
-				const std::uint8_t value,
-				const std::size_t size
+				imut std::uintptr_t pos,
+				imut std::uint8_t value,
+				imut std::size_t size
 			) noexcept {
 
 				auto dec_alloc = reinterpret_cast<std::uint8_t*>(get());
@@ -2298,7 +2297,7 @@ namespace qengine{
 
 	#pragma region Utility functions
 
-			__compelled_inline void __regcall swap(void* src, const std::size_t length, const bool free_src = false) noexcept {
+			__compelled_inline void __regcall swap(void* src, imut std::size_t length, imut bool free_src = false) noexcept {
 				//release current resources
 				zero();
 				free(local_alloc);
@@ -2315,7 +2314,7 @@ namespace qengine{
 			}
 
 			//size is only the length in bytes of the allocation to be appended or destroyed
-			__compelled_inline void __regcall resize(const std::size_t size) noexcept {
+			__compelled_inline void __regcall resize(imut std::size_t size) noexcept {
 				auto dec_alloc = get();
 
 				auto n_local_alloc = realloc(dec_alloc, size);
@@ -2353,18 +2352,18 @@ namespace qengine{
 
 	#pragma region Operators
 
-			__compelled_inline qe_malloc& __regcall operator=(const std::vector<uint8_t>& value) noexcept {
+			__compelled_inline qe_malloc& __regcall operator=(imut std::vector<uint8_t>& value) noexcept {
 				swap(const_cast<std::vector<uint8_t>*>(&value)->data(), value.size());
 
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator void* () const noexcept {
+			__compelled_inline __stackcall operator void* () imut noexcept {
 				return algo_inst(local_alloc, alloc_size);
 			}
 
 			template<typename T>
-			__compelled_inline __stackcall operator T* () const noexcept {
+			__compelled_inline __stackcall operator T* () imut noexcept {
 				return reinterpret_cast<T*>(algo_inst(local_alloc, alloc_size));
 			}
 
