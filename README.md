@@ -771,6 +771,8 @@ I have with the rather brief testing period I have subjected this to, been unabl
 
 * [HadockKali](https://github.com/HadockKali) ( For helping with this Readme )
 
+* [javaloader's SkyCrypt](https://github.com/javaloader/Sky-Crypt-C-11-String-Encryptor-) - Although this project appears unlicensed, everything in the QSTR header is heavily based off of this project, mostly i changed naming conventions and optimized / changed some of the code to fit qengine's theme. His repo deserves a star or two.
+
 * My dear friend [slow-call](https://github.com/slow-call), whom has helped me with generating ideas for this project from it's inception and whom also helped create the beautiful icon which qengine now bears.
 
 Licenses for both respective libraries are included in the repo and must be upheld.
