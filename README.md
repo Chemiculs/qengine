@@ -277,7 +277,7 @@ Windows SEH (Structured Exception Handling) and Cxx EH (Exception Handling) mech
 [Link to below sample project](https://github.com/Chemiculs/qengine-researchanddevelopment/tree/master/qengine-windows-SEH-test)
  
 ```cpp
-//  Dereference a ring -3 pointer rather than call _CxxRaiseException() directly to avoid another import table entry
+//  Dereference a ring -3 pointer rather than call _CxxRaiseException() directly to avoid another  table entry
 //  Basic SEH exception handling callback obfuscation, call WINAPI_SEH_INIT(); at beginning of scope && WINAPI_SEH_END() or ';' at the end of the scope and it will be executed from a statically compiled SEH table entry for x86_64, or SEH handled on stack for x86
 
 WINAPI_SEH_INIT()	//	emplace @ fn beginning to displace the following code within a seperate and (somewhat) hidden windows SEH block inside your output PE
@@ -327,7 +327,7 @@ Here is an example of creating an obfuscated conditional branch that evaluates t
 
 using namespace qengine;
 
-static  __singleton void true_() noexcept {	//	callback functions shall never be inlined and should always be explicitly declared as a singleton point of execution, intentions are very important to know
+static  __singleton void true_() noexcept {	//	callback functions shall never be inlined and should always be explicitly declared as a singleton point of execution, intentions are very ant to know
 
 	std::cout << "condition is true" << std::endl;
 }
@@ -598,10 +598,10 @@ As you can see below, this yields the expected result from calling MessageBoxA w
 
 ![import protection](img/importer.png)
 
-If you do not want the overhead of GetProcAddress() being called repeatedly, I have added the ability to store the imported function bound to its prototype as a local or global object which can be directly invoked for a small performance gain 
-(I have not checked myself, but I doubt the compiler will know precisely what we are doing and will perform an Export Table lookup at every GetProcAddress() call).
+If you do not want the overhead of GetProcAddress() being called repeatedly, I have added the ability to store the imported function bound to its prototype as a local or global object which can be directly invoked for a potential performance gain, and cleaner / more organized appearing code
+(I have not checked myself, but I doubt the compiler will know precisely what we are doing and will perform unnecessary logic)
 
-This is useful if you are calling the imported function in a loop or by any other means calling it repeatedly, below is an example specific to this use case :
+:
 
 ```cpp
 
