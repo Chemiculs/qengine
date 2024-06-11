@@ -28,7 +28,7 @@ This project aims to make binaries appear as unique and unrecognizable as possib
 
 * This will NOT prevent static disk signatures of your executables - however, it will make the task of understanding your code from a classic disassembler such as IDA VERY difficult if used properly, and will prevent memory-dump / memory-scan-based signature detections of your binary.
 
-* This library is (almost) fully inlined, employing a minimalist design and maximum performance + reliability, function inlining allows qengine to hide the actual code you are executing behind a wall of cryptographic instructions and protected memory regions
+* This library is fully inlined, employing a minimalist design and maximum performance + reliability, function inlining allows qengine to hide the actual code you are executing behind a wall of cryptographic instructions and protected memory regions
 
 qengine is very lightweight and incurs a ~1.70% average performance loss vs. standard library / primitive types, likewise you will retain ~98.3% of your application's original performance ( on average ) while simultaneously generating thousands or even millions of junk instructions dilluting your meaningful compiled codebase 
 
@@ -113,6 +113,8 @@ Below is a diagram of how the polyc algorithm currently works, please bear with 
 ### ** NOTE: This setup option only works out of the box targetting the MSVC v143 compiler WITH the "Runtime Library" Option set to the default " Multi-threaded DLL (/MD) " build target.
 
 if you wish to target another compiler or Runtime Library version, you MUST first compile [ASMJIT](https://github.com/asmjit/asmjit) and [Capstone](https://github.com/capstone-engine/capstone) from their source(s), with the according compiler settings from your target project applied and then replace the library files output with the according target output filename(s) in the <root_directory>/qengine/engine/extern/ folder :
+
+UPDATE: If you are using llvm / clang, there is an alternative llvm / clang compatible build of the static libraries located in the  /src/qengine/extern/clang_alternate_libs, set this as your library directory with llvm / clang projects.
 
 ```cpp
 
@@ -861,9 +863,10 @@ qengine has a separate repository available, which contains the current official
 
 I am one person and only have so much time on my hands, and i have other projects i am working on + an unrelated IRL job. 
 
-I may be fairly effecient at pumping out code, but i am left with even less time to do the in-depth debugging, reversal and documentation on this project which i would like to achieve for this project ultimately. 
+While i may be fairly effecient at pumping out code, but i am left with even less time to do the in-depth debugging, reversal and documentation on this project which i would like to achieve for this project ultimately. 
 
-I wouldn't mind help to get there, so if you encounter any bugs please submit a report.
+Currently there is a problem with qengine in regards to it's interaction with llvm / clang, this seems to come with a new version of llvm / clang or as a result of a (likely minor) change in code which i am unaware of.
+If anyone finds a way to compell inline directives with llvm / clang like it used to, please let me know.
 
 ## - Ideas / Collaborators
 
