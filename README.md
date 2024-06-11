@@ -7,7 +7,6 @@
 
 
 qengine is a Header-Only, Highly Configurable, Compiler-Independent, and largely inlined Binary Obfuscation Toolkit designed for C++ Standard 17 (or higher) Applications for Microsoft Windows. 
-
 qengine offers ease of use in your projects, while making your output code extremely difficult to understand, especially for classic disassemblers like IDA.
 
 If you are interested in security testing qengine, or downloading further example usage of qengine, please refer to the Research and Development Repository which contains official template projects for these purposes:
