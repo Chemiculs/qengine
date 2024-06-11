@@ -85,6 +85,27 @@ This project does however, if it has the potential which i believe it may, this 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
+<summary> Polymorphic Encryption Algorithm (polyc) </summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The backbone to this project has been it's aggressively-inlined polyc encryption algorithm.
+
+While the algorithm has been strong and reliable, before the most recent update it really couldn't be truly labeled 'polymorphic' except in the sense that it generates its own table data and keys at runtime.
+
+The polyc algorithm has been updated to support encrypted function calls to differing encryption subroutines, encapsulating it's xor pass.
+
+polyc holds a global pointer table which is managed by the qxx_type objects - this table registers or retrieves a pointer entry every time you call the algorithm. This pointer descripts which subroutine pointer must be decrypted, called, and encrypted again.
+
+Below is a diagram of how the polyc algorithm currently works, please bear with my bad MSPAINT artwork:
+
+![polyc diagram](img/polycgraph.png)
+
+</details>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<details>
 <summary>Setup / Usage</summary>
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -266,26 +287,6 @@ __fpcall
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-<details>
-<summary> Polymorphic Encryption Algorithm (polyc) </summary>
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-The backbone to this project has been it's aggressively-inlined polyc encryption algorithm.
-
-While the algorithm has been strong and reliable, before the most recent update it really couldn't be truly labeled 'polymorphic' except in the sense that it generates its own table data and keys at runtime.
-
-The polyc algorithm has been updated to support encrypted function calls to differing encryption subroutines, encapsulating it's xor pass.
-
-polyc holds a global pointer table which is managed by the qxx_type objects - this table registers or retrieves a pointer entry every time you call the algorithm. This pointer descripts which subroutine pointer must be decrypted, called, and encrypted again.
-
-Below is a diagram of how the polyc algorithm currently works, please bear with my bad MSPAINT artwork:
-
-![polyc diagram](img/polycgraph.png)
-
-</details>
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 <details>
 <summary> Windows SEH-based obfuscation and CXX EH-based obfuscation </summary>
 
