@@ -84,6 +84,8 @@ static imut constexpr auto QCTIME_SEED = __TIME__[7];
 
 #define __optimized_ctor __compelled_inline __regcall	//	this forces compiler optimization depending on the argument list, IF the function can be inlined it will be which is arguably the least expensive calling method, however if the compiler fails yet to inline, the argument will be passed through registers if the arguments match the bitwidth of the operating system
 
+#define __optimized_dtor __compelled_inline __stackcall
+
 #define __inlineable inline	//	this is a suggestion, not a command. why was it included in the language standard as a commanding word that has garaunteed effect?
 
 /* specify vectorcall if the project is compiled using extended types as this is better than fastcall for floating point numbers */
@@ -122,13 +124,6 @@ static imut constexpr auto QCTIME_SEED = __TIME__[7];
 #define __RAND__(_high_, _low_) rand() % _high_ + _low_ 
 
 #pragma region Memory
-
-#pragma region Old Code Backup
-
-// backup of old and deprecated __XORWORD__ macro
-// #define __XORWORD__(_word_, _xval_) for(auto _m_ = 0; _m_ < sizeof(decltype(_xval_)); ++_m_) _word_ ^= reinterpret_cast<std::uint8_t*>(&_xval_)[_m_] 
-
-#pragma endregion
 
 #define __XORBYTE__(_byte_, _xval_) for(auto _m_ = 0; _m_ < sizeof(decltype(_xval_)); ++_m_) _byte_ ^= reinterpret_cast<std::uint8_t*>(&_xval_)[_m_] 
 

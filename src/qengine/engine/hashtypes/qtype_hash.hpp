@@ -133,9 +133,11 @@ namespace qengine {
 
 	#pragma region Globals
 
-			mut std::int8_t _value{};
+			mut std::int8_t _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -155,16 +157,35 @@ namespace qengine {
 
 	#pragma region Accessors
 
-			__compelled_inline std::int8_t& __stackcall get() imut noexcept {
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				is_polyc_alteration = true;
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+				return &_value;
+			}
 
-				auto _return = _value;
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				return _return;
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
+			__compelled_inline std::int8_t __stackcall get() imut noexcept {
+
+				if (!is_polyc_alteration) {
+
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
+
+				return _value;
 			}
 
 			__compelled_inline void __regcall set( std::int8_t value ) noexcept {
@@ -305,9 +326,11 @@ namespace qengine {
 
 	#pragma region Globals
 
-			mut std::uint8_t _value{};
+			mut std::uint8_t _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -327,16 +350,35 @@ namespace qengine {
 
 	#pragma region Accessors
 
-			__compelled_inline std::uint8_t& __stackcall get() imut noexcept {
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				is_polyc_alteration = true;
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+				return &_value;
+			}
 
-				auto _return = _value;
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				return _return;
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
+			__compelled_inline std::uint8_t __stackcall get() imut noexcept {
+
+				if (!is_polyc_alteration) {
+
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
+
+				return _value;
 			}
 
 			__compelled_inline void __regcall set(std::uint8_t value) noexcept {
@@ -348,7 +390,7 @@ namespace qengine {
 				_value = value;
 			}
 
-			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut noexcept{
+			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut noexcept {
 				return &_value;
 			}
 
@@ -466,7 +508,9 @@ namespace qengine {
 			}
 
 			__compelled_inline __stackcall ~qh_uint8() { }
+
 	#pragma endregion
+
 		};
 
 	#pragma endregion
@@ -479,9 +523,11 @@ namespace qengine {
 
 	#pragma region Globals
 
-			mut short _value{};
+			mut std::int16_t _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -501,16 +547,35 @@ namespace qengine {
 
 	#pragma region Accessors
 
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
+
+				is_polyc_alteration = true;
+
+				return &_value;
+			}
+
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
+
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
 			__compelled_inline std::int16_t __stackcall get() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				if (!is_polyc_alteration) {
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
-				auto _return = _value;
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
 
-				return _return;
+				return _value;
 			}
 
 			__compelled_inline void __regcall set(std::int16_t value) noexcept {
@@ -522,7 +587,7 @@ namespace qengine {
 				_value = value;
 			}
 
-			__compelled_inline imut decltype(_value)* get_raw_memory_address() imut noexcept {
+			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut noexcept {
 				return &_value;
 			}
 
@@ -639,8 +704,6 @@ namespace qengine {
 				return get();
 			}
 
-			__compelled_inline __stackcall ~qh_int16() { }
-
 	#pragma endregion
 		};
 
@@ -650,9 +713,11 @@ namespace qengine {
 
 	#pragma region Globals
 
-			mut std::uint16_t _value{};
+			mut std::uint16_t _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -672,16 +737,35 @@ namespace qengine {
 
 	#pragma region Accessors
 
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
+
+				is_polyc_alteration = true;
+
+				return &_value;
+			}
+
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
+
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
 			__compelled_inline std::uint16_t __stackcall get() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				if (!is_polyc_alteration) {
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
-				auto _return = _value;
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
 
-				return _return;
+				return _value;
 			}
 
 			__compelled_inline void __regcall set(std::uint16_t value) noexcept {
@@ -824,9 +908,11 @@ namespace qengine {
 
 	#pragma region Globals
 
-			mut std::int32_t _value{};
+			mut std::int32_t _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -846,16 +932,35 @@ namespace qengine {
 
 	#pragma region Accessors
 
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
+
+				is_polyc_alteration = true;
+
+				return &_value;
+			}
+
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
+
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
 			__compelled_inline std::int32_t __stackcall get() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				if (!is_polyc_alteration) {
 
-				if (hash != _hash) 
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
-				auto _return = _value;
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
 
-				return _return;
+				return _value;
 			}
 
 			__compelled_inline void __regcall set(std::int32_t value) noexcept {
@@ -867,7 +972,7 @@ namespace qengine {
 				_value = value;
 			}
 
-			__compelled_inline imut decltype(_value)* get_raw_memory_address() imut noexcept {
+			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut noexcept {
 				return &_value;
 			}
 
@@ -994,9 +1099,11 @@ namespace qengine {
 
 	#pragma region Globals
 
-			mut std::uint32_t _value{};
+			mut std::uint32_t _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -1016,16 +1123,35 @@ namespace qengine {
 
 	#pragma region Accessors
 
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
+
+				is_polyc_alteration = true;
+
+				return &_value;
+			}
+
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
+
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
 			__compelled_inline std::uint32_t __stackcall get() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				if (!is_polyc_alteration) {
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
-				auto _return = _value;
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
 
-				return _return;
+				return _value;
 			}
 
 			__compelled_inline void __regcall set(std::uint32_t value) noexcept {
@@ -1037,7 +1163,7 @@ namespace qengine {
 				_value = value;
 			}
 
-			__compelled_inline imut decltype(_value)* get_raw_memory_address() imut noexcept {
+			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut noexcept {
 				return &_value;
 			}
 
@@ -1154,7 +1280,6 @@ namespace qengine {
 				return get();
 			}
 
-			__compelled_inline __stackcall ~qh_uint32() noexcept { }
 	#pragma endregion
 		};
 
@@ -1170,9 +1295,11 @@ namespace qengine {
 
 	#pragma region Globals
 
-			mut std::int64_t _value{};
+			mut std::int64_t _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -1192,16 +1319,35 @@ namespace qengine {
 
 	#pragma region Accessors
 
-			int64_t __stackcall get() imut noexcept {
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				is_polyc_alteration = true;
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value)); // access violation executing location, make the argument for passing callback an rvalue ?
+				return &_value;
+			}
 
-				auto _return = _value;
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				return _return;
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
+			__compelled_inline std::int64_t __stackcall get() imut noexcept {
+
+				if (!is_polyc_alteration) {
+
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
+
+				return _value;
 			}
 
 			__compelled_inline void __regcall set(std::int64_t value) noexcept {
@@ -1213,7 +1359,7 @@ namespace qengine {
 				_value = value;
 			}
 
-			__compelled_inline imut decltype(_value)* get_raw_memory_address() imut noexcept {
+			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut noexcept {
 				return &_value;
 			}
 
@@ -1340,9 +1486,11 @@ namespace qengine {
 
 	#pragma region Globals
 
-			mut std::uint64_t _value{};
+			mut std::uint64_t _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -1362,18 +1510,36 @@ namespace qengine {
 
 	#pragma region Accessors
 
-			__compelled_inline std::uint64_t __stackcall get() imut noexcept {
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				is_polyc_alteration = true;
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
-
-				auto _return = _value;
-
-				return _return;
+				return &_value;
 			}
 
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
+
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
+			__compelled_inline std::uint64_t __stackcall get() imut noexcept {
+
+				if (!is_polyc_alteration) {
+
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
+
+				return _value;
+			}
 			__compelled_inline void __regcall set(std::uint64_t value) noexcept {
 
 				auto hash = qhash::qhash_cpu(&value, sizeof(value));
@@ -1383,7 +1549,7 @@ namespace qengine {
 				_value = value;
 			}
 
-			__compelled_inline imut decltype(_value)* get_raw_memory_address() imut noexcept {
+			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut noexcept {
 				return &_value;
 			}
 
@@ -1522,7 +1688,9 @@ namespace qengine {
 
 			mut float _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -1542,19 +1710,38 @@ namespace qengine {
 
 	#pragma region Accessors
 
-			__compelled_inline float __stackcall get() imut noexcept {
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				is_polyc_alteration = true;
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
-
-				auto _return = _value;
-
-				return _return;
+				return &_value;
 			}
 
-			__compelled_inline void __regcall set(float value) noexcept {
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
+
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
+			__compelled_inline float __stackcall get() imut noexcept {
+
+				if (!is_polyc_alteration) {
+
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
+
+				return _value;
+			}
+
+			__compelled_inline void __regcall set( float value ) noexcept {
 
 				auto hash = qhash::qhash_cpu(&value, sizeof(value));
 
@@ -1563,7 +1750,7 @@ namespace qengine {
 				_value = value;
 			}
 
-			__compelled_inline imut decltype(_value)* get_raw_memory_address() imut noexcept {
+			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut noexcept {
 				return &_value;
 			}
 
@@ -1645,7 +1832,9 @@ namespace qengine {
 
 			mut double _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -1665,16 +1854,35 @@ namespace qengine {
 
 	#pragma region Accessors
 
-			__compelled_inline double __fpcall get() imut noexcept {
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				is_polyc_alteration = true;
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+				return &_value;
+			}
 
-				auto _return = _value;
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				return _return;
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
+			__compelled_inline double __stackcall get() imut noexcept {
+
+				if (!is_polyc_alteration) {
+
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
+
+				return _value;
 			}
 
 			__compelled_inline void __fpcall set(double value) noexcept {
@@ -1773,7 +1981,9 @@ namespace qengine {
 
 			mut __m128 _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -1793,16 +2003,35 @@ namespace qengine {
 
 	#pragma region Accessors
 
-			__compelled_inline __m128 __fpcall get() imut noexcept {
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				is_polyc_alteration = true;
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+				return &_value;
+			}
 
-				auto _return = _value;
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				return _return;
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
+			__compelled_inline __m128 __stackcall get() imut noexcept {
+
+				if (!is_polyc_alteration) {
+
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
+
+				return _value;
 			}
 
 			__compelled_inline void __fpcall set(__m128 value) noexcept {
@@ -1814,7 +2043,7 @@ namespace qengine {
 				_value = value;
 			}
 
-			__compelled_inline imut decltype(_value)* get_raw_memory_address() imut noexcept {
+			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut noexcept {
 				return &_value;
 			}
 
@@ -1872,7 +2101,9 @@ namespace qengine {
 			}
 
 			__compelled_inline __stackcall ~qh_m128() noexcept { }
+
 	#pragma endregion
+
 		};
 
 	#ifdef __SSE2__
@@ -1885,7 +2116,9 @@ namespace qengine {
 
 			mut __m128i _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -1905,16 +2138,35 @@ namespace qengine {
 
 	#pragma region Accessors
 
-			__compelled_inline __m128i __fpcall get() imut {
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				is_polyc_alteration = true;
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+				return &_value;
+			}
 
-				auto _return = _value;
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				return _return;
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
+			__compelled_inline __m128i __stackcall get() imut noexcept {
+
+				if (!is_polyc_alteration) {
+
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
+
+				return _value;
 			}
 
 			__compelled_inline void __fpcall set(__m128i value) {
@@ -1926,7 +2178,7 @@ namespace qengine {
 				_value = value;
 			}
 
-			__compelled_inline imut decltype(_value)* get_raw_memory_address() {
+			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut noexcept {
 				return &_value;
 			}
 
@@ -1983,7 +2235,6 @@ namespace qengine {
 				return get();
 			}
 
-			__compelled_inline __stackcall ~qh_m128i() { }
 	#pragma endregion
 		};
 
@@ -1995,7 +2246,9 @@ namespace qengine {
 
 			mut __m128d _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -2015,16 +2268,35 @@ namespace qengine {
 
 	#pragma region Accessors
 
-			__compelled_inline __m128d __fpcall get() imut noexcept {
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				is_polyc_alteration = true;
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+				return &_value;
+			}
 
-				auto _return = _value;
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				return _return;
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
+			__compelled_inline __m128d __stackcall get() imut noexcept {
+
+				if (!is_polyc_alteration) {
+
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
+
+				return _value;
 			}
 
 			__compelled_inline void __fpcall set(__m128d value) noexcept {
@@ -2036,7 +2308,7 @@ namespace qengine {
 				_value = value;
 			}
 
-			__compelled_inline imut decltype(_value)* get_raw_memory_address() imut noexcept {
+			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut noexcept {
 				return &_value;
 			}
 
@@ -2093,8 +2365,8 @@ namespace qengine {
 				return get();
 			}
 
-			__compelled_inline __stackcall ~qh_m128d() noexcept { }
 	#pragma endregion
+
 		};
 
 	#endif
@@ -2115,7 +2387,9 @@ namespace qengine {
 
 			mut __m256 _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -2135,16 +2409,35 @@ namespace qengine {
 
 	#pragma region Accessors
 
-			__compelled_inline __m256 __fpcall get() imut noexcept {
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				is_polyc_alteration = true;
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+				return &_value;
+			}
 
-				auto _return = _value;
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				return _return;
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
+			__compelled_inline __m256 __stackcall get() imut noexcept {
+
+				if (!is_polyc_alteration) {
+
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
+
+				return _value;
 			}
 
 			__compelled_inline void __fpcall set(__m256 value) noexcept {
@@ -2213,8 +2506,8 @@ namespace qengine {
 				return get();
 			}
 
-			__compelled_inline __stackcall ~qh_m256() noexcept { }
 	#pragma endregion
+
 		};
 
 		class qh_m256i {
@@ -2225,7 +2518,9 @@ namespace qengine {
 
 			mut __m256i _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -2245,16 +2540,35 @@ namespace qengine {
 
 	#pragma region Accessors
 
-			__compelled_inline __m256i __fpcall get() imut noexcept {
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				is_polyc_alteration = true;
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+				return &_value;
+			}
 
-				auto _return = _value;
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				return _return;
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
+			__compelled_inline __m256i __stackcall get() imut noexcept {
+
+				if (!is_polyc_alteration) {
+
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
+
+				return _value;
 			}
 
 			__compelled_inline void __fpcall set(__m256i value) noexcept {
@@ -2266,7 +2580,7 @@ namespace qengine {
 				_value = value;
 			}
 
-			__compelled_inline imut decltype(_value)* get_raw_memory_address() imut noexcept {
+			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut noexcept {
 				return &_value;
 			}
 
@@ -2335,7 +2649,9 @@ namespace qengine {
 
 			mut __m256d _value;
 
-			mut qhash::qhash_cpu_t _hash{};
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -2355,16 +2671,35 @@ namespace qengine {
 
 	#pragma region Accessors
 
-			__compelled_inline __m256d __fpcall get() imut noexcept {
+			__compelled_inline decltype(_value)* __stackcall open_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+				is_polyc_alteration = true;
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+				return &_value;
+			}
 
-				auto _return = _value;
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				return _return;
+				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
+			__compelled_inline __m256d __stackcall get() imut noexcept {
+
+				if (!is_polyc_alteration) {
+
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
+				}
+
+				return _value;
 			}
 
 			__compelled_inline void __fpcall set(__m256d value) noexcept {
@@ -2376,7 +2711,7 @@ namespace qengine {
 				_value = value;
 			}
 
-			__compelled_inline imut decltype(_value)* get_raw_memory_address() noexcept {
+			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut noexcept {
 				return &_value;
 			}
 
@@ -2455,13 +2790,40 @@ namespace qengine {
 
 			mut std::string _value;
 
-			mut qhash::qhash_cpu_t _hash;
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
 		public:
 
 	#pragma region CTOR
+
+			__compelled_inline std::string* __stackcall open_str_ptr() imut noexcept {
+
+				is_polyc_alteration = true;
+
+				return &_value;
+			}
+
+			__compelled_inline imut char* __stackcall open_data_ptr() imut noexcept {
+
+				is_polyc_alteration = true;
+
+				return const_cast<char*>(_value.c_str());
+			}
+
+			__compelled_inline bool __stackcall close_data_ptr() imut noexcept {
+
+				auto hash = qhash::qhash_cpu(const_cast<char*>(_value.c_str()), _value.length());
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
 
 			__compelled_inline __stackcall qh_string(imut std::string value) noexcept {
 
@@ -2485,26 +2847,28 @@ namespace qengine {
 
 			__compelled_inline std::string __stackcall get() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(const_cast<char*>(_value.c_str())), sizeof(char) * _value.length());
+				if (!is_polyc_alteration) {
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(const_cast<char*>(_value.c_str())), _value.length());
+
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(_hash, hash), reinterpret_cast<void*>(&_value));
+				}
 
 				return _value;
 			}
 
 			__compelled_inline void __stackcall set(std::string value) noexcept {
 
-				auto hash = qhash::qhash_cpu(const_cast<char*>(value.c_str()), sizeof(char) * value.length());
+				auto hash = qhash::qhash_cpu(const_cast<char*>(value.c_str()), value.length());
 
 				this->_hash = hash;
 
 				_value = value;
 			}
 
-			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() noexcept {
-
-				return &_value;
+			__compelled_inline imut char* __stackcall get_raw_memory_address() imut noexcept {
+				return _value.c_str();
 			}
 
 	#pragma endregion
@@ -2546,13 +2910,40 @@ namespace qengine {
 
 			mut std::wstring _value = L"";
 
-			mut qhash::qhash_cpu_t _hash;
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
 		public:
 
 	#pragma region CTOR
+
+			__compelled_inline std::wstring* __stackcall open_wstr_ptr() imut noexcept {
+
+				is_polyc_alteration = true;
+
+				return &_value;
+			}
+
+			__compelled_inline imut wchar_t* __stackcall open_data_ptr() imut noexcept {
+
+				is_polyc_alteration = true;
+
+				return const_cast<wchar_t*>(_value.c_str());
+			}
+
+			__compelled_inline bool __stackcall close_data_ptr() imut noexcept {
+
+				auto hash = qhash::qhash_cpu(const_cast<wchar_t*>(_value.c_str()), _value.length());
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
 
 			__compelled_inline __stackcall qh_wstring(imut std::wstring value) noexcept {
 
@@ -2576,10 +2967,13 @@ namespace qengine {
 
 			__compelled_inline std::wstring __stackcall get() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(const_cast<wchar_t*>(_value.c_str())), sizeof(wchar_t) * _value.length());
+				if (!is_polyc_alteration) {
 
-				if (hash != _hash)
-					violation_callback(qexcept::q_rogueaccess(this->_hash.hash_obj.hash, hash.hash_obj.hash), reinterpret_cast<void*>(&_value));
+					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(const_cast<wchar_t*>(_value.c_str())), sizeof(wchar_t) * _value.length());
+
+					if (hash != _hash)
+						violation_callback(qexcept::q_rogueaccess(_hash, hash), reinterpret_cast<void*>(&_value));
+				}
 
 				auto _return = _value;
 
@@ -2595,8 +2989,8 @@ namespace qengine {
 				_value = value;
 			}
 
-			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address()imut noexcept {
-				return &_value;
+			__compelled_inline imut wchar_t* __stackcall get_raw_memory_address() imut noexcept {
+				return _value.c_str();;
 			}
 
 	#pragma endregion
@@ -2639,7 +3033,9 @@ namespace qengine {
 			mut void* allocation;
 			mut size_t allocation_size;
 
-			mut qhash::qhash_cpu_t _hash;
+			mut std::uintptr_t _hash;
+
+			mut bool is_polyc_alteration;
 
 	#pragma endregion
 
@@ -2701,17 +3097,37 @@ namespace qengine {
 
 	#pragma region Get / Set
 
-			__compelled_inline bool __regcall get(void* destination, std::uintptr_t offset, std::size_t length) imut noexcept {
+			__compelled_inline imut void* __stackcall open_data_ptr() imut noexcept {
+
+				is_polyc_alteration = true;
+
+				return allocation;
+			}
+
+			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
+
+				auto hash = qhash::qhash_cpu(allocation, allocation_size);
+
+				this->_hash = hash;
+
+				is_polyc_alteration = false;
+
+				return true;
+			}
+
+			__compelled_inline imut bool __regcall get(void* destination, std::uintptr_t offset, std::size_t length) imut noexcept {
 
 				if (!allocation || !destination)
 					return false;
 
-				auto hash = qhash::qhash_cpu(allocation, allocation_size);
+				if (!is_polyc_alteration) {
 
-				if (hash != _hash) {
+					auto hash = qhash::qhash_cpu(allocation, allocation_size);
 
-					violation_callback(qexcept::q_rogueaccess(_hash.hash_obj.hash, hash.hash_obj.hash), allocation);
-					return false;
+					if (hash != _hash) {
+						violation_callback(qexcept::q_rogueaccess(_hash, hash), allocation);
+						return false;
+					}
 				}
 
 				memcpy(destination, reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(allocation) + offset), length);

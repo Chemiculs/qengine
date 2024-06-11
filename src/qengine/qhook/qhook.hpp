@@ -90,13 +90,9 @@ namespace qengine {
 							
 							// hook detected
 							if (!callback_) {
-
-								try {
+								
+								if(fn_detect_o)
 									delete fn_detect_o;
-								}
-								catch (const std::exception& except) {
-									throw except;
-								}
 
 								continue;
 							}

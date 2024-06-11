@@ -62,7 +62,7 @@ namespace qengine {
 
 			std::size_t fn_length_;
 
-			qhash::qhash_cpu_t hash_;
+			std::uintptr_t hash_;
 
 			std::uint8_t* fn_original_state_;
 

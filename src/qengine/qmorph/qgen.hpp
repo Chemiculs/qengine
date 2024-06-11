@@ -20,9 +20,7 @@
 
 #pragma region ASMJIT
 
-// If your bin folder outputs a static library, you don't need it. this seems to cause an unnecessary binary output in some cases.
 #define ASMJIT_STATIC
-
 #include "../extern/asmjit/asmjit.h"
 
 #pragma endregion
