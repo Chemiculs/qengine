@@ -195,6 +195,45 @@ instruct it to, while CLANG / Intel compilers are more likely to listen to user 
   </details>
   
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<details>
+<summary> Compile-Time String Encryption </summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The qxx_string and qxx_wstring classes provide powerful string encryption (at runtime) and control-flow obfuscation (compile-time) themselves, however as they cannot be made to be constexpr-compliant, 
+the string literals may or may not be compiler-evaluated.
+
+These classes alone do not garauntee nor were intended to remove plaintext strings from .data / .bss / .rdata etc, seeing that many of qengine's users request this and use skyCrypt anyways,
+i decided to improve upon the project and comform it's syntax to qengine's naming conventions.
+
+If you require compile-time string encryption, simply use the QSTR macro as below. It can be used to standard std::string objects or used to construct qxx_string objects:
+
+```cpp
+#include <iostream>
+
+#include <qengine/engine/qengine.hpp>
+
+using namespace qengine;
+
+ __singleton std::int32_t __stackcall main() noexcept {
+
+	qtype_enc::qe_string my_string_e(QSTR("Hello World!"));
+
+	std::cout << my_string_e.get() << std::endl;
+
+	std::cin.get();
+
+	return 0;
+}
+```
+
+You can perform a string search in IDA or a Hex Editor on the output binary in debug or release mode, the string won't be detected.
+
+</details>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 <details>
 <summary> " Hello World! " Source / Example </summary>
 
@@ -211,7 +250,7 @@ Here is the obligatory "Hello World" for qengine:
 
 using namespace qengine;
 
- __singleton std::int32_t __stackcall main() noexcept {	//	explicit declarators are used as the point of this project is explicit communication with the compiler, however these are not required
+ __singleton std::int32_t __stackcall main() noexcept {	
 
 	qtype_enc::qe_string my_string_e("Hello World!");
 
@@ -226,6 +265,8 @@ using namespace qengine;
 	std::cout << my_string_eh.get() << std::endl;
 
 	std::cin.get();
+
+	return 0;
 }
 ```
 
@@ -551,6 +592,8 @@ __singleton  std::int32_t __stackcall main() noexcept {
 	std::cout << ".text / header permutations complete!" << std::endl;
 
 	std::cin.get();
+
+	return 0;
 }
 ```
 
@@ -613,6 +656,8 @@ __singleton  std::int32_t __stackcall main() noexcept {
 	auto status = qimport::qimp::invoke<NTSTATUS>(L"user32.dll", "MessageBoxA", NULL, "Hello World", "Hello World", NULL);
 
 	std::cin.get();
+
+	return 0;
 }
 ```
 
