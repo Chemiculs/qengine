@@ -913,5 +913,5 @@ Feel free to submit any bugs with the library you find, and I encourage you to c
 
 
 <p align="center" style="font-size: 20px; font-weight: bold;">
-                                         		0xH4X0R#0390 
+                                         		0xh4x0r
 </p>
