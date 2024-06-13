@@ -459,42 +459,42 @@ namespace qengine {
 			}
 
 			__compelled_inline qh_uint8& __regcall operator*=(imut std::uint8_t value) noexcept {
-				set(static_cast<byte>(get() * value));
+				set(static_cast<std::uint8_t>(get() * value));
 				return *this;
 			}
 
 			__compelled_inline qh_uint8& __regcall operator/=(imut std::uint8_t value) noexcept {
-				set(static_cast<byte>(get() / value));
+				set(static_cast<std::uint8_t>(get() / value));
 				return *this;
 			}
 
 			__compelled_inline qh_uint8& __regcall operator%=(imut std::uint8_t value) noexcept {
-				set(static_cast<byte>(get() % value));
+				set(static_cast<std::uint8_t>(get() % value));
 				return *this;
 			}
 
 			__compelled_inline qh_uint8& __regcall operator^=(imut std::uint8_t value) noexcept {
-				set(static_cast<byte>(get() ^ value));
+				set(static_cast<std::uint8_t>(get() ^ value));
 				return *this;
 			}
 
 			__compelled_inline qh_uint8& __regcall operator&=(imut std::uint8_t value) noexcept {
-				set(static_cast<byte>(get() & value));
+				set(static_cast<std::uint8_t>(get() & value));
 				return *this;
 			}
 
 			__compelled_inline qh_uint8& __regcall operator|=(imut std::uint8_t value) noexcept {
-				set(static_cast<byte>(get() | value));
+				set(static_cast<std::uint8_t>(get() | value));
 				return *this;
 			}
 
 			__compelled_inline qh_uint8& __regcall operator<<=(imut std::uint8_t value) noexcept {
-				set(static_cast<byte>(get() << value));
+				set(static_cast<std::uint8_t>(get() << value));
 				return *this;
 			}
 
 			__compelled_inline qh_uint8& __regcall operator>>=(imut std::uint8_t value) noexcept {
-				set(static_cast<byte>(get() >> value));
+				set(static_cast<std::uint8_t>(get() >> value));
 				return *this;
 			}
 
