@@ -159,7 +159,7 @@ namespace qengine {
 
 				/* incrementally shift the bits left to ensure the entire output word has been marked by the sizeof(data) (this is more important for smaller datasets to reduce collision rates) */
 				epilogue ^= static_cast<uint32_t>((QHEPILOGUE32 ^ (length << ((length * 8) % (((i == 0 ? 1 : i) * 8))))));
-				reinterpret_cast<byte*>(&hash_r)[i] ^= reinterpret_cast<std::uint8_t*>(&epilogue)[i];
+				reinterpret_cast<std::uint8_t*>(&hash_r)[i] ^= reinterpret_cast<std::uint8_t*>(&epilogue)[i];
 
 				/* shift length left i * (sizeof( byte in bits ), xor hash by results to make the result more unique */
 				hash_r ^= (((significance_switch ? most_significant_length : least_significant_length) << (32 - ((i * 8) > 0 ? (i * 8) : 8))));
@@ -218,7 +218,7 @@ namespace qengine {
 
 				/* incrementally shift the bits left to ensure the entire output word has been marked by the sizeof(data) (this is more important for smaller datasets) */
 				epilogue ^= static_cast<uint64_t>((QHEPILOGUE64 ^ (length << ((length * 8) % (((i == 0 ? 1 : i) * 8))))));
-				reinterpret_cast<byte*>(&hash_r)[i] ^= reinterpret_cast<std::uint8_t*>(&epilogue)[i];
+				reinterpret_cast<std::uint8_t*>(&hash_r)[i] ^= reinterpret_cast<std::uint8_t*>(&epilogue)[i];
 
 				/* shift length left i * (sizeof( byte in bits ), xor hash by results to make the result more unique */
 				hash_r ^= (((significance_switch ? most_significant_length : least_significant_length) << (64 - ((i * 8) > 0 ? (i * 8) : 8))));
@@ -272,6 +272,10 @@ namespace qengine {
 
 #endif
 
+#pragma region Preprocessor
+
 #pragma pack(pop)
+
+#pragma endregion
 
 #endif
