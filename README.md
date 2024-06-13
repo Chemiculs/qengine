@@ -6,7 +6,8 @@
 </p>
 
 
-qengine is a Header-Only, Highly Configurable, Compiler-Independent, and largely inlined Binary Obfuscation Toolkit designed for C++ Standard 17 (or higher) Applications for Microsoft Windows. qengine offers ease of use while making your code extremely difficult to understand, especially for classic disassemblers like IDA.
+qengine is a Header-Only, Highly Configurable, Compiler-Independent, and largely inlined Binary Obfuscation Toolkit designed for C++ Standard 17 (or higher) Applications for Microsoft Windows,
+offering ease of use in your projects, while making your output code extremely difficult to understand, especially for classic disassemblers like IDA.
 
 If you are interested in security testing qengine, or downloading further example usage of qengine, please refer to the Research and Development Repository which contains official template projects for these purposes:
 
@@ -28,7 +29,7 @@ This project aims to make binaries appear as unique and unrecognizable as possib
 
 * This will NOT prevent static disk signatures of your executables - however, it will make the task of understanding your code from a classic disassembler such as IDA VERY difficult if used properly, and will prevent memory-dump / memory-scan-based signature detections of your binary.
 
-* This library is (almost) fully inlined, employing a minimalist design and maximum performance + reliability, function inlining allows qengine to hide the actual code you are executing behind a wall of cryptographic instructions and protected memory regions
+* This library is fully inlined, employing a minimalist design and maximum performance + reliability, function inlining allows qengine to hide the actual code you are executing behind a wall of cryptographic instructions and protected memory regions
 
 qengine is very lightweight and incurs a ~1.70% average performance loss vs. standard library / primitive types, likewise you will retain ~98.3% of your application's original performance ( on average ) while simultaneously generating thousands or even millions of junk instructions dilluting your meaningful compiled codebase 
 
@@ -85,6 +86,27 @@ This project does however, if it has the potential which i believe it may, this 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <details>
+<summary> Polymorphic Encryption Algorithm (polyc) </summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The backbone to this project has been it's aggressively-inlined polyc encryption algorithm.
+
+While the algorithm has been strong and reliable, before the most recent update it really couldn't be truly labeled 'polymorphic' except in the sense that it generates its own table data and keys at runtime.
+
+The polyc algorithm has been updated to support encrypted function calls to differing encryption subroutines, encapsulating it's xor pass.
+
+polyc holds a global pointer table which is managed by the qxx_type objects - this table registers or retrieves a pointer entry every time you call the algorithm. This pointer descripts which subroutine pointer must be decrypted, called, and encrypted again.
+
+Below is a diagram of how the polyc algorithm currently works, please bear with my bad MSPAINT artwork:
+
+![polyc diagram](img/polycgraph.png)
+
+</details>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<details>
 <summary>Setup / Usage</summary>
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -92,6 +114,8 @@ This project does however, if it has the potential which i believe it may, this 
 ### ** NOTE: This setup option only works out of the box targetting the MSVC v143 compiler WITH the "Runtime Library" Option set to the default " Multi-threaded DLL (/MD) " build target.
 
 if you wish to target another compiler or Runtime Library version, you MUST first compile [ASMJIT](https://github.com/asmjit/asmjit) and [Capstone](https://github.com/capstone-engine/capstone) from their source(s), with the according compiler settings from your target project applied and then replace the library files output with the according target output filename(s) in the <root_directory>/qengine/engine/extern/ folder :
+
+UPDATE: If you are using llvm / clang, there is an alternative llvm / clang compatible build of the static libraries located in the  /src/qengine/extern/clang_alternate_libs, set this as your library directory with llvm / clang projects.
 
 ```cpp
 
@@ -174,6 +198,45 @@ instruct it to, while CLANG / Intel compilers are more likely to listen to user 
   </details>
   
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<details>
+<summary> Compile-Time String Encryption </summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The qxx_string and qxx_wstring classes provide powerful string encryption (at runtime) and control-flow obfuscation (compile-time) themselves, however as they cannot be made to be constexpr-compliant, 
+the string literals may or may not be compiler-evaluated.
+
+These classes alone do not garauntee nor were intended to remove plaintext strings from .data / .bss / .rdata etc, seeing that many of qengine's users request this and use skyCrypt anyways,
+i decided to improve upon the project and comform it's syntax to qengine's naming conventions.
+
+If you require compile-time string encryption, simply use the QSTR macro as below. It can be used to standard std::string objects or used to construct qxx_string objects:
+
+```cpp
+#include <iostream>
+
+#include <qengine/engine/qengine.hpp>
+
+using namespace qengine;
+
+ __singleton std::int32_t __stackcall main() noexcept {
+
+	qtype_enc::qe_string my_string_e(QSTR("Hello World!"));
+
+	std::cout << my_string_e.get() << std::endl;
+
+	std::cin.get();
+
+	return 0;
+}
+```
+
+You can perform a string search in IDA or a Hex Editor on the output binary in debug or release mode, the string won't be detected.
+
+</details>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 <details>
 <summary> " Hello World! " Source / Example </summary>
 
@@ -190,7 +253,7 @@ Here is the obligatory "Hello World" for qengine:
 
 using namespace qengine;
 
- __singleton std::int32_t __stackcall main() noexcept {	//	explicit declarators are used as the point of this project is explicit communication with the compiler, however these are not required
+ __singleton std::int32_t __stackcall main() noexcept {	
 
 	qtype_enc::qe_string my_string_e("Hello World!");
 
@@ -205,6 +268,8 @@ using namespace qengine;
 	std::cout << my_string_eh.get() << std::endl;
 
 	std::cin.get();
+
+	return 0;
 }
 ```
 
@@ -265,6 +330,7 @@ __fpcall
 </details>
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 <details>
 <summary> Windows SEH-based obfuscation and CXX EH-based obfuscation </summary>
 
@@ -529,6 +595,8 @@ __singleton  std::int32_t __stackcall main() noexcept {
 	std::cout << ".text / header permutations complete!" << std::endl;
 
 	std::cin.get();
+
+	return 0;
 }
 ```
 
@@ -591,6 +659,8 @@ __singleton  std::int32_t __stackcall main() noexcept {
 	auto status = qimport::qimp::invoke<NTSTATUS>(L"user32.dll", "MessageBoxA", NULL, "Hello World", "Hello World", NULL);
 
 	std::cin.get();
+
+	return 0;
 }
 ```
 
@@ -794,9 +864,10 @@ qengine has a separate repository available, which contains the current official
 
 I am one person and only have so much time on my hands, and i have other projects i am working on + an unrelated IRL job. 
 
-I may be fairly effecient at pumping out code, but i am left with even less time to do the in-depth debugging, reversal and documentation on this project which i would like to achieve for this project ultimately. 
+While i may be fairly effecient at pumping out code, but i am left with even less time to do the in-depth debugging, reversal and documentation on this project which i would like to achieve for this project ultimately. 
 
-I wouldn't mind help to get there, so if you encounter any bugs please submit a report.
+Currently there is a problem with qengine in regards to it's interaction with llvm / clang, this seems to come with a new version of llvm / clang or as a result of a (likely minor) change in code which i am unaware of.
+If anyone finds a way to compell inline directives with llvm / clang like it used to, please let me know.
 
 ## - Ideas / Collaborators
 
