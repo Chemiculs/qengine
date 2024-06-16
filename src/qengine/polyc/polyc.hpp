@@ -482,7 +482,7 @@ namespace qengine {
 
 				reinterpret_cast<std::uintptr_t>(abs),
 				// Below is an annoying ternary expression with the sole intention of including a chance of subroutine0 and subroutine8 mutators both being selected given a roughly equivalent chance
-				std::chrono::high_resolution_clock::now().time_since_epoch().count() % 2 ? ( (std::chrono::high_resolution_clock::now().time_since_epoch().count() % 9) - 1 ) : (std::chrono::high_resolution_clock::now().time_since_epoch().count() % 9),
+				std::chrono::high_resolution_clock::now().time_since_epoch().count() % 2 ? static_cast<std::uint8_t>( (std::chrono::high_resolution_clock::now().time_since_epoch().count() % 9) - 1 ) : static_cast<std::uint8_t>(std::chrono::high_resolution_clock::now().time_since_epoch().count() % 9),
 				false,
 				_polyc_pointer_table->size(),
 				length
@@ -540,9 +540,9 @@ namespace qengine {
 
 			}
 
-			if(execute_subroutine)
-				if (algo_pointer_entry->is_crypted)
-					if (!internal_do_algo_subroutine_byref(algo_pointer_entry))
+			if(execute_subroutine)												//	Safety check to ensure this data is manipulated using a subroutine 
+				if (algo_pointer_entry->is_crypted)								//	Check if the entry is was crypted, this means the XOR (decryption) subroutine has completed and we now need to realign our data to match the inverse subroutine algorithm
+					if (!internal_do_algo_subroutine_byref(algo_pointer_entry)) //  This function automatically toggles the is_crypted field when called
 						return false;
 
 			return true;
