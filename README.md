@@ -504,7 +504,7 @@ Below I will give an example of how to create a callback function to handle this
 
 using namespace qengine;
 
-__singleton  void __regcall violation_callback(qexcept::q_rogueaccess except, void* data) noexcept {
+__singleton  void __regcall violation_callback(qexcept::q_rogueaccess except, c_void data) noexcept {
 
 	if (except.id != qexcept::MEMORY_ALTERATION) // ensure this callback has been raised due to memory alteration
 		return;
@@ -764,7 +764,7 @@ __singleton  std::int32_t __stackcall main() noexcept {
 
 	qhook::qhook_t::set_client_callback_fn(&callback);
 
-	qhook::qhook_t((void*)&myimportantmethod);
+	qhook::qhook_t((c_void)&myimportantmethod);
 
 	// any of the below hooks will be detected - you could change the registers used etc. if you wanted to
 
@@ -785,7 +785,7 @@ __singleton  std::int32_t __stackcall main() noexcept {
 
 	std::cout << "emplacing hook..." << std::endl;
 
-	auto* ptr = (void*)&myimportantmethod;
+	auto* ptr = (c_void)&myimportantmethod;
 
 	DWORD tmp{};
 

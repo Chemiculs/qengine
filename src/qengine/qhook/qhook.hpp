@@ -35,7 +35,7 @@ namespace qengine {
 
 #pragma region Singleton Globals
 
-			static void(__regcall * callback_)(qhook_detection_t*);
+			static void( __regcall * callback_ )( qhook_detection_t* );
 
 			static bool is_cancel_flag;
 
@@ -86,7 +86,7 @@ namespace qengine {
 
 						qhook_detection_t* fn_detect_o = nullptr;
 
-						if (fn_detect_o = qhook_util::analyze_fn_hook_presence(reinterpret_cast<const void*>(fn.function_address()), fn.function_length(), fn.module_information(), fn.capstone_handle())) {
+						if (fn_detect_o = qhook_util::analyze_fn_hook_presence(reinterpret_cast<imut c_void>(fn.function_address()), fn.function_length(), fn.module_information(), fn.capstone_handle())) {
 							
 							// hook detected
 							if (!callback_) {
@@ -194,7 +194,7 @@ namespace qengine {
 
 #pragma region Singleton Globals
 
-			static volatile bool is_callback_init;
+			static bool is_callback_init;
 
 			static qcallback::qmem_except_hook client_callback_fn_;
 
@@ -204,7 +204,7 @@ namespace qengine {
 
 #pragma region Instanced Globals
 
-			void* fn_address_;
+			mut void* fn_address_;
 
 #pragma endregion
 
@@ -219,6 +219,15 @@ namespace qengine {
 					except->is_hook,
 						except
 				});
+			}
+
+#pragma endregion
+
+#pragma region Single-Threaded Scan Routine
+
+			static __compelled_inline qhook_detection_t* __regcall single_scan_fn_hook_presence ( imut c_void fn, imut std::size_t fn_sz ) noexcept {
+				
+
 			}
 
 #pragma endregion
@@ -272,7 +281,7 @@ namespace qengine {
 
 #pragma region Static Declarators
 
-		volatile bool qhook_t::is_callback_init = false;
+		bool qhook_t::is_callback_init = false;
 
 		qcallback::qmem_except_hook qhook_t::client_callback_fn_ = nullptr;
 

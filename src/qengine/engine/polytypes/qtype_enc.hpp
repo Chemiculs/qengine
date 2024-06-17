@@ -2195,7 +2195,7 @@ namespace qengine{
 
 			__optimized_dtor ~qe_string() noexcept {
 
-				polyc::unregister_polyc_pointer(_value.c_str());
+				polyc::unregister_polyc_pointer((c_void)_value.c_str());
 			}
 
 #pragma endregion
@@ -2284,7 +2284,7 @@ namespace qengine{
 
 			__optimized_dtor ~qe_wstring() noexcept {
 
-				polyc::unregister_polyc_pointer(_value.c_str());
+				polyc::unregister_polyc_pointer((imut c_void)_value.c_str());
 			}
 
 #pragma endregion

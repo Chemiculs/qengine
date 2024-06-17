@@ -118,7 +118,7 @@ namespace qengine {
 							
 							for (std::intptr_t x = i - 1; x > -1; --x) {
 
-								if (instructions[x].id == X86_INS_MOV || instructions[x].id == X86_INS_MOVABS) {
+								if (instructions[x].id == X86_INS_MOV || instructions[x].id == X86_INS_MOVABS || instructions[x].id == X86_INS_MOVZX || instructions[x].id == X86_INS_MOVSX) { // mov reg jmp reg hook detected
 
 									if (( instructions[x].detail->x86.operands[0].type == X86_OP_REG ) && instructions[x].detail->x86.operands[1].type == X86_OP_IMM) { // immediate mov into register
 
@@ -142,6 +142,10 @@ namespace qengine {
 										}
 									}
 								}
+
+								// You need to get context() and watch rip / eip in feature to track the hook and dump the malicious code
+								// It doesn't look like i properly checked for the possibility of a push imm32 instruction for 32-bit applications
+
 								else if (instructions[x].id == X86_INS_POP) { // check if top of stack popped into our register
 
 									if (instructions[x].detail->x86.operands[0].type == X86_OP_REG && (instructions[x].detail->x86.operands[0].reg == instructions[i].detail->x86.operands[0].reg) ) { // pop value off stack into same register, scan for last push

@@ -57,24 +57,6 @@ namespace qengine {
 
 #pragma endregion
 
-	#pragma region Algorithm Constants
-
-		static imut constexpr auto QCTIME_SEED = __TIME__[7];
-
-	#define BYTE_SET 0xFFui8
-
-	#ifdef _WIN64
-
-	#define BIT_SCRAMBLE 0x0101010101010101ui64
-
-	#else
-
-	#define BIT_SCRAMBLE 0x01010101ui32
-
-	#endif
-
-	#pragma endregion
-
 	#pragma region Globals
 
 		extern bool _polyc_initialized;
@@ -542,7 +524,7 @@ namespace qengine {
 
 			if(execute_subroutine)												//	Safety check to ensure this data is manipulated using a subroutine 
 				if (algo_pointer_entry->is_crypted)								//	Check if the entry is was crypted, this means the XOR (decryption) subroutine has completed and we now need to realign our data to match the inverse subroutine algorithm
-					if (!internal_do_algo_subroutine_byref(algo_pointer_entry)) //  This function automatically toggles the is_crypted field when called
+					if (!internal_do_algo_subroutine_byref(algo_pointer_entry)) //  This function automatically toggles the is_crypted field when executed
 						return false;
 
 			return true;
