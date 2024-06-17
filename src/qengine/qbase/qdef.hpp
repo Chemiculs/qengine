@@ -10,6 +10,7 @@
 #pragma region Operating System
 
 #include <windows.h>
+#include <Psapi.h>
 
 #pragma endregion
 
