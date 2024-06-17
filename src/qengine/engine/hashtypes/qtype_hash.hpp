@@ -166,7 +166,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -179,7 +179,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -190,7 +190,7 @@ namespace qengine {
 
 			__compelled_inline void __regcall set( std::int8_t value ) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -359,7 +359,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -372,7 +372,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -383,7 +383,7 @@ namespace qengine {
 
 			__compelled_inline void __regcall set(std::uint8_t value) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -556,7 +556,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -569,7 +569,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -580,7 +580,7 @@ namespace qengine {
 
 			__compelled_inline void __regcall set(std::int16_t value) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -746,7 +746,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -759,7 +759,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -770,7 +770,7 @@ namespace qengine {
 
 			__compelled_inline void __regcall set(std::uint16_t value) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -941,7 +941,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -954,7 +954,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -965,7 +965,7 @@ namespace qengine {
 
 			__compelled_inline void __regcall set(std::int32_t value) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -1132,7 +1132,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -1145,7 +1145,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -1156,7 +1156,7 @@ namespace qengine {
 
 			__compelled_inline void __regcall set(std::uint32_t value) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -1328,7 +1328,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -1341,7 +1341,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -1352,7 +1352,7 @@ namespace qengine {
 
 			__compelled_inline void __regcall set(std::int64_t value) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -1519,7 +1519,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -1532,7 +1532,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -1542,7 +1542,7 @@ namespace qengine {
 			}
 			__compelled_inline void __regcall set(std::uint64_t value) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -1719,7 +1719,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -1732,7 +1732,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -1743,7 +1743,7 @@ namespace qengine {
 
 			__compelled_inline void __regcall set( float value ) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -1863,7 +1863,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -1876,7 +1876,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -1887,7 +1887,7 @@ namespace qengine {
 
 			__compelled_inline void __fpcall set(double value) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -2012,7 +2012,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -2025,7 +2025,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -2036,7 +2036,7 @@ namespace qengine {
 
 			__compelled_inline void __fpcall set(__m128 value) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -2147,7 +2147,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -2160,7 +2160,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -2171,7 +2171,7 @@ namespace qengine {
 
 			__compelled_inline void __fpcall set(__m128i value) {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -2277,7 +2277,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -2290,7 +2290,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -2301,7 +2301,7 @@ namespace qengine {
 
 			__compelled_inline void __fpcall set(__m128d value) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -2418,7 +2418,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -2431,7 +2431,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -2442,7 +2442,7 @@ namespace qengine {
 
 			__compelled_inline void __fpcall set(__m256 value) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -2549,7 +2549,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -2562,7 +2562,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -2573,7 +2573,7 @@ namespace qengine {
 
 			__compelled_inline void __fpcall set(__m256i value) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -2680,7 +2680,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(&_value, sizeof(_value));
+				auto hash = qengine::qhash::qhash_cpu(&_value, sizeof(_value));
 
 				this->_hash = hash;
 
@@ -2693,7 +2693,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(&_value), sizeof(_value));
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(this->_hash, hash), reinterpret_cast<void*>(&_value));
@@ -2704,7 +2704,7 @@ namespace qengine {
 
 			__compelled_inline void __fpcall set(__m256d value) noexcept {
 
-				auto hash = qhash::qhash_cpu(&value, sizeof(value));
+				auto hash = qengine::qhash::qhash_cpu(&value, sizeof(value));
 
 				this->_hash = hash;
 
@@ -2816,7 +2816,7 @@ namespace qengine {
 
 			__compelled_inline bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(const_cast<char*>(_value.c_str()), _value.length());
+				auto hash = qengine::qhash::qhash_cpu(const_cast<char*>(_value.c_str()), _value.length());
 
 				this->_hash = hash;
 
@@ -2849,7 +2849,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(const_cast<char*>(_value.c_str())), _value.length());
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(const_cast<char*>(_value.c_str())), _value.length());
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(_hash, hash), reinterpret_cast<void*>(&_value));
@@ -2860,7 +2860,7 @@ namespace qengine {
 
 			__compelled_inline void __stackcall set(std::string value) noexcept {
 
-				auto hash = qhash::qhash_cpu(const_cast<char*>(value.c_str()), value.length());
+				auto hash = qengine::qhash::qhash_cpu(const_cast<char*>(value.c_str()), value.length());
 
 				this->_hash = hash;
 
@@ -2936,7 +2936,7 @@ namespace qengine {
 
 			__compelled_inline bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(const_cast<wchar_t*>(_value.c_str()), _value.length());
+				auto hash = qengine::qhash::qhash_cpu(const_cast<wchar_t*>(_value.c_str()), _value.length());
 
 				this->_hash = hash;
 
@@ -2969,7 +2969,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(reinterpret_cast<void*>(const_cast<wchar_t*>(_value.c_str())), sizeof(wchar_t) * _value.length());
+					auto hash = qengine::qhash::qhash_cpu(reinterpret_cast<void*>(const_cast<wchar_t*>(_value.c_str())), sizeof(wchar_t) * _value.length());
 
 					if (hash != _hash)
 						violation_callback(qexcept::q_rogueaccess(_hash, hash), reinterpret_cast<void*>(&_value));
@@ -2982,7 +2982,7 @@ namespace qengine {
 
 			__compelled_inline void __regcall set(std::wstring value) noexcept {
 
-				auto hash = qhash::qhash_cpu(const_cast<wchar_t*>(value.c_str()), sizeof(wchar_t) * value.length());
+				auto hash = qengine::qhash::qhash_cpu(const_cast<wchar_t*>(value.c_str()), sizeof(wchar_t) * value.length());
 
 				this->_hash = hash;
 
@@ -3106,7 +3106,7 @@ namespace qengine {
 
 			__compelled_inline imut bool __stackcall close_data_ptr() imut noexcept {
 
-				auto hash = qhash::qhash_cpu(allocation, allocation_size);
+				auto hash = qengine::qhash::qhash_cpu(allocation, allocation_size);
 
 				this->_hash = hash;
 
@@ -3122,7 +3122,7 @@ namespace qengine {
 
 				if (!is_polyc_alteration) {
 
-					auto hash = qhash::qhash_cpu(allocation, allocation_size);
+					auto hash = qengine::qhash::qhash_cpu(allocation, allocation_size);
 
 					if (hash != _hash) {
 						violation_callback(qexcept::q_rogueaccess(_hash, hash), allocation);
@@ -3169,7 +3169,7 @@ namespace qengine {
 
 				memcpy(reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(allocation) + offset), source, length);
 
-				_hash = qhash::qhash_cpu(allocation, allocation_size);
+				_hash = qengine::qhash::qhash_cpu(allocation, allocation_size);
 
 				return true;
 			}
@@ -3227,7 +3227,7 @@ namespace qengine {
 
 				allocation_size = size;
 
-				_hash = qhash::qhash_cpu(allocation, size);
+				_hash = qengine::qhash::qhash_cpu(allocation, size);
 
 				return true;
 			}
@@ -3243,7 +3243,7 @@ namespace qengine {
 				allocation = allocation_;
 				allocation_size = size;
 
-				_hash = qhash::qhash_cpu(allocation_, size);
+				_hash = qengine::qhash::qhash_cpu(allocation_, size);
 
 				return true;
 			}
