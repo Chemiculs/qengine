@@ -2514,7 +2514,7 @@ namespace qengine {
 
 			__compelled_inline __stackcall ~qeh_string() noexcept { 
 				
-				polyc::unregister_polyc_pointer((c_void)_value.open_data_ptr());
+				polyc::unregister_polyc_pointer(_value.open_data_ptr());
 			}
 
 #pragma endregion
@@ -2604,7 +2604,7 @@ namespace qengine {
 
 			__compelled_inline __stackcall ~qeh_wstring() noexcept {
 				
-				polyc::unregister_polyc_pointer((imut c_void)_value.open_data_ptr());
+				polyc::unregister_polyc_pointer(_value.open_data_ptr());
 			}
 
 #pragma endregion
@@ -2870,7 +2870,7 @@ namespace qengine {
 
 			__compelled_inline ~qeh_malloc() noexcept {
 				
-				polyc::unregister_polyc_pointer( (imut c_void)allocation.open_data_ptr() );
+				polyc::unregister_polyc_pointer(allocation.open_data_ptr());
 			}
 
 #pragma endregion
