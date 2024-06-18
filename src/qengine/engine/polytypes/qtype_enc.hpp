@@ -137,7 +137,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			std::int8_t _value;
+			volatile std::int8_t _value;
 
 #pragma endregion
 
@@ -152,7 +152,7 @@ namespace qengine{
 
 			__optimized_dtor ~qe_int8() noexcept {
 				
-				polyc::unregister_polyc_pointer(&_value);
+				polyc::unregister_polyc_pointer(const_cast<std::int8_t*>(&_value));
 			}
 
 #pragma endregion
@@ -177,7 +177,7 @@ namespace qengine{
 
 				_value = value;
 
-				return polyc::algo(&_value, sizeof(_value));
+				return polyc::algo(const_cast<std::int8_t*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
@@ -293,7 +293,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			std::uint8_t _value;
+			volatile std::uint8_t _value;
 
 #pragma endregion
 
@@ -307,7 +307,7 @@ namespace qengine{
 
 			__optimized_dtor ~qe_uint8() noexcept {
 
-				polyc::unregister_polyc_pointer(&_value);
+				polyc::unregister_polyc_pointer(const_cast<std::uint8_t*>(&_value));
 			}
 
 #pragma endregion
@@ -329,7 +329,7 @@ namespace qengine{
 
 				_value = value;
 
-				return polyc::algo(&_value, sizeof(_value));
+				return polyc::algo(const_cast<std::uint8_t*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
@@ -448,7 +448,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			std::int16_t _value;
+			volatile std::int16_t _value;
 
 #pragma endregion
 
@@ -462,7 +462,7 @@ namespace qengine{
 
 			__optimized_dtor ~qe_int16() noexcept {
 
-				polyc::unregister_polyc_pointer(&_value);
+				polyc::unregister_polyc_pointer(const_cast<std::int16_t*>(&_value));
 			}
 
 #pragma endregion
@@ -484,7 +484,7 @@ namespace qengine{
 
 				_value = value;
 
-				return polyc::algo(&_value, sizeof(_value));
+				return polyc::algo(const_cast<std::int16_t*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
@@ -599,7 +599,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			std::uint16_t _value;
+			volatile std::uint16_t _value;
 
 #pragma endregion
 
@@ -613,7 +613,7 @@ namespace qengine{
 
 			__optimized_dtor qe_uint16() noexcept {
 
-				polyc::unregister_polyc_pointer(&_value);
+				polyc::unregister_polyc_pointer(const_cast<std::uint16_t*>(&_value));
 			}
 
 #pragma endregion
@@ -635,7 +635,7 @@ namespace qengine{
 
 				_value = value;
 
-				return polyc::algo(&_value, sizeof(_value));
+				return polyc::algo(const_cast<std::uint16_t*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
@@ -754,7 +754,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			std::int32_t _value;
+			volatile std::int32_t _value;
 
 #pragma endregion
 
@@ -768,7 +768,7 @@ namespace qengine{
 
 			__optimized_dtor ~qe_int32() noexcept {
 
-				polyc::unregister_polyc_pointer(&_value);
+				polyc::unregister_polyc_pointer(const_cast<std::int32_t*>(&_value));
 			}
 
 #pragma endregion
@@ -790,7 +790,7 @@ namespace qengine{
 
 				_value = value;
 
-				return polyc::algo(&_value, sizeof(_value));
+				return polyc::algo(const_cast<std::int32_t*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
@@ -905,7 +905,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			std::uint32_t _value;
+			volatile std::uint32_t _value;
 
 #pragma endregion
 
@@ -919,7 +919,7 @@ namespace qengine{
 
 			__optimized_dtor ~qe_uint32() noexcept {
 
-				polyc::unregister_polyc_pointer(&_value);
+				polyc::unregister_polyc_pointer(const_cast<std::uint32_t*>(&_value));
 			}
 
 #pragma endregion
@@ -941,7 +941,7 @@ namespace qengine{
 
 				_value = value;
 
-				return polyc::algo(&_value, sizeof(_value));
+				return polyc::algo(const_cast<std::uint32_t*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
@@ -1062,7 +1062,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			std::int64_t _value;
+			volatile std::int64_t _value;
 
 #pragma endregion
 
@@ -1076,7 +1076,7 @@ namespace qengine{
 
 			__optimized_dtor ~qe_int64() noexcept {
 
-				polyc::unregister_polyc_pointer(&_value);
+				polyc::unregister_polyc_pointer(const_cast<std::int64_t*>(&_value));
 			}
 
 #pragma endregion
@@ -1098,7 +1098,7 @@ namespace qengine{
 
 				_value = value;
 
-				return polyc::algo(&_value, sizeof(_value));
+				return polyc::algo(const_cast<std::int64_t*>(&_value), sizeof(_value));
 			}
 #pragma endregion
 
@@ -1212,7 +1212,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			std::uint64_t _value;
+			volatile std::uint64_t _value;
 
 #pragma endregion
 
@@ -1226,7 +1226,7 @@ namespace qengine{
 
 			__optimized_dtor ~qe_uint64() noexcept {
 
-				polyc::unregister_polyc_pointer(&_value);
+				polyc::unregister_polyc_pointer(const_cast<std::uint64_t*>(&_value));
 			}
 
 #pragma endregion
@@ -1248,7 +1248,7 @@ namespace qengine{
 
 				_value = value;
 
-				return polyc::algo(&_value, sizeof(_value));
+				return polyc::algo(const_cast<std::uint64_t*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
@@ -1371,7 +1371,7 @@ namespace qengine{
 
 		private:
 
-			float _value;
+			volatile float _value;
 
 		public:
 
@@ -1383,7 +1383,7 @@ namespace qengine{
 
 			__optimized_dtor ~qe_float() noexcept {
 
-				polyc::unregister_polyc_pointer(&_value);
+				polyc::unregister_polyc_pointer(const_cast<float*>(&_value));
 			}
 
 #pragma endregion
@@ -1405,7 +1405,7 @@ namespace qengine{
 
 				_value = value;
 
-				return polyc::algo(&_value, sizeof(_value));
+				return polyc::algo(const_cast<float*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
@@ -1470,7 +1470,7 @@ namespace qengine{
 
 		private:
 
-			double _value;
+			volatile double _value;
 
 		public:
 
@@ -1480,16 +1480,31 @@ namespace qengine{
 				set(value);
 			}
 
+			__optimized_dtor ~qe_double() noexcept {
+
+				polyc::unregister_polyc_pointer(const_cast<double*>(&_value));
+			}
+
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline double __stackcall get() imut noexcept {
-				return get();
+			__compelled_inline imut float __stackcall get() imut noexcept {
+
+				polyc::algo(const_cast<double*>(&_value), sizeof(_value));
+
+				auto value = _value;
+
+				polyc::algo(const_cast<double*>(&_value), sizeof(_value));
+
+				return value;
 			}
 
-			__compelled_inline void __fpcall set(imut double value) noexcept {
-				set(value);
+			__compelled_inline imut bool __fpcall set(imut float value) noexcept {
+
+				_value = value;
+
+				return polyc::algo(const_cast<double*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
