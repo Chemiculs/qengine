@@ -6,6 +6,7 @@ src/qengine/engine/polytypes/qtype_enc.hpp.bak
 src/qengine/engine/hashtypes/qtype_hash.hpp.bak
 src/qengine/engine/polyhashtypes/qtype_enchash.hpp.bak
 src/qengine/polyc/polyc.hpp.bak
+src/qengine/qimport/qmap.hpp
 
 src/qengine/extern/asmjit/
 src/qengine_c_wrapper/

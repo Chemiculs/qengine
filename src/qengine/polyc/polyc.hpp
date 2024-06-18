@@ -443,8 +443,6 @@ namespace qengine {
 				for (auto i = (existing_entry->pointer_table_index + 1); i < _polyc_pointer_table->size(); ++i)
 					--(*_polyc_pointer_table)[i].pointer_table_index;
 
-			RtlZeroMemory(existing_entry, sizeof(polyc_pointer_t));	//	Wipe pointer table data for this entry before removal
-
 			_polyc_pointer_table->erase(_polyc_pointer_table->begin() + existing_entry->pointer_table_index);
 
 			return true;
