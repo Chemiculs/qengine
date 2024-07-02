@@ -180,7 +180,7 @@ class qh_struct{
 				return true;
 			}
 
-			__compelled_inline imut T __stackcall get() imut nex {
+			__singleton imut T __stackcall get() imut nex {
 
 				if (!is_polyc_alteration) {
 
@@ -221,7 +221,7 @@ class qh_struct{
 
 				_value.*member = std::move(value);
 
-				auto hash = qhash::qhash_cpu(volatile_cast<T*>(&_value), sizeof(_value));
+				auto hash = qhash::qhash_cpu(volatile_cast<T*>(&_value), sizeof(T));
 
 				this->_hash = std::move(hash);
 

@@ -46,7 +46,7 @@ namespace qengine {
 
 		__compelled_inline void __stackcall init_qtype_hash(qcallback::qmem_exception_rogue_c callback = qtype_hash::violation_callback_d) nex {
 
-			if (is_init)
+			if (is_init || qtype_hash::is_init)
 				return;
 
 			qtype_hash::init_hash_t(callback);

@@ -165,7 +165,7 @@ namespace qengine {
 				hash_r ^= (((significance_switch ? most_significant_length : least_significant_length) << (32 - ((i * 8) > 0 ? (i * 8) : 8))));
 			}
 
-			hash_r = (preamble_result & hash_r) ^ ((0xFFFFFFFF - (most_significant * 255) - (least_significant * 128)));
+			hash_r = (preamble_result ^ hash_r) ^ ((0xAEAEAEAE - (most_significant * 255) - (least_significant * 128)));
 
 			// Wipe Singletons / Locals
 			RtlZeroMemory(&preamble_result, sizeof(std::uint32_t));
@@ -231,7 +231,7 @@ namespace qengine {
 				hash_r ^= (((significance_switch ? most_significant_length : least_significant_length) << (64 - ((i * 8) > 0 ? (i * 8) : 8))));
 			}
 
-			hash_r = (preamble_result & hash_r) ^ ((0xFFFFFFFFFFFFFFFF - (most_significant * 255) - (least_significant * 128)));
+			hash_r = (preamble_result ^ hash_r) ^ ((0xAEAEAEAEAEAEAEAE - (most_significant * 255) - (least_significant * 128)));
 
 			// Wipe Singletons / Locals
 			RtlZeroMemory(&preamble_result, sizeof(std::uint64_t));
