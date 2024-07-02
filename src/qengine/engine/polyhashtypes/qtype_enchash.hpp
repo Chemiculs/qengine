@@ -127,7 +127,7 @@ class qeh_struct {
 			}
 
 			template<typename _T>
-			__compelled_inline imut bool __regcall set(imut _T T::* member, imut _T value) nex{
+			__compelled_inline imut bool __regcall set(_T T::* member, imut _T value) nex{
 
 				auto decrypted = get();
 

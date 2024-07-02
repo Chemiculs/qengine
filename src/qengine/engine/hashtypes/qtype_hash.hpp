@@ -194,7 +194,7 @@ class qh_struct{
 			}
 
 			template<typename _T>
-			__compelled_inline decltype(auto) __regcall get( imut _T T::* member ) imut nex {
+			__compelled_inline decltype(auto) __regcall get( _T T::* member ) imut nex {
 
 				if (!is_polyc_alteration) {
 
@@ -217,13 +217,15 @@ class qh_struct{
 			}
 
 			template<typename _T>
-			__compelled_inline imut bool __regcall set( imut _T T::* member, imut _T value ) nex {
+			__compelled_inline imut bool __regcall set( _T T::* member, imut _T value ) nex {
 
 				_value.*member = std::move(value);
 
 				auto hash = qhash::qhash_cpu(volatile_cast<T*>(&_value), sizeof(_value));
 
 				this->_hash = std::move(hash);
+
+				return true;
 			}
 
 			__compelled_inline imut T* __stackcall get_raw_memory_address() imut nex {

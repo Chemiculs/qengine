@@ -2752,7 +2752,7 @@ namespace qengine{
 				c_void src,
 				imut std::uintptr_t pos,
 				imut std::size_t length,
-				bool free_src = false
+				imut bool free_src = false
 			) nex {
 
 				auto dec_alloc = get();
