@@ -122,13 +122,6 @@ namespace qengine {
 
 #pragma region Memory Exception Presets
 
-		struct q_fn_alteration : qexcept_mem{
-
-			void* violation_object_;
-
-			q_fn_alteration(bool state, void* violation_object) : qexcept_mem( state ? qexcept_mem_e::HOOK_DETECTED : qexcept_mem_e::FN_HASH_CORRUPT), violation_object_(violation_object) {  }
-		};
-
 		struct q_badalloc : qexcept_mem {
 			q_badalloc() : qexcept_mem(qexcept_mem_e::BAD_ALLOC) {  }
 		};

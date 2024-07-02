@@ -19,9 +19,7 @@
 
 #include <string>
 #include <vector>
-#include <memory>
 #include <cstdlib>
-#include <exception>
 
 #pragma endregion
 
@@ -96,12 +94,6 @@
 
 #pragma endregion
 
-#pragma region Using Directives
-
-using namespace qengine::polyc;
-
-#pragma endregion
-
 namespace qengine{
 
 	namespace qtype_enc {
@@ -112,20 +104,168 @@ namespace qengine{
 
 #pragma endregion
 
-#pragma region Static Methods
+#pragma region Types
 
-		// this must be called once at application startup / or when you wish to begin using any type included in this header
-		static void __regcall init_constants() noexcept {
-			if (!is_init) {
-				is_init = true;
+#pragma region Template / User Defined
 
-				polyc::polyc_init();
-			}
-		}
+		template<typename T>
+		class qe_struct {
+
+		private:
+
+#pragma region Encrypted value
+
+			mut noregister T _value;
 
 #pragma endregion
 
-#pragma region Types
+		public:
+
+#pragma region Ctor / Dtor
+
+			__optimized_ctor qe_struct( imut T value = T{} ) nex {
+
+				set(value);
+			}
+
+			__optimized_dtor ~qe_struct() nex {
+
+				polyc::unregister_polyc_pointer(volatile_cast<T*>(&_value));
+
+				RtlZeroMemory(volatile_cast<T*>(&this->_value), sizeof(T));
+			}
+
+#pragma endregion
+
+#pragma region Accessors
+
+			__compelled_inline imut T __stackcall get() imut nex {
+
+				polyc::algo(volatile_cast<T*>(&_value), sizeof(_value));
+
+				T value = *volatile_cast<T*>(&_value);
+
+				polyc::algo(volatile_cast<T*>(&_value), sizeof(_value));
+
+				return value;
+			}
+
+			template<typename _T>
+			__compelled_inline decltype(auto) __regcall get( _T T::* member ) imut nex {
+
+				T decrypted = get();
+
+				return decrypted.*member;
+			}
+
+			__compelled_inline imut bool __regcall set(imut T value) nex {
+
+				*volatile_cast<T*>(&_value) =  value;
+
+				return polyc::algo(volatile_cast<T*>(&_value), sizeof(_value));
+			}
+
+			template<typename _T>
+			__compelled_inline imut bool __regcall set( _T T::* member, _T value ) nex {
+
+				polyc::algo(volatile_cast<T*>(&_value), sizeof(_value));
+
+				(volatile_cast<T*>(&_value)->*member) = std::move(value);
+
+				return polyc::algo(volatile_cast<T*>(&_value), sizeof(_value));
+			}
+
+#pragma endregion
+
+#pragma region Operators
+
+			__compelled_inline qe_struct<T>& __regcall operator=(imut T value) nex {
+				set(value);
+				return *this;
+			}
+
+			__compelled_inline __stackcall operator T() imut nex {
+				return get();
+			}
+
+#pragma endregion
+
+		};
+
+#pragma endregion
+
+#pragma region Other Primitive Types
+		
+		class qe_bool {
+
+		private:
+
+#pragma region Encrypted value
+
+			mut noregister bool _value;
+
+#pragma endregion
+
+		public:
+
+#pragma region Ctor / Dtor
+
+			__optimized_ctor qe_bool(imut bool value = false) nex {
+
+				set( value );
+			}
+
+			__optimized_dtor ~qe_bool() nex {
+				
+				polyc::unregister_polyc_pointer(volatile_cast<bool*>(&_value));
+
+				RtlZeroMemory(volatile_cast<bool*>(&this->_value), sizeof(_value));
+			}
+
+#pragma endregion
+
+#pragma region Accessors
+
+			__compelled_inline imut std::int8_t __stackcall get() imut nex {
+
+				polyc::algo(volatile_cast<bool*>(&_value) , sizeof(_value));
+
+				auto value = _value;
+
+				polyc::algo(volatile_cast<bool*>(&_value), sizeof(_value));
+
+				return value;
+			}
+
+			__compelled_inline imut bool __regcall set(imut bool value) nex {
+
+				// The current method COULD lead to an .data allocation rather than stack, which has it's own security vulnerabilities.
+				// Revisit this later and try to perform all decryption routines directly to a local stack-allocated instance so any .data member are never plaintext
+
+				_value = value;
+
+				return polyc::algo(volatile_cast<bool*>(&_value), sizeof(_value));
+			}
+
+#pragma endregion
+
+#pragma region Operators
+
+			__compelled_inline qe_bool& __regcall operator=(imut bool value) nex {
+
+				set(value);
+				return *this;
+			}
+
+			__compelled_inline __stackcall operator bool() imut nex {
+
+				return get();
+			}
+
+#pragma endregion
+		};
+
+#pragma endregion
 
 #pragma region WORD
 
@@ -137,7 +277,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			volatile std::int8_t _value;
+			mut noregister std::int8_t _value;
 
 #pragma endregion
 
@@ -145,142 +285,144 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__optimized_ctor qe_int8(imut std::int8_t value = 0) noexcept {
+			__optimized_ctor qe_int8(imut std::int8_t value = 0) nex {
 
 				set( value );
 			}
 
-			__optimized_dtor ~qe_int8() noexcept {
+			__optimized_dtor ~qe_int8() nex {
 				
-				polyc::unregister_polyc_pointer(const_cast<std::int8_t*>(&_value));
+				polyc::unregister_polyc_pointer(volatile_cast<std::int8_t*>(&_value));
+
+				RtlZeroMemory(volatile_cast<std::int8_t*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut std::int8_t __stackcall get() imut noexcept {
+			__compelled_inline imut std::int8_t __stackcall get() imut nex {
 
-				polyc::algo(const_cast<std::int8_t*>(&_value) , sizeof(_value));
+				polyc::algo(volatile_cast<std::int8_t*>(&_value) , sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<std::int8_t*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<std::int8_t*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __regcall set(imut std::int8_t value) noexcept {
+			__compelled_inline imut bool __regcall set(imut std::int8_t value) nex {
 
 				// The current method COULD lead to an .data allocation rather than stack, which has it's own security vulnerabilities.
 				// Revisit this later and try to perform all decryption routines directly to a local stack-allocated instance so any .data member are never plaintext
 
 				_value = value;
 
-				return polyc::algo(const_cast<std::int8_t*>(&_value), sizeof(_value));
+				return polyc::algo(volatile_cast<std::int8_t*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Operators
 
-			__compelled_inline qe_int8 __regcall operator+(imut std::int8_t value) imut noexcept {
+			__compelled_inline qe_int8 __regcall operator+(imut std::int8_t value) imut nex {
 				return qe_int8(get() + value);
 			};
 
-			__compelled_inline qe_int8 __regcall operator-(imut std::int8_t value) imut noexcept {
+			__compelled_inline qe_int8 __regcall operator-(imut std::int8_t value) imut nex {
 				return qe_int8(get() - value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator/(imut std::int8_t value) imut noexcept {
+			__compelled_inline qe_int8 __regcall operator/(imut std::int8_t value) imut nex {
 				return qe_int8(get() / value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator*(imut std::int8_t value) imut noexcept {
+			__compelled_inline qe_int8 __regcall operator*(imut std::int8_t value) imut nex {
 				return qe_int8(get() * value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator&(imut std::int8_t value) imut noexcept {
+			__compelled_inline qe_int8 __regcall operator&(imut std::int8_t value) imut nex {
 				return qe_int8(get() & value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator|(imut std::int8_t value) imut noexcept {
+			__compelled_inline qe_int8 __regcall operator|(imut std::int8_t value) imut nex {
 				return qe_int8(get() | value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator%(imut std::int8_t value) imut noexcept {
+			__compelled_inline qe_int8 __regcall operator%(imut std::int8_t value) imut nex {
 				return qe_int8(get() % value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator^(imut std::int8_t value) imut noexcept {
+			__compelled_inline qe_int8 __regcall operator^(imut std::int8_t value) imut nex {
 				return qe_int8(get() ^ value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator<<(imut std::int8_t value) imut noexcept {
+			__compelled_inline qe_int8 __regcall operator<<(imut std::int8_t value) imut nex {
 				return qe_int8(get() << value);
 			}
 
-			__compelled_inline qe_int8 __regcall operator>>(imut std::int8_t value) imut noexcept {
+			__compelled_inline qe_int8 __regcall operator>>(imut std::int8_t value) imut nex {
 				return qe_int8(get() >> value);
 			}
 
 			__compelled_inline qe_int8& __regcall operator+=(imut std::int8_t value) {
-				set(static_cast<std::int8_t>(get() + value));
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator-=(imut std::int8_t value) noexcept {
-				set(static_cast<std::int8_t>(get() - value));
+			__compelled_inline qe_int8& __regcall operator-=(imut std::int8_t value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__singleton qe_int8& __regcall operator*=(imut std::int8_t value) noexcept {
+			__singleton qe_int8& __regcall operator*=(imut std::int8_t value) nex {
 
-				set(static_cast<std::int8_t>(get() * value));
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator/=(imut std::int8_t value) noexcept {
-				set(static_cast<std::int8_t>(get() / value));
+			__compelled_inline qe_int8& __regcall operator/=(imut std::int8_t value) nex {
+				set(get() / value);
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator%=(imut std::int8_t value) noexcept {
-				set(static_cast<std::int8_t>(get() % value));
+			__compelled_inline qe_int8& __regcall operator%=(imut std::int8_t value) nex {
+				set(get() % value);
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator^=(imut std::int8_t value) noexcept {
-				set(static_cast<std::int8_t>(get() ^ value));
+			__compelled_inline qe_int8& __regcall operator^=(imut std::int8_t value) nex {
+				set(get() ^ value);
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator&=(imut std::int8_t value) noexcept {
-				set(static_cast<std::int8_t>(get() & value));
+			__compelled_inline qe_int8& __regcall operator&=(imut std::int8_t value) nex {
+				set(get() & value);
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator|=(imut std::int8_t value) noexcept {
-				set(static_cast<std::int8_t>(get() | value));
+			__compelled_inline qe_int8& __regcall operator|=(imut std::int8_t value) nex {
+				set(get() | value);
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator<<=(imut std::int8_t value) noexcept {
-				set(static_cast<std::int8_t>(get() << value));
+			__compelled_inline qe_int8& __regcall operator<<=(imut std::int8_t value) nex {
+				set(get() << value);
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator>>=(imut std::int8_t value) noexcept {
-				set(static_cast<std::int8_t>(get() >> value));
+			__compelled_inline qe_int8& __regcall operator>>=(imut std::int8_t value) nex {
+				set(get() >> value);
 				return *this;
 			}
 
-			__compelled_inline qe_int8& __regcall operator=(imut std::int8_t value) noexcept {
+			__compelled_inline qe_int8& __regcall operator=(imut std::int8_t value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __regcall operator std::int8_t() imut noexcept {
+			__compelled_inline __stackcall operator std::int8_t() imut nex {
 				return get();
 			}
 
@@ -293,7 +435,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			volatile std::uint8_t _value;
+			mut noregister std::uint8_t _value;
 
 #pragma endregion
 
@@ -301,137 +443,139 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__optimized_ctor qe_uint8(imut std::uint8_t value = 0) noexcept {
+			__optimized_ctor qe_uint8(imut std::uint8_t value = 0) nex {
 				set(value);
 			}
 
-			__optimized_dtor ~qe_uint8() noexcept {
+			__optimized_dtor ~qe_uint8() nex {
 
-				polyc::unregister_polyc_pointer(const_cast<std::uint8_t*>(&_value));
+				polyc::unregister_polyc_pointer(volatile_cast<std::uint8_t*>(&_value));
+
+				RtlZeroMemory(volatile_cast<std::uint8_t*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut std::uint8_t __stackcall get() imut noexcept {
+			__compelled_inline imut std::uint8_t __stackcall get() imut nex {
 
-				polyc::algo(const_cast<std::uint8_t*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<std::uint8_t*>(&_value), sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<std::uint8_t*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<std::uint8_t*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __regcall set(imut std::uint8_t value) noexcept {
+			__compelled_inline imut bool __regcall set(imut std::uint8_t value) nex {
 
 				_value = value;
 
-				return polyc::algo(const_cast<std::uint8_t*>(&_value), sizeof(_value));
+				return polyc::algo(volatile_cast<std::uint8_t*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Operators
 
-			__compelled_inline qe_uint8 __regcall operator+(imut std::uint8_t value) imut noexcept {
+			__compelled_inline qe_uint8 __regcall operator+(imut std::uint8_t value) imut nex {
 				return qe_uint8(get() + value);
 			};
 
-			__compelled_inline qe_uint8 __regcall operator-(imut std::uint8_t value) imut noexcept {
+			__compelled_inline qe_uint8 __regcall operator-(imut std::uint8_t value) imut nex {
 				return qe_uint8(get() - value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator/(imut std::uint8_t value) imut noexcept {
+			__compelled_inline qe_uint8 __regcall operator/(imut std::uint8_t value) imut nex {
 				return qe_uint8(get() / value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator*(imut std::uint8_t value) imut noexcept {
+			__compelled_inline qe_uint8 __regcall operator*(imut std::uint8_t value) imut nex {
 				return qe_uint8(get() * value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator&(imut std::uint8_t value) imut noexcept {
+			__compelled_inline qe_uint8 __regcall operator&(imut std::uint8_t value) imut nex {
 				return qe_uint8(get() & value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator|(imut std::uint8_t value) imut noexcept {
+			__compelled_inline qe_uint8 __regcall operator|(imut std::uint8_t value) imut nex {
 				return qe_uint8(get() | value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator%(imut std::uint8_t value) imut noexcept {
+			__compelled_inline qe_uint8 __regcall operator%(imut std::uint8_t value) imut nex {
 				return qe_uint8(get() % value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator^(imut std::uint8_t value) imut noexcept {
+			__compelled_inline qe_uint8 __regcall operator^(imut std::uint8_t value) imut nex {
 				return qe_uint8(get() ^ value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator<<(imut std::uint8_t value) imut noexcept {
+			__compelled_inline qe_uint8 __regcall operator<<(imut std::uint8_t value) imut nex {
 				return qe_uint8(get() << value);
 			}
 
-			__compelled_inline qe_uint8 __regcall operator>>(imut std::uint8_t value) imut noexcept {
+			__compelled_inline qe_uint8 __regcall operator>>(imut std::uint8_t value) imut nex {
 				return qe_uint8(get() >> value);
 			}
 
-			__compelled_inline qe_uint8& __regcall operator+=(imut std::uint8_t value) noexcept {
-				set(static_cast<std::uint8_t>(get() + value));
+			__compelled_inline qe_uint8& __regcall operator+=(imut std::uint8_t value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator-=(imut std::uint8_t value) noexcept {
-				set(static_cast<std::uint8_t>(get() - value));
+			__compelled_inline qe_uint8& __regcall operator-=(imut std::uint8_t value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator*=(imut std::uint8_t value) noexcept {
-				set(static_cast<std::uint8_t>(get() * value));
+			__compelled_inline qe_uint8& __regcall operator*=(imut std::uint8_t value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator/=(imut std::uint8_t value) noexcept {
-				set(static_cast<std::uint8_t>(get() / value));
+			__compelled_inline qe_uint8& __regcall operator/=(imut std::uint8_t value) nex {
+				set(get() / value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator%=(imut std::uint8_t value) noexcept {
-				set(static_cast<std::uint8_t>(get() % value));
+			__compelled_inline qe_uint8& __regcall operator%=(imut std::uint8_t value) nex {
+				set(get() % value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator^=(imut std::uint8_t value) noexcept {
-				set(static_cast<std::uint8_t>(get() ^ value));
+			__compelled_inline qe_uint8& __regcall operator^=(imut std::uint8_t value) nex {
+				set(get() ^ value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator&=(imut std::uint8_t value) noexcept {
-				set(static_cast<std::uint8_t>(get() & value));
+			__compelled_inline qe_uint8& __regcall operator&=(imut std::uint8_t value) nex {
+				set(get() & value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator|=(imut std::uint8_t value) noexcept {
-				set(static_cast<std::uint8_t>(get() | value));
+			__compelled_inline qe_uint8& __regcall operator|=(imut std::uint8_t value) nex {
+				set(get() | value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator<<=(imut std::uint8_t value) noexcept {
-				set(static_cast<std::uint8_t>(get() << value));
+			__compelled_inline qe_uint8& __regcall operator<<=(imut std::uint8_t value) nex {
+				set(get() << value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator>>=(imut std::uint8_t value) noexcept {
-				set(static_cast<std::uint8_t>(get() >> value));
+			__compelled_inline qe_uint8& __regcall operator>>=(imut std::uint8_t value) nex {
+				set(get() >> value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint8& __regcall operator=(imut std::uint8_t value) noexcept {
+			__compelled_inline qe_uint8& __regcall operator=(imut std::uint8_t value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __regcall operator std::uint8_t() imut noexcept {
+			__compelled_inline __stackcall operator std::uint8_t() imut nex {
 				return get();
 			}
 
@@ -448,7 +592,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			volatile std::int16_t _value;
+			mut noregister std::int16_t _value;
 
 #pragma endregion
 
@@ -456,137 +600,139 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__optimized_ctor qe_int16(imut std::int16_t value = 0) noexcept {
+			__optimized_ctor qe_int16(imut std::int16_t value = 0) nex {
 				set(value);
 			}
 
-			__optimized_dtor ~qe_int16() noexcept {
+			__optimized_dtor ~qe_int16() nex {
 
-				polyc::unregister_polyc_pointer(const_cast<std::int16_t*>(&_value));
+				polyc::unregister_polyc_pointer(volatile_cast<std::int16_t*>(&_value));
+
+				RtlZeroMemory(volatile_cast<std::int16_t*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut std::int16_t __stackcall get() imut noexcept {
+			__compelled_inline imut std::int16_t __stackcall get() imut nex {
 
-				polyc::algo(const_cast<std::int16_t*>(const_cast<std::int16_t*>(&_value) ), sizeof(_value));	//	Return value unused, exceptions thrown here are due to improper compiler settings or end user environment
+				polyc::algo(volatile_cast<std::int16_t*>(volatile_cast<std::int16_t*>(&_value) ), sizeof(_value));	//	Return value unused, exceptions thrown here are due to improper compiler settings or end user environment
 
 				auto value = _value;
 
-				polyc::algo(const_cast<std::int16_t*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<std::int16_t*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __regcall set(imut std::int16_t value) noexcept {
+			__compelled_inline imut bool __regcall set(imut std::int16_t value) nex {
 
 				_value = value;
 
-				return polyc::algo(const_cast<std::int16_t*>(&_value), sizeof(_value));
+				return polyc::algo(volatile_cast<std::int16_t*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Operators
 
-			__compelled_inline qe_int16 __regcall operator+(imut std::int16_t value) imut noexcept {
+			__compelled_inline qe_int16 __regcall operator+(imut std::int16_t value) imut nex {
 				return qe_int16(get() + value);
 			};
 
-			__compelled_inline qe_int16 __regcall operator-(imut std::int16_t value) imut noexcept {
+			__compelled_inline qe_int16 __regcall operator-(imut std::int16_t value) imut nex {
 				return qe_int16(get() - value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator/(imut std::int16_t value) imut noexcept {
+			__compelled_inline qe_int16 __regcall operator/(imut std::int16_t value) imut nex {
 				return qe_int16(get() / value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator*(imut std::int16_t value) imut noexcept {
+			__compelled_inline qe_int16 __regcall operator*(imut std::int16_t value) imut nex {
 				return qe_int16(get() * value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator&(imut std::int16_t value) imut noexcept {
+			__compelled_inline qe_int16 __regcall operator&(imut std::int16_t value) imut nex {
 				return qe_int16(get() & value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator|(imut std::int16_t value) imut noexcept {
+			__compelled_inline qe_int16 __regcall operator|(imut std::int16_t value) imut nex {
 				return qe_int16(get() | value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator%(imut std::int16_t value) imut noexcept {
+			__compelled_inline qe_int16 __regcall operator%(imut std::int16_t value) imut nex {
 				return qe_int16(get() % value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator^(imut std::int16_t value) imut noexcept {
+			__compelled_inline qe_int16 __regcall operator^(imut std::int16_t value) imut nex {
 				return qe_int16(get() ^ value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator<<(imut std::int16_t value) imut noexcept {
+			__compelled_inline qe_int16 __regcall operator<<(imut std::int16_t value) imut nex {
 				return qe_int16(get() << value);
 			}
 
-			__compelled_inline qe_int16 __regcall operator>>(imut std::int16_t value) imut noexcept {
+			__compelled_inline qe_int16 __regcall operator>>(imut std::int16_t value) imut nex {
 				return qe_int16(get() >> value);
 			}
 
-			__compelled_inline qe_int16& __regcall operator+=(imut std::int16_t value) noexcept {
-				set(static_cast<std::int16_t>(get() + value));
+			__compelled_inline qe_int16& __regcall operator+=(imut std::int16_t value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator-=(imut std::int16_t value) noexcept {
-				set(static_cast<std::int16_t>(get() - value));
+			__compelled_inline qe_int16& __regcall operator-=(imut std::int16_t value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator*=(imut std::int16_t value) noexcept {
-				set(static_cast<std::int16_t>(get() * value));
+			__compelled_inline qe_int16& __regcall operator*=(imut std::int16_t value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator/=(imut std::int16_t value) noexcept {
-				set(static_cast<std::int16_t>(get() / value));
+			__compelled_inline qe_int16& __regcall operator/=(imut std::int16_t value) nex {
+				set(get() / value);
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator%=(imut std::int16_t value) noexcept {
-				set(static_cast<std::int16_t>(get() % value));
+			__compelled_inline qe_int16& __regcall operator%=(imut std::int16_t value) nex {
+				set(get() % value);
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator^=(imut std::int16_t value) noexcept {
-				set(static_cast<std::int16_t>(get() ^ value));
+			__compelled_inline qe_int16& __regcall operator^=(imut std::int16_t value) nex {
+				set(get() ^ value);
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator&=(imut std::int16_t value) noexcept {
-				set(static_cast<std::int16_t>(get() & value));
+			__compelled_inline qe_int16& __regcall operator&=(imut std::int16_t value) nex {
+				set(get() & value);
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator|=(imut std::int16_t value) noexcept {
-				set(static_cast<std::int16_t>(get() | value));
+			__compelled_inline qe_int16& __regcall operator|=(imut std::int16_t value) nex {
+				set(get() | value);
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator<<=(imut std::int16_t value) noexcept {
-				set(static_cast<std::int16_t>(get() << value));
+			__compelled_inline qe_int16& __regcall operator<<=(imut std::int16_t value) nex {
+				set(get() << value);
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator>>=(imut std::int16_t value) noexcept {
-				set(static_cast<std::int16_t>(get() >> value));
+			__compelled_inline qe_int16& __regcall operator>>=(imut std::int16_t value) nex {
+				set(get() >> value);
 				return *this;
 			}
 
-			__compelled_inline qe_int16& __regcall operator=(imut std::int16_t value) noexcept {
+			__compelled_inline qe_int16& __regcall operator=(imut std::int16_t value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __regcall operator std::int16_t() imut noexcept {
+			__compelled_inline __stackcall operator std::int16_t() imut nex {
 				return get();
 			}
 
@@ -599,7 +745,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			volatile std::uint16_t _value;
+			mut noregister std::uint16_t _value;
 
 #pragma endregion
 
@@ -607,137 +753,139 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__optimized_ctor qe_uint16(imut std::uint16_t value = 0) noexcept {
+			__optimized_ctor qe_uint16(imut std::uint16_t value = 0) nex {
 				set(value);
 			}
 
-			__optimized_dtor qe_uint16() noexcept {
+			__optimized_dtor qe_uint16() nex {
 
-				polyc::unregister_polyc_pointer(const_cast<std::uint16_t*>(&_value));
+				polyc::unregister_polyc_pointer(volatile_cast<std::uint16_t*>(&_value));
+
+				RtlZeroMemory(volatile_cast<std::uint16_t*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut std::uint16_t __stackcall get() imut noexcept {
+			__compelled_inline imut std::uint16_t __stackcall get() imut nex {
 
-				polyc::algo(const_cast<std::uint16_t*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<std::uint16_t*>(&_value), sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<std::uint16_t*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<std::uint16_t*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __regcall set(imut std::uint16_t value) noexcept {
+			__compelled_inline imut bool __regcall set(imut std::uint16_t value) nex {
 
 				_value = value;
 
-				return polyc::algo(const_cast<std::uint16_t*>(&_value), sizeof(_value));
+				return polyc::algo(volatile_cast<std::uint16_t*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Operators
 
-			__compelled_inline qe_uint16 __regcall operator+(imut std::uint16_t value) imut noexcept {
+			__compelled_inline qe_uint16 __regcall operator+(imut std::uint16_t value) imut nex {
 				return qe_uint16(get() + value);
 			};
 
-			__compelled_inline qe_uint16 __regcall operator-(imut std::uint16_t value) imut noexcept {
+			__compelled_inline qe_uint16 __regcall operator-(imut std::uint16_t value) imut nex {
 				return qe_uint16(get() - value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator/(imut std::uint16_t value) imut noexcept {
+			__compelled_inline qe_uint16 __regcall operator/(imut std::uint16_t value) imut nex {
 				return qe_uint16(get() / value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator*(imut std::uint16_t value) imut noexcept {
+			__compelled_inline qe_uint16 __regcall operator*(imut std::uint16_t value) imut nex {
 				return qe_uint16(get() * value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator&(imut std::uint16_t value) imut noexcept {
+			__compelled_inline qe_uint16 __regcall operator&(imut std::uint16_t value) imut nex {
 				return qe_uint16(get() & value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator|(imut std::uint16_t value) imut noexcept {
+			__compelled_inline qe_uint16 __regcall operator|(imut std::uint16_t value) imut nex {
 				return qe_uint16(get() | value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator%(imut std::uint16_t value) imut noexcept {
+			__compelled_inline qe_uint16 __regcall operator%(imut std::uint16_t value) imut nex {
 				return qe_uint16(get() % value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator^(imut std::uint16_t value) imut noexcept {
+			__compelled_inline qe_uint16 __regcall operator^(imut std::uint16_t value) imut nex {
 				return qe_uint16(get() ^ value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator<<(imut std::uint16_t value) imut noexcept {
+			__compelled_inline qe_uint16 __regcall operator<<(imut std::uint16_t value) imut nex {
 				return qe_uint16(get() << value);
 			}
 
-			__compelled_inline qe_uint16 __regcall operator>>(imut std::uint16_t value) imut noexcept {
+			__compelled_inline qe_uint16 __regcall operator>>(imut std::uint16_t value) imut nex {
 				return qe_uint16(get() >> value);
 			}
 
-			__compelled_inline qe_uint16& __regcall operator+=(imut std::uint16_t value) noexcept {
-				set(static_cast<std::uint16_t>(get() + value));
+			__compelled_inline qe_uint16& __regcall operator+=(imut std::uint16_t value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator-=(imut std::uint16_t value) noexcept {
-				set(static_cast<std::uint16_t>(get() - value));
+			__compelled_inline qe_uint16& __regcall operator-=(imut std::uint16_t value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator*=(imut std::uint16_t value) noexcept {
-				set(static_cast<std::uint16_t>(get() * value));
+			__compelled_inline qe_uint16& __regcall operator*=(imut std::uint16_t value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator/=(imut std::uint16_t value) noexcept {
-				set(static_cast<std::uint16_t>(get() / value));
+			__compelled_inline qe_uint16& __regcall operator/=(imut std::uint16_t value) nex {
+				set(get() / value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator%=(imut std::uint16_t value) noexcept {
-				set(static_cast<std::uint16_t>(get() % value));
+			__compelled_inline qe_uint16& __regcall operator%=(imut std::uint16_t value) nex {
+				set(get() % value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator^=(imut std::uint16_t value) noexcept {
-				set(static_cast<std::uint16_t>(get() ^ value));
+			__compelled_inline qe_uint16& __regcall operator^=(imut std::uint16_t value) nex {
+				set(get() ^ value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator&=(imut std::uint16_t value) noexcept {
-				set(static_cast<std::uint16_t>(get() & value));
+			__compelled_inline qe_uint16& __regcall operator&=(imut std::uint16_t value) nex {
+				set(get() & value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator|=(imut std::uint16_t value) noexcept {
-				set(static_cast<std::uint16_t>(get() | value));
+			__compelled_inline qe_uint16& __regcall operator|=(imut std::uint16_t value) nex {
+				set(get() | value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator<<=(imut std::uint16_t value) noexcept {
-				set(static_cast<std::uint16_t>(get() << value));
+			__compelled_inline qe_uint16& __regcall operator<<=(imut std::uint16_t value) nex {
+				set(get() << value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator>>=(imut std::uint16_t value) noexcept {
-				set(static_cast<std::uint16_t>(get() >> value));
+			__compelled_inline qe_uint16& __regcall operator>>=(imut std::uint16_t value) nex {
+				set(get() >> value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint16& __regcall operator=(imut std::uint16_t value) noexcept {
+			__compelled_inline qe_uint16& __regcall operator=(imut std::uint16_t value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __regcall operator std::uint16_t() imut noexcept {
+			__compelled_inline __stackcall operator std::uint16_t() imut nex {
 				return get();
 			}
 
@@ -754,7 +902,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			volatile std::int32_t _value;
+			mut noregister std::int32_t _value;
 
 #pragma endregion
 
@@ -762,137 +910,139 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__optimized_ctor qe_int32(imut int value = 0) noexcept {
+			__optimized_ctor qe_int32(imut int value = 0) nex {
 				set(value);
 			}
 
-			__optimized_dtor ~qe_int32() noexcept {
+			__optimized_dtor ~qe_int32() nex {
 
-				polyc::unregister_polyc_pointer(const_cast<std::int32_t*>(&_value));
+				polyc::unregister_polyc_pointer(volatile_cast<std::int32_t*>(&_value));
+
+				RtlZeroMemory(volatile_cast<std::int32_t*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut std::int32_t __stackcall get() imut noexcept {
+			__compelled_inline imut std::int32_t __stackcall get() imut nex {
 
-				polyc::algo(const_cast<std::int32_t*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<std::int32_t*>(&_value), sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<std::int32_t*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<std::int32_t*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __regcall set(imut std::int32_t value) noexcept {
+			__compelled_inline imut bool __regcall set(imut std::int32_t value) nex {
 
 				_value = value;
 
-				return polyc::algo(const_cast<std::int32_t*>(&_value), sizeof(_value));
+				return polyc::algo(volatile_cast<std::int32_t*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Operators
 
-			__compelled_inline qe_int32 __regcall operator+(imut int value) imut noexcept {
+			__compelled_inline qe_int32 __regcall operator+(imut int value) imut nex {
 				return qe_int32(get() + value);
 			};
 
-			__compelled_inline qe_int32 __regcall operator-(imut int value) imut noexcept {
+			__compelled_inline qe_int32 __regcall operator-(imut int value) imut nex {
 				return qe_int32(get() - value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator/(imut int value) imut noexcept {
+			__compelled_inline qe_int32 __regcall operator/(imut int value) imut nex {
 				return qe_int32(get() / value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator*(imut int value) imut noexcept {
+			__compelled_inline qe_int32 __regcall operator*(imut int value) imut nex {
 				return qe_int32(get() * value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator&(imut int value) imut noexcept {
+			__compelled_inline qe_int32 __regcall operator&(imut int value) imut nex {
 				return qe_int32(get() & value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator|(imut int value) imut noexcept {
+			__compelled_inline qe_int32 __regcall operator|(imut int value) imut nex {
 				return qe_int32(get() | value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator%(imut int value) imut noexcept {
+			__compelled_inline qe_int32 __regcall operator%(imut int value) imut nex {
 				return qe_int32(get() % value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator^(imut int value) imut noexcept {
+			__compelled_inline qe_int32 __regcall operator^(imut int value) imut nex {
 				return qe_int32(get() ^ value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator<<(imut int value) imut noexcept {
+			__compelled_inline qe_int32 __regcall operator<<(imut int value) imut nex {
 				return qe_int32(get() << value);
 			}
 
-			__compelled_inline qe_int32 __regcall operator>>(imut int value) imut noexcept {
+			__compelled_inline qe_int32 __regcall operator>>(imut int value) imut nex {
 				return qe_int32(get() >> value);
 			}
 
-			__compelled_inline qe_int32& __regcall operator+=(imut int value) noexcept {
-				set(static_cast<int>(get() + value));
+			__compelled_inline qe_int32& __regcall operator+=(imut int value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator-=(imut int value) noexcept {
-				set(static_cast<int>(get() - value));
+			__compelled_inline qe_int32& __regcall operator-=(imut int value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator*=(imut int value) noexcept {
-				set(static_cast<int>(get() * value));
+			__compelled_inline qe_int32& __regcall operator*=(imut int value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator/=(imut int value) noexcept {
-				set(static_cast<int>(get() / value));
+			__compelled_inline qe_int32& __regcall operator/=(imut int value) nex {
+				set(get() / value);
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator%=(imut int value) noexcept {
-				set(static_cast<int>(get() % value));
+			__compelled_inline qe_int32& __regcall operator%=(imut int value) nex {
+				set(get() % value);
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator^=(imut int value) noexcept {
-				set(static_cast<int>(get() ^ value));
+			__compelled_inline qe_int32& __regcall operator^=(imut int value) nex {
+				set(get() ^ value);
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator&=(imut int value) noexcept {
-				set(static_cast<int>(get() & value));
+			__compelled_inline qe_int32& __regcall operator&=(imut int value) nex {
+				set(get() & value);
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator|=(imut int value) noexcept {
-				set(static_cast<int>(get() | value));
+			__compelled_inline qe_int32& __regcall operator|=(imut int value) nex {
+				set(get() | value);
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator<<=(imut int value) noexcept {
-				set(static_cast<int>(get() << value));
+			__compelled_inline qe_int32& __regcall operator<<=(imut int value) nex {
+				set(get() << value);
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator>>=(imut int value) noexcept {
-				set(static_cast<int>(get() >> value));
+			__compelled_inline qe_int32& __regcall operator>>=(imut int value) nex {
+				set(get() >> value);
 				return *this;
 			}
 
-			__compelled_inline qe_int32& __regcall operator=(imut int value) noexcept {
+			__compelled_inline qe_int32& __regcall operator=(imut int value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __regcall operator int() imut noexcept {
+			__compelled_inline __stackcall operator int() imut nex {
 				return get();
 			}
 
@@ -905,7 +1055,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			volatile std::uint32_t _value;
+			mut noregister std::uint32_t _value;
 
 #pragma endregion
 
@@ -913,137 +1063,139 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__optimized_ctor qe_uint32(imut std::uint32_t value = 0) noexcept {
+			__optimized_ctor qe_uint32(imut std::uint32_t value = 0) nex {
 				set(value);
 			}
 
-			__optimized_dtor ~qe_uint32() noexcept {
+			__optimized_dtor ~qe_uint32() nex {
 
-				polyc::unregister_polyc_pointer(const_cast<std::uint32_t*>(&_value));
+				polyc::unregister_polyc_pointer(volatile_cast<std::uint32_t*>(&_value));
+
+				RtlZeroMemory(volatile_cast<std::uint32_t*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut std::uint32_t __stackcall get() imut noexcept {
+			__compelled_inline imut std::uint32_t __stackcall get() imut nex {
 
-				polyc::algo(const_cast<std::uint32_t*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<std::uint32_t*>(&_value), sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<std::uint32_t*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<std::uint32_t*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __regcall set(imut std::uint32_t value) noexcept {
+			__compelled_inline imut bool __regcall set(imut std::uint32_t value) nex {
 
 				_value = value;
 
-				return polyc::algo(const_cast<std::uint32_t*>(&_value), sizeof(_value));
+				return polyc::algo(volatile_cast<std::uint32_t*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Operators
 
-			__compelled_inline qe_uint32 __regcall operator+(imut std::uint32_t value) imut noexcept {
+			__compelled_inline qe_uint32 __regcall operator+(imut std::uint32_t value) imut nex {
 				return qe_uint32(get() + value);
 			};
 
-			__compelled_inline qe_uint32 __regcall operator-(imut std::uint32_t value) imut noexcept {
+			__compelled_inline qe_uint32 __regcall operator-(imut std::uint32_t value) imut nex {
 				return qe_uint32(get() - value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator/(imut std::uint32_t value) imut noexcept {
+			__compelled_inline qe_uint32 __regcall operator/(imut std::uint32_t value) imut nex {
 				return qe_uint32(get() / value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator*(imut std::uint32_t value) imut noexcept {
+			__compelled_inline qe_uint32 __regcall operator*(imut std::uint32_t value) imut nex {
 				return qe_uint32(get() * value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator&(imut std::uint32_t value) imut noexcept {
+			__compelled_inline qe_uint32 __regcall operator&(imut std::uint32_t value) imut nex {
 				return qe_uint32(get() & value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator|(imut std::uint32_t value) imut noexcept {
+			__compelled_inline qe_uint32 __regcall operator|(imut std::uint32_t value) imut nex {
 				return qe_uint32(get() | value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator%(imut std::uint32_t value) imut noexcept {
+			__compelled_inline qe_uint32 __regcall operator%(imut std::uint32_t value) imut nex {
 				return qe_uint32(get() % value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator^(imut std::uint32_t value) imut noexcept {
+			__compelled_inline qe_uint32 __regcall operator^(imut std::uint32_t value) imut nex {
 				return qe_uint32(get() ^ value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator<<(imut std::uint32_t value) imut noexcept {
+			__compelled_inline qe_uint32 __regcall operator<<(imut std::uint32_t value) imut nex {
 				return qe_uint32(get() << value);
 			}
 
-			__compelled_inline qe_uint32 __regcall operator>>(imut std::uint32_t value) imut noexcept {
+			__compelled_inline qe_uint32 __regcall operator>>(imut std::uint32_t value) imut nex {
 				return qe_uint32(get() >> value);
 			}
 
-			__compelled_inline qe_uint32& __regcall operator+=(imut std::uint32_t value) noexcept {
-				set(static_cast<int>(get() + value));
+			__compelled_inline qe_uint32& __regcall operator+=(imut std::uint32_t value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator-=(imut std::uint32_t value) noexcept {
-				set(static_cast<int>(get() - value));
+			__compelled_inline qe_uint32& __regcall operator-=(imut std::uint32_t value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator*=(imut std::uint32_t value) noexcept {
-				set(static_cast<int>(get() * value));
+			__compelled_inline qe_uint32& __regcall operator*=(imut std::uint32_t value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator/=(imut std::uint32_t value) noexcept {
-				set(static_cast<int>(get() / value));
+			__compelled_inline qe_uint32& __regcall operator/=(imut std::uint32_t value) nex {
+				set(get() / value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator%=(imut std::uint32_t value) noexcept {
-				set(static_cast<int>(get() % value));
+			__compelled_inline qe_uint32& __regcall operator%=(imut std::uint32_t value) nex {
+				set(get() % value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator^=(imut std::uint32_t value) noexcept {
-				set(static_cast<int>(get() ^ value));
+			__compelled_inline qe_uint32& __regcall operator^=(imut std::uint32_t value) nex {
+				set(get() ^ value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator&=(imut std::uint32_t value) noexcept {
-				set(static_cast<int>(get() & value));
+			__compelled_inline qe_uint32& __regcall operator&=(imut std::uint32_t value) nex {
+				set(get() & value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator|=(imut std::uint32_t value) noexcept {
-				set(static_cast<int>(get() | value));
+			__compelled_inline qe_uint32& __regcall operator|=(imut std::uint32_t value) nex {
+				set(get() | value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator<<=(imut std::uint32_t value) noexcept {
-				set(static_cast<int>(get() << value));
+			__compelled_inline qe_uint32& __regcall operator<<=(imut std::uint32_t value) nex {
+				set(get() << value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator>>=(imut std::uint32_t value) noexcept {
-				set(static_cast<int>(get() >> value));
+			__compelled_inline qe_uint32& __regcall operator>>=(imut std::uint32_t value) nex {
+				set(get() >> value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint32& __regcall operator=(imut std::uint32_t value) noexcept {
+			__compelled_inline qe_uint32& __regcall operator=(imut std::uint32_t value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __regcall operator std::uint32_t() imut noexcept {
+			__compelled_inline __stackcall operator std::uint32_t() imut nex {
 				return get();
 			}
 
@@ -1062,7 +1214,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			volatile std::int64_t _value;
+			mut noregister std::int64_t _value;
 
 #pragma endregion
 
@@ -1070,136 +1222,138 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__optimized_ctor qe_int64(imut std::int64_t value = 0) noexcept {
+			__optimized_ctor qe_int64(imut std::int64_t value = 0) nex {
 				set(value);
 			}
 
-			__optimized_dtor ~qe_int64() noexcept {
+			__optimized_dtor ~qe_int64() nex {
 
-				polyc::unregister_polyc_pointer(const_cast<std::int64_t*>(&_value));
+				polyc::unregister_polyc_pointer(volatile_cast<std::int64_t*>(&_value));
+
+				RtlZeroMemory(volatile_cast<std::int64_t*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut std::int64_t __stackcall get() imut noexcept {
+			__compelled_inline imut std::int64_t __stackcall get() imut nex {
 
-				polyc::algo(const_cast<std::int64_t*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<std::int64_t*>(&_value), sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<std::int64_t*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<std::int64_t*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __regcall set(imut std::int64_t value) noexcept {
+			__compelled_inline imut bool __regcall set(imut std::int64_t value) nex {
 
 				_value = value;
 
-				return polyc::algo(const_cast<std::int64_t*>(&_value), sizeof(_value));
+				return polyc::algo(volatile_cast<std::int64_t*>(&_value), sizeof(_value));
 			}
 #pragma endregion
 
 #pragma region Operators
 
-			__compelled_inline qe_int64 __regcall operator+(imut std::int64_t value) imut noexcept {
+			__compelled_inline qe_int64 __regcall operator+(imut std::int64_t value) imut nex {
 				return qe_int64(get() + value);
 			};
 
-			__compelled_inline qe_int64 __regcall operator-(imut std::int64_t value) imut noexcept {
+			__compelled_inline qe_int64 __regcall operator-(imut std::int64_t value) imut nex {
 				return qe_int64(get() - value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator/(imut std::int64_t value) imut noexcept {
+			__compelled_inline qe_int64 __regcall operator/(imut std::int64_t value) imut nex {
 				return qe_int64(get() / value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator*(imut std::int64_t value) imut noexcept {
+			__compelled_inline qe_int64 __regcall operator*(imut std::int64_t value) imut nex {
 				return qe_int64(get() * value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator&(imut std::int64_t value) imut noexcept {
+			__compelled_inline qe_int64 __regcall operator&(imut std::int64_t value) imut nex {
 				return qe_int64(get() & value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator|(imut std::int64_t value) imut noexcept {
+			__compelled_inline qe_int64 __regcall operator|(imut std::int64_t value) imut nex {
 				return qe_int64(get() | value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator%(imut std::int64_t value) imut noexcept {
+			__compelled_inline qe_int64 __regcall operator%(imut std::int64_t value) imut nex {
 				return qe_int64(get() % value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator^(imut std::int64_t value) imut noexcept {
+			__compelled_inline qe_int64 __regcall operator^(imut std::int64_t value) imut nex {
 				return qe_int64(get() ^ value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator<<(imut std::int64_t value) imut noexcept {
+			__compelled_inline qe_int64 __regcall operator<<(imut std::int64_t value) imut nex {
 				return qe_int64(get() << value);
 			}
 
-			__compelled_inline qe_int64 __regcall operator>>(imut std::int64_t value) imut noexcept {
+			__compelled_inline qe_int64 __regcall operator>>(imut std::int64_t value) imut nex {
 				return qe_int64(get() >> value);
 			}
 
-			__compelled_inline qe_int64& __regcall operator+=(imut std::int64_t value) noexcept {
-				set(static_cast<int>(get() + value));
+			__compelled_inline qe_int64& __regcall operator+=(imut std::int64_t value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator-=(imut std::int64_t value) noexcept {
-				set(static_cast<int>(get() - value));
+			__compelled_inline qe_int64& __regcall operator-=(imut std::int64_t value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator*=(imut std::int64_t value) noexcept {
-				set(static_cast<int>(get() * value));
+			__compelled_inline qe_int64& __regcall operator*=(imut std::int64_t value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator/=(imut std::int64_t value) noexcept {
-				set(static_cast<int>(get() / value));
+			__compelled_inline qe_int64& __regcall operator/=(imut std::int64_t value) nex {
+				set(get() / value);
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator%=(imut std::int64_t value) noexcept {
-				set(static_cast<int>(get() % value));
+			__compelled_inline qe_int64& __regcall operator%=(imut std::int64_t value) nex {
+				set(get() % value);
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator^=(imut std::int64_t value) noexcept {
-				set(static_cast<int>(get() ^ value));
+			__compelled_inline qe_int64& __regcall operator^=(imut std::int64_t value) nex {
+				set(get() ^ value);
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator&=(imut std::int64_t value) noexcept {
-				set(static_cast<int>(get() & value));
+			__compelled_inline qe_int64& __regcall operator&=(imut std::int64_t value) nex {
+				set(get() & value);
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator|=(imut std::int64_t value) noexcept {
-				set(static_cast<int>(get() | value));
+			__compelled_inline qe_int64& __regcall operator|=(imut std::int64_t value) nex {
+				set(get() | value);
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator<<=(imut std::int64_t value) noexcept {
-				set(static_cast<int>(get() << value));
+			__compelled_inline qe_int64& __regcall operator<<=(imut std::int64_t value) nex {
+				set(get() << value);
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator>>=(imut std::int64_t value) noexcept {
-				set(static_cast<int>(get() >> value));
+			__compelled_inline qe_int64& __regcall operator>>=(imut std::int64_t value) nex {
+				set(get() >> value);
 				return *this;
 			}
 
-			__compelled_inline qe_int64& __regcall operator=(imut std::int64_t value) noexcept {
+			__compelled_inline qe_int64& __regcall operator=(imut std::int64_t value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator std::int64_t() imut noexcept {
+			__compelled_inline __stackcall operator std::int64_t() imut nex {
 				return get();
 			}
 
@@ -1212,7 +1366,7 @@ namespace qengine{
 
 #pragma region Encrypted value
 
-			volatile std::uint64_t _value;
+			mut noregister std::uint64_t _value;
 
 #pragma endregion
 
@@ -1224,133 +1378,135 @@ namespace qengine{
 				set(value);
 			}
 
-			__optimized_dtor ~qe_uint64() noexcept {
+			__optimized_dtor ~qe_uint64() nex {
 
-				polyc::unregister_polyc_pointer(const_cast<std::uint64_t*>(&_value));
+				polyc::unregister_polyc_pointer(volatile_cast<std::uint64_t*>(&_value));
+
+				RtlZeroMemory(volatile_cast<std::uint64_t*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut std::uint64_t __stackcall get() imut noexcept {
+			__compelled_inline imut std::uint64_t __stackcall get() imut nex {
 
-				polyc::algo(const_cast<std::uint64_t*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<std::uint64_t*>(&_value), sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<std::uint64_t*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<std::uint64_t*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __regcall set(imut std::uint64_t value) noexcept {
+			__compelled_inline imut bool __regcall set(imut std::uint64_t value) nex {
 
 				_value = value;
 
-				return polyc::algo(const_cast<std::uint64_t*>(&_value), sizeof(_value));
+				return polyc::algo(volatile_cast<std::uint64_t*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Operators
 
-			__compelled_inline qe_uint64 __regcall operator+(imut std::uint64_t value) imut noexcept {
+			__compelled_inline qe_uint64 __regcall operator+(imut std::uint64_t value) imut nex {
 				return qe_uint64(get() + value);
 			};
 
-			__compelled_inline qe_uint64 __regcall operator-(imut std::uint64_t value) imut noexcept {
+			__compelled_inline qe_uint64 __regcall operator-(imut std::uint64_t value) imut nex {
 				return qe_uint64(get() - value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator/(imut std::uint64_t value) imut noexcept {
+			__compelled_inline qe_uint64 __regcall operator/(imut std::uint64_t value) imut nex {
 				return qe_uint64(get() / value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator*(imut std::uint64_t value) imut noexcept {
+			__compelled_inline qe_uint64 __regcall operator*(imut std::uint64_t value) imut nex {
 				return qe_uint64(get() * value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator&(imut std::uint64_t value) imut noexcept {
+			__compelled_inline qe_uint64 __regcall operator&(imut std::uint64_t value) imut nex {
 				return qe_uint64(get() & value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator|(imut std::uint64_t value) imut noexcept {
+			__compelled_inline qe_uint64 __regcall operator|(imut std::uint64_t value) imut nex {
 				return qe_uint64(get() | value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator%(imut std::uint64_t value) imut noexcept {
+			__compelled_inline qe_uint64 __regcall operator%(imut std::uint64_t value) imut nex {
 				return qe_uint64(get() % value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator^(imut std::uint64_t value) imut noexcept {
+			__compelled_inline qe_uint64 __regcall operator^(imut std::uint64_t value) imut nex {
 				return qe_uint64(get() ^ value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator<<(imut std::uint64_t value) imut noexcept {
+			__compelled_inline qe_uint64 __regcall operator<<(imut std::uint64_t value) imut nex {
 				return qe_uint64(get() << value);
 			}
 
-			__compelled_inline qe_uint64 __regcall operator>>(imut std::uint64_t value) imut noexcept {
+			__compelled_inline qe_uint64 __regcall operator>>(imut std::uint64_t value) imut nex {
 				return qe_uint64(get() >> value);
 			}
 
-			__compelled_inline qe_uint64& __regcall operator+=(imut std::uint64_t value) noexcept {
-				set(static_cast<int>(get() + value));
+			__compelled_inline qe_uint64& __regcall operator+=(imut std::uint64_t value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator-=(imut std::uint64_t value) noexcept {
-				set(static_cast<int>(get() - value));
+			__compelled_inline qe_uint64& __regcall operator-=(imut std::uint64_t value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator*=(imut std::uint64_t value) noexcept {
-				set(static_cast<int>(get() * value));
+			__compelled_inline qe_uint64& __regcall operator*=(imut std::uint64_t value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator/=(imut std::uint64_t value) noexcept {
-				set(static_cast<int>(get() / value));
+			__compelled_inline qe_uint64& __regcall operator/=(imut std::uint64_t value) nex {
+				set(get() / value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator%=(imut std::uint64_t value) noexcept {
-				set(static_cast<int>(get() % value));
+			__compelled_inline qe_uint64& __regcall operator%=(imut std::uint64_t value) nex {
+				set(get() % value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator^=(imut std::uint64_t value) noexcept {
-				set(static_cast<int>(get() ^ value));
+			__compelled_inline qe_uint64& __regcall operator^=(imut std::uint64_t value) nex {
+				set(get() ^ value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator&=(imut std::uint64_t value) noexcept {
-				set(static_cast<int>(get() & value));
+			__compelled_inline qe_uint64& __regcall operator&=(imut std::uint64_t value) nex {
+				set(get() & value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator|=(imut std::uint64_t value) noexcept {
-				set(static_cast<int>(get() | value));
+			__compelled_inline qe_uint64& __regcall operator|=(imut std::uint64_t value) nex {
+				set(get() | value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator<<=(imut std::uint64_t value) noexcept {
-				set(static_cast<int>(get() << value));
+			__compelled_inline qe_uint64& __regcall operator<<=(imut std::uint64_t value) nex {
+				set(get() << value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator>>=(imut std::uint64_t value) noexcept {
-				set(static_cast<int>(get() >> value));
+			__compelled_inline qe_uint64& __regcall operator>>=(imut std::uint64_t value) nex {
+				set(get() >> value);
 				return *this;
 			}
 
-			__compelled_inline qe_uint64& __regcall operator=(imut std::uint64_t value) noexcept {
+			__compelled_inline qe_uint64& __regcall operator=(imut std::uint64_t value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator std::uint64_t() imut noexcept {
+			__compelled_inline __stackcall operator std::uint64_t() imut nex {
 				return get();
 			}
 
@@ -1371,89 +1527,91 @@ namespace qengine{
 
 		private:
 
-			volatile float _value;
+			noregister float _value;
 
 		public:
 
 #pragma region Ctor / Dtor
 
-			__compelled_inline __fpcall qe_float(imut float value) noexcept {
+			__compelled_inline __fpcall qe_float(imut float value) nex {
 				set(value);
 			}
 
-			__optimized_dtor ~qe_float() noexcept {
+			__optimized_dtor ~qe_float() nex {
 
-				polyc::unregister_polyc_pointer(const_cast<float*>(&_value));
+				polyc::unregister_polyc_pointer(volatile_cast<float*>(&_value));
+
+				RtlZeroMemory(volatile_cast<float*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut float __stackcall get() imut noexcept {
+			__compelled_inline imut float __stackcall get() imut nex {
 
-				polyc::algo(const_cast<float*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<float*>(&_value), sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<float*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<float*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __fpcall set(imut float value) noexcept {
+			__compelled_inline imut bool __fpcall set(imut float value) nex {
 
 				_value = value;
 
-				return polyc::algo(const_cast<float*>(&_value), sizeof(_value));
+				return polyc::algo(volatile_cast<float*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Operators
 
-			__compelled_inline qe_float __fpcall operator+(imut float value) imut noexcept {
+			__compelled_inline qe_float __fpcall operator+(imut float value) imut nex {
 				return qe_float(get() + value);
 			};
 
-			__compelled_inline qe_float __fpcall operator-(imut float value) imut noexcept {
+			__compelled_inline qe_float __fpcall operator-(imut float value) imut nex {
 				return qe_float(get() - value);
 			}
 
-			__compelled_inline qe_float __fpcall operator/(imut float value) imut noexcept {
+			__compelled_inline qe_float __fpcall operator/(imut float value) imut nex {
 				return qe_float(get() / value);
 			}
 
-			__compelled_inline qe_float __fpcall operator*(imut float value) imut noexcept {
+			__compelled_inline qe_float __fpcall operator*(imut float value) imut nex {
 				return qe_float(get() * value);
 			}
 
-			__compelled_inline qe_float& __fpcall operator+=(imut float value) noexcept {
-				_value = algo_t_inst(get() + value);
+			__compelled_inline qe_float& __fpcall operator+=(imut float value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_float& __fpcall operator-=(imut float value) noexcept {
-				_value = algo_t_inst(get() - value);
+			__compelled_inline qe_float& __fpcall operator-=(imut float value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_float& __fpcall operator*=(imut float value) noexcept {
-				_value = algo_t_inst(get() * value);
+			__compelled_inline qe_float& __fpcall operator*=(imut float value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_float& __fpcall operator/=(imut float value) noexcept {
-				_value = algo_t_inst(get() / value);
+			__compelled_inline qe_float& __fpcall operator/=(imut float value) nex {
+				set(get() / value);
 				return *this;
 			}
 
-			__compelled_inline qe_float& __fpcall operator=(imut float value) noexcept {
+			__compelled_inline qe_float& __fpcall operator=(imut float value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator float() imut noexcept {
+			__compelled_inline __stackcall operator float() imut nex {
 				return get();
 			}
 
@@ -1470,7 +1628,7 @@ namespace qengine{
 
 		private:
 
-			volatile double _value;
+			noregister double _value;
 
 		public:
 
@@ -1480,79 +1638,176 @@ namespace qengine{
 				set(value);
 			}
 
-			__optimized_dtor ~qe_double() noexcept {
+			__optimized_dtor ~qe_double() nex {
 
-				polyc::unregister_polyc_pointer(const_cast<double*>(&_value));
+				polyc::unregister_polyc_pointer(volatile_cast<double*>(&_value));
+
+				RtlZeroMemory(volatile_cast<double*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut float __stackcall get() imut noexcept {
+			__compelled_inline imut double __stackcall get() imut nex {
 
-				polyc::algo(const_cast<double*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<double*>(&_value), sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<double*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<double*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __fpcall set(imut float value) noexcept {
+			__compelled_inline imut bool __fpcall set(imut double value) nex {
 
 				_value = value;
 
-				return polyc::algo(const_cast<double*>(&_value), sizeof(_value));
+				return polyc::algo(volatile_cast<double*>(&_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Operators
 
-			__compelled_inline qe_double __fpcall operator+(imut double value) imut noexcept {
+			__compelled_inline qe_double __fpcall operator+(imut double value) imut nex {
 				return qe_double(get() + value);
 			};
 
-			__compelled_inline qe_double __fpcall operator-(imut double value) imut noexcept {
+			__compelled_inline qe_double __fpcall operator-(imut double value) imut nex {
 				return qe_double(get() - value);
 			}
 
-			__compelled_inline qe_double __fpcall operator/(imut double value) imut noexcept {
+			__compelled_inline qe_double __fpcall operator/(imut double value) imut nex {
 				return qe_double(get() / value);
 			}
 
-			__compelled_inline qe_double __fpcall operator*(imut double value) imut noexcept {
+			__compelled_inline qe_double __fpcall operator*(imut double value) imut nex {
 				return qe_double(get() * value);
 			}
 
-			__compelled_inline qe_double& __fpcall operator+=(imut double value) noexcept {
-				_value = algo_t_inst(get() + value);
+			__compelled_inline qe_double& __fpcall operator+=(imut double value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_double& __fpcall operator-=(imut double value) noexcept {
-				_value = algo_t_inst(get() - value);
+			__compelled_inline qe_double& __fpcall operator-=(imut double value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_double& __fpcall operator*=(imut double value) noexcept {
-				_value = algo_t_inst(get() * value);
+			__compelled_inline qe_double& __fpcall operator*=(imut double value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_double& __fpcall operator/=(imut double value) noexcept {
-				_value = algo_t_inst(get() / value);
+			__compelled_inline qe_double& __fpcall operator/=(imut double value) nex {
+				set(get() / value);
 				return *this;
 			}
 
-			__compelled_inline qe_double& __fpcall operator=(imut double value) noexcept {
+			__compelled_inline qe_double& __fpcall operator=(imut double value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator double() imut noexcept {
+			__compelled_inline __stackcall operator double() imut nex {
+				return get();
+			}
+
+#pragma endregion
+		};
+
+		class qe_longdouble {
+
+		private:
+
+			noregister long double _value;
+
+		public:
+
+#pragma region Ctor / Dtor
+
+			__compelled_inline __fpcall qe_longdouble(imut long double value = static_cast<long double>(0.0f)) {
+				set(value);
+			}
+
+			__optimized_dtor ~qe_longdouble() nex {
+
+				polyc::unregister_polyc_pointer(volatile_cast<long double*>(&_value));
+
+				RtlZeroMemory(volatile_cast<long double*>(&this->_value), sizeof(_value));
+			}
+
+#pragma endregion
+
+#pragma region Accessors
+
+			__compelled_inline imut long double __stackcall get() imut nex {
+
+				polyc::algo(volatile_cast<long double*>(&_value), sizeof(_value));
+
+				auto value = _value;
+
+				polyc::algo(volatile_cast<long double*>(&_value), sizeof(_value));
+
+				return value;
+			}
+
+			__compelled_inline imut bool __fpcall set(imut long double value) nex {
+
+				_value = value;
+
+				return polyc::algo(volatile_cast<long double*>(&_value), sizeof(_value));
+			}
+
+#pragma endregion
+
+#pragma region Operators
+
+			__compelled_inline qe_longdouble __fpcall operator+(imut long double value) imut nex {
+				return qe_longdouble(get() + value);
+			};
+
+			__compelled_inline qe_longdouble __fpcall operator-(imut long double value) imut nex {
+				return qe_longdouble(get() - value);
+			}
+
+			__compelled_inline qe_longdouble __fpcall operator/(imut long double value) imut nex {
+				return qe_longdouble(get() / value);
+			}
+
+			__compelled_inline qe_longdouble __fpcall operator*(imut long double value) imut nex {
+				return qe_longdouble(get() * value);
+			}
+
+			__compelled_inline qe_longdouble& __fpcall operator+=(imut long double value) nex {
+				set(get() + value);
+				return *this;
+			}
+
+			__compelled_inline qe_longdouble& __fpcall operator-=(imut long double value) nex {
+				set(get() - value);
+				return *this;
+			}
+
+			__compelled_inline qe_longdouble& __fpcall operator*=(imut long double value) nex {
+				set(get() * value);
+				return *this;
+			}
+
+			__compelled_inline qe_longdouble& __fpcall operator/=(imut long double value) nex {
+				set(get() / value);
+				return *this;
+			}
+
+			__compelled_inline qe_longdouble& __fpcall operator=(imut long double value) nex {
+				set(value);
+				return *this;
+			}
+
+			__compelled_inline __stackcall operator long double() imut nex {
 				return get();
 			}
 
@@ -1580,31 +1835,33 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__compelled_inline __fpcall qe_m128(imut __m128 value) noexcept {
+			__compelled_inline __fpcall qe_m128(imut __m128 value) nex {
 				set(value);
 			}
 
-			__optimized_dtor ~qe_m128() noexcept {
+			__optimized_dtor ~qe_m128() nex {
 
 				polyc::unregister_polyc_pointer(&_value);
+
+				RtlZeroMemory(volatile_cast<__m128*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut __m128 __stackcall get() imut noexcept {
+			__compelled_inline imut __m128 __stackcall get() imut nex {
 
-				polyc::algo(const_cast<__m128*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<__m128*>(&_value), sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<__m128*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<__m128*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __fpcall set(imut __m128 value) noexcept {
+			__compelled_inline imut bool __fpcall set(imut __m128 value) nex {
 
 				_value = value;
 
@@ -1615,50 +1872,50 @@ namespace qengine{
 #pragma region Operators
 	#ifdef __clang__ // msvc does not support math operatotions on vector types
 
-			__compelled_inline qe_m128 __fpcall operator+(imut __m128 value) imut noexcept {
+			__compelled_inline qe_m128 __fpcall operator+(imut __m128 value) imut nex {
 				return qe_m128(get() + value);
 			};
 
-			__compelled_inline qe_m128 __fpcall operator-(imut __m128 value) imut noexcept {
+			__compelled_inline qe_m128 __fpcall operator-(imut __m128 value) imut nex {
 				return qe_m128(get() - value);
 			}
 
-			__compelled_inline qe_m128 __fpcall operator/(imut __m128 value) imut noexcept {
+			__compelled_inline qe_m128 __fpcall operator/(imut __m128 value) imut nex {
 				return qe_m128((imut __m128)get() / value);
 			}
 
-			__compelled_inline qe_m128 __fpcall operator*(imut __m128 value) imut noexcept {
+			__compelled_inline qe_m128 __fpcall operator*(imut __m128 value) imut nex {
 				return qe_m128(get() * value);
 			}
 
-			__compelled_inline qe_m128& __fpcall operator+=(imut __m128 value) noexcept {
-				_value = algo_t_inst(algo_t_inst(value) + value);
+			__compelled_inline qe_m128& __fpcall operator+=(imut __m128 value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128& __fpcall operator-=(imut __m128 value) noexcept {
-				_value = algo_t_inst(get() - value);
+			__compelled_inline qe_m128& __fpcall operator-=(imut __m128 value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128& __fpcall operator*=(imut __m128 value) noexcept {
-				_value = algo_t_inst(get() * value);
+			__compelled_inline qe_m128& __fpcall operator*=(imut __m128 value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128& __fpcall operator/=(imut __m128 value) noexcept {
-				_value = algo_t_inst(get() / value);
+			__compelled_inline qe_m128& __fpcall operator/=(imut __m128 value) nex {
+				set(get() / value);
 				return *this;
 			}
 
 	#endif
 
-			__compelled_inline qe_m128& __fpcall operator=(imut __m128 value) noexcept {
+			__compelled_inline qe_m128& __fpcall operator=(imut __m128 value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator __m128() imut noexcept {
+			__compelled_inline __stackcall operator __m128() imut nex {
 				return get();
 			}
 
@@ -1677,31 +1934,33 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__compelled_inline __fpcall qe_m128i(imut __m128i value) noexcept {
+			__compelled_inline __fpcall qe_m128i(imut __m128i value) nex {
 				set(value);
 			}
 
-			__optimized_dtor ~qe_m128i() noexcept {
+			__optimized_dtor ~qe_m128i() nex {
 
 				polyc::unregister_polyc_pointer(&_value);
+
+				RtlZeroMemory(volatile_cast<__m128i*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut __m128i __stackcall get() imut noexcept {
+			__compelled_inline imut __m128i __stackcall get() imut nex {
 
-				polyc::algo(const_cast<__m128i*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<__m128i*>(&_value), sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<__m128i*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<__m128i*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __fpcall set(imut __m128i value) noexcept {
+			__compelled_inline imut bool __fpcall set(imut __m128i value) nex {
 
 				_value = value;
 
@@ -1714,50 +1973,50 @@ namespace qengine{
 
 	#ifdef __clang__ // msvc does not support math operators on vector types
 
-			__compelled_inline qe_m128i __fpcall operator+(imut __m128i value) imut noexcept {
+			__compelled_inline qe_m128i __fpcall operator+(imut __m128i value) imut nex {
 				return qe_m128i(get() + value);
 			};
 
-			__compelled_inline qe_m128i __fpcall operator-(imut __m128i value) imut noexcept {
+			__compelled_inline qe_m128i __fpcall operator-(imut __m128i value) imut nex {
 				return qe_m128i(get() - value);
 			}
 
-			__compelled_inline qe_m128i __fpcall operator/(imut __m128i value) imut noexcept {
+			__compelled_inline qe_m128i __fpcall operator/(imut __m128i value) imut nex {
 				return qe_m128i((imut __m128i)get() / value);
 			}
 
-			__compelled_inline qe_m128i __fpcall operator*(imut __m128i value) imut noexcept {
+			__compelled_inline qe_m128i __fpcall operator*(imut __m128i value) imut nex {
 				return qe_m128i(get() * value);
 			}
 
-			__compelled_inline qe_m128i& __fpcall operator+=(imut __m128i value) noexcept {
-				_value = algo_t_inst(algo_t_inst(value) + value);
+			__compelled_inline qe_m128i& __fpcall operator+=(imut __m128i value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128i& __fpcall operator-=(imut __m128i value) noexcept {
-				_value = algo_t_inst(get() - value);
+			__compelled_inline qe_m128i& __fpcall operator-=(imut __m128i value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128i& __fpcall operator*=(imut __m128i value) noexcept {
-				_value = algo_t_inst(get() * value);
+			__compelled_inline qe_m128i& __fpcall operator*=(imut __m128i value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128i& __fpcall operator/=(imut __m128i value) noexcept {
-				_value = algo_t_inst(get() / value);
+			__compelled_inline qe_m128i& __fpcall operator/=(imut __m128i value) nex {
+				set(get() / value);
 				return *this;
 			}
 
 	#endif
 
-			__compelled_inline qe_m128i& __fpcall operator=(imut __m128i value) noexcept {
+			__compelled_inline qe_m128i& __fpcall operator=(imut __m128i value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator __m128i() imut noexcept {
+			__compelled_inline __stackcall operator __m128i() imut nex {
 				return get();
 			}
 
@@ -1774,31 +2033,33 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__compelled_inline __fpcall qe_m128d(imut __m128d value) noexcept {
+			__compelled_inline __fpcall qe_m128d(imut __m128d value) nex {
 				set(value);
 			}
 
-			__optimized_dtor ~qe_m128d() noexcept {
+			__optimized_dtor ~qe_m128d() nex {
 
 				polyc::unregister_polyc_pointer(&_value);
+
+				RtlZeroMemory(volatile_cast<__m128d*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut __m128d __stackcall get() imut noexcept {
+			__compelled_inline imut __m128d __stackcall get() imut nex {
 
-				polyc::algo(const_cast<__m128d*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<__m128d*>(&_value), sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<__m128d*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<__m128d*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __fpcall set(imut __m128d value) noexcept {
+			__compelled_inline imut bool __fpcall set(imut __m128d value) nex {
 
 				_value = value;
 
@@ -1809,19 +2070,19 @@ namespace qengine{
 #pragma region Operators
 	#ifdef __clang__ // msvc does not support math operators on vector types
 
-			__compelled_inline qe_m128d __fpcall operator+(imut __m128d value) imut noexcept {
+			__compelled_inline qe_m128d __fpcall operator+(imut __m128d value) imut nex {
 				return qe_m128d(get() + value);
 			};
 
-			__compelled_inline qe_m128d __fpcall operator-(imut __m128d value) imut noexcept {
+			__compelled_inline qe_m128d __fpcall operator-(imut __m128d value) imut nex {
 				return qe_m128d(get() - value);
 			}
 
-			__compelled_inline qe_m128d __fpcall operator/(imut __m128d value) imut noexcept {
+			__compelled_inline qe_m128d __fpcall operator/(imut __m128d value) imut nex {
 				return qe_m128d((imut __m128d)get() / value);
 			}
 
-			__compelled_inline qe_m128d __fpcall operator*(imut __m128d value) imut noexcept {
+			__compelled_inline qe_m128d __fpcall operator*(imut __m128d value) imut nex {
 				return qe_m128d(get() * value);
 			}
 
@@ -1829,34 +2090,34 @@ namespace qengine{
 
 	#ifdef __clang__
 
-			__compelled_inline qe_m128d& __fpcall operator+=(imut __m128d value) noexcept {
-				_value = algo_t_inst(algo_t_inst(value) + value);
+			__compelled_inline qe_m128d& __fpcall operator+=(imut __m128d value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128d& __fpcall operator-=(imut __m128d value) noexcept {
-				_value = algo_t_inst(get() - value);
+			__compelled_inline qe_m128d& __fpcall operator-=(imut __m128d value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128d& __fpcall operator*=(imut __m128d value) noexcept {
-				_value = algo_t_inst(get() * value);
+			__compelled_inline qe_m128d& __fpcall operator*=(imut __m128d value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_m128d& __fpcall operator/=(imut __m128d value) noexcept {
-				_value = algo_t_inst(get() / value);
+			__compelled_inline qe_m128d& __fpcall operator/=(imut __m128d value) nex {
+				set(get() / value);
 				return *this;
 			}
 
 	#endif
 
-			__compelled_inline qe_m128d& __fpcall operator=(imut __m128d value) noexcept {
+			__compelled_inline qe_m128d& __fpcall operator=(imut __m128d value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator __m128d() imut noexcept {
+			__compelled_inline __stackcall operator __m128d() imut nex {
 				return get();
 			}
 
@@ -1883,31 +2144,33 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__compelled_inline __fpcall qe_m256(imut __m256 value) noexcept {
+			__compelled_inline __fpcall qe_m256(imut __m256 value) nex {
 				set(value);
 			}
 			
-			__optimized_dtor ~qe_m256() noexcept {
+			__optimized_dtor ~qe_m256() nex {
 
 				polyc::unregister_polyc_pointer(&_value);
+
+				RtlZeroMemory(volatile_cast<__m256*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut __m256 __stackcall get() imut noexcept {
+			__compelled_inline imut __m256 __stackcall get() imut nex {
 
-				polyc::algo(const_cast<__m256*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<__m256*>(&_value), sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<__m256*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<__m256*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __fpcall set(imut __m256 value) noexcept {
+			__compelled_inline imut bool __fpcall set(imut __m256 value) nex {
 
 				_value = value;
 
@@ -1920,50 +2183,50 @@ namespace qengine{
 
 	#ifdef __clang__ // msvc does not support math operators on vector types
 
-			__compelled_inline qe_m256 __fpcall operator+(imut __m256 value) imut noexcept {
+			__compelled_inline qe_m256 __fpcall operator+(imut __m256 value) imut nex {
 				return qe_m256(get() + value);
 			};
 
-			__compelled_inline qe_m256 __fpcall operator-(imut __m256 value) imut noexcept {
+			__compelled_inline qe_m256 __fpcall operator-(imut __m256 value) imut nex {
 				return qe_m256(get() - value);
 			}
 
-			__compelled_inline qe_m256 __fpcall operator/(imut __m256 value) imut noexcept {
+			__compelled_inline qe_m256 __fpcall operator/(imut __m256 value) imut nex {
 				return qe_m256((imut __m256)get() / value);
 			}
 
-			__compelled_inline qe_m256 __fpcall operator*(imut __m256 value) imut noexcept {
+			__compelled_inline qe_m256 __fpcall operator*(imut __m256 value) imut nex {
 				return qe_m256(get() * value);
 			}
 
-			__compelled_inline qe_m256& __fpcall operator+=(imut __m256 value) noexcept {
-				_value = algo_t_inst(algo_t_inst(value) + value);
+			__compelled_inline qe_m256& __fpcall operator+=(imut __m256 value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256& __fpcall operator-=(imut __m256 value) noexcept {
-				_value = algo_t_inst(get() - value);
+			__compelled_inline qe_m256& __fpcall operator-=(imut __m256 value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256& __fpcall operator*=(imut __m256 value) noexcept {
-				_value = algo_t_inst(get() * value);
+			__compelled_inline qe_m256& __fpcall operator*=(imut __m256 value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256& __fpcall operator/=(imut __m256 value) noexcept {
-				_value = algo_t_inst(get() / value);
+			__compelled_inline qe_m256& __fpcall operator/=(imut __m256 value) nex {
+				set(get() / value);
 				return *this;
 			}
 
 	#endif
 
-			__compelled_inline qe_m256& __fpcall operator=(imut __m256 value) noexcept {
+			__compelled_inline qe_m256& __fpcall operator=(imut __m256 value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator __m256() imut noexcept {
+			__compelled_inline __stackcall operator __m256() imut nex {
 				return get();
 			}
 
@@ -1980,31 +2243,33 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__compelled_inline __fpcall qe_m256i(imut __m256i value) noexcept {
+			__compelled_inline __fpcall qe_m256i(imut __m256i value) nex {
 				set(value);
 			}
 
-			__optimized_dtor ~qe_m256i() noexcept {
+			__optimized_dtor ~qe_m256i() nex {
 
 				polyc::unregister_polyc_pointer(&_value);
+
+				RtlZeroMemory(volatile_cast<__m256i*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut __m256i __stackcall get() imut noexcept {
+			__compelled_inline imut __m256i __stackcall get() imut nex {
 
-				polyc::algo(const_cast<__m256i*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<__m256i*>(&_value), sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<__m256i*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<__m256i*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __fpcall set(imut __m256i value) noexcept {
+			__compelled_inline imut bool __fpcall set(imut __m256i value) nex {
 
 				_value = value;
 
@@ -2016,50 +2281,50 @@ namespace qengine{
 #pragma region Operators
 	#ifdef __clang__ // msvc does not support math operators on vector types
 
-			__compelled_inline qe_m256i __fpcall operator+(imut __m256i value) imut noexcept {
+			__compelled_inline qe_m256i __fpcall operator+(imut __m256i value) imut nex {
 				return qe_m256i(get() + value);
 			};
 
-			__compelled_inline qe_m256i __fpcall operator-(imut __m256i value) imut noexcept {
+			__compelled_inline qe_m256i __fpcall operator-(imut __m256i value) imut nex {
 				return qe_m256i(get() - value);
 			}
 
-			__compelled_inline qe_m256i __fpcall operator/(imut __m256i value) imut noexcept {
+			__compelled_inline qe_m256i __fpcall operator/(imut __m256i value) imut nex {
 				return qe_m256i((imut __m256i)get() / value);
 			}
 
-			__compelled_inline qe_m256i __fpcall operator*(imut __m256i value) imut noexcept {
+			__compelled_inline qe_m256i __fpcall operator*(imut __m256i value) imut nex {
 				return qe_m256i(get() * value);
 			}
 
-			__compelled_inline qe_m256i& __fpcall operator+=(imut __m256i value) noexcept {
-				_value = algo_t_inst(algo_t_inst(value) + value);
+			__compelled_inline qe_m256i& __fpcall operator+=(imut __m256i value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256i& __fpcall operator-=(imut __m256i value) noexcept {
-				_value = algo_t_inst(get() - value);
+			__compelled_inline qe_m256i& __fpcall operator-=(imut __m256i value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256i& __fpcall operator*=(imut __m256i value) noexcept {
-				_value = algo_t_inst(get() * value);
+			__compelled_inline qe_m256i& __fpcall operator*=(imut __m256i value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256i& __fpcall operator/=(imut __m256i value) noexcept {
-				_value = algo_t_inst(get() / value);
+			__compelled_inline qe_m256i& __fpcall operator/=(imut __m256i value) nex {
+				set(get() / value);
 				return *this;
 			}
 
 	#endif
 
-			__compelled_inline qe_m256i& __fpcall operator=(imut __m256i value) noexcept {
+			__compelled_inline qe_m256i& __fpcall operator=(imut __m256i value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator __m256i() imut noexcept {
+			__compelled_inline __stackcall operator __m256i() imut nex {
 				return get();
 			}
 
@@ -2076,31 +2341,33 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__compelled_inline __fpcall qe_m256d(imut __m256d value) noexcept {
+			__compelled_inline __fpcall qe_m256d(imut __m256d value) nex {
 				set(value);
 			}
 
-			__optimized_dtor ~qe_m256d() noexcept {
+			__optimized_dtor ~qe_m256d() nex {
 
 				polyc::unregister_polyc_pointer(&_value);
+
+				RtlZeroMemory(volatile_cast<__m256d*>(&this->_value), sizeof(_value));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut __m256d __stackcall get() imut noexcept {
+			__compelled_inline imut __m256d __stackcall get() imut nex {
 
-				polyc::algo(const_cast<__m256d*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<__m256d*>(&_value), sizeof(_value));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<__m256d*>(&_value), sizeof(_value));
+				polyc::algo(volatile_cast<__m256d*>(&_value), sizeof(_value));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __fpcall set(imut __m256d value) noexcept {
+			__compelled_inline imut bool __fpcall set(imut __m256d value) nex {
 
 				_value = value;
 
@@ -2114,19 +2381,19 @@ namespace qengine{
 
 	#ifdef __clang__ // msvc does not support math operators on vector types
 
-			__compelled_inline qe_m256d __fpcall operator+(imut __m256d value) imut noexcept {
+			__compelled_inline qe_m256d __fpcall operator+(imut __m256d value) imut nex {
 				return qe_m256d(get() + value);
 			};
 
-			__compelled_inline qe_m256d __fpcall operator-(imut __m256d value) imut noexcept {
+			__compelled_inline qe_m256d __fpcall operator-(imut __m256d value) imut nex {
 				return qe_m256d(get() - value);
 			}
 
-			__compelled_inline qe_m256d __fpcall operator/(imut __m256d value) imut noexcept {
+			__compelled_inline qe_m256d __fpcall operator/(imut __m256d value) imut nex {
 				return qe_m256d((imut __m256d)get() / value);
 			}
 
-			__compelled_inline qe_m256d __fpcall operator*(imut __m256d value) imut noexcept {
+			__compelled_inline qe_m256d __fpcall operator*(imut __m256d value) imut nex {
 				return qe_m256d(get() * value);
 			}
 
@@ -2134,34 +2401,34 @@ namespace qengine{
 
 	#ifdef __clang__
 
-			__compelled_inline qe_m256d& __fpcall operator+=(imut __m256d value) noexcept {
-				_value = algo_t_inst(algo_t_inst(value) + value);
+			__compelled_inline qe_m256d& __fpcall operator+=(imut __m256d value) nex {
+				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256d& __fpcall operator-=(imut __m256d value) noexcept {
-				_value = algo_t_inst(get() - value);
+			__compelled_inline qe_m256d& __fpcall operator-=(imut __m256d value) nex {
+				set(get() - value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256d& __fpcall operator*=(imut __m256d value) noexcept {
-				_value = algo_t_inst(get() * value);
+			__compelled_inline qe_m256d& __fpcall operator*=(imut __m256d value) nex {
+				set(get() * value);
 				return *this;
 			}
 
-			__compelled_inline qe_m256d& __fpcall operator/=(imut __m256d value) noexcept {
-				_value = algo_t_inst(get() / value);
+			__compelled_inline qe_m256d& __fpcall operator/=(imut __m256d value) nex {
+				set(get() / value);
 				return *this;
 			}
 
 	#endif
 
-			__compelled_inline qe_m256d& __fpcall operator=(imut __m256d value) noexcept {
+			__compelled_inline qe_m256d& __fpcall operator=(imut __m256d value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator __m256d() imut noexcept {
+			__compelled_inline __stackcall operator __m256d() imut nex {
 				return get();
 			}
 
@@ -2190,70 +2457,64 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__compelled_inline __stackcall qe_string(imut std::string value) noexcept {
-
-				if (!is_init) {
-					init_constants();
-				}
+			__compelled_inline __stackcall qe_string(imut std::string value) nex {
 				
 				set(value);
 			}
 
-			__optimized_ctor qe_string(imut char* value = "") noexcept {
-
-				if (!is_init) {
-					init_constants();
-				}
+			__optimized_ctor qe_string(imut char* value = "") nex {
 
 				set(std::string(value));
 			}
 
-			__optimized_dtor ~qe_string() noexcept {
+			__optimized_dtor ~qe_string() nex {
 
-				polyc::unregister_polyc_pointer(_value.c_str());
+				polyc::unregister_polyc_pointer(reinterpret_cast<c_void>( imut_cast<char*>(_value.c_str()) ));
+
+				RtlZeroMemory(imut_cast<char*>( _value.c_str() ), _value.length());
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut std::string __stackcall get() imut noexcept {
+			__compelled_inline imut std::string __stackcall get() imut nex {
 
-				polyc::algo(const_cast<char*>(_value.c_str()), _value.length());
+				polyc::algo(imut_cast<char*>(_value.c_str()), _value.length());
 
 				auto value = _value;
 
-				polyc::algo(const_cast<char*>(_value.c_str()), _value.length());
+				polyc::algo(imut_cast<char*>(_value.c_str()), _value.length());
 
 				return value;
 			}
 
-			__compelled_inline imut bool __stackcall set( imut std::string value ) noexcept {
+			__compelled_inline imut bool __stackcall set( imut std::string value ) nex {
 
 				_value = value;
 
-				return polyc::algo(const_cast<char*>(_value.c_str()), _value.length());
+				return polyc::algo(imut_cast<char*>(_value.c_str()), _value.length());
 			}
 
 #pragma endregion	
 
 #pragma region Operators
 
-			__compelled_inline qe_string __stackcall operator+(imut std::string& value) imut noexcept {
+			__compelled_inline qe_string __stackcall operator+(imut std::string& value) imut nex {
 				return qe_string( get() + value);
 			};
 
-			__compelled_inline qe_string& __stackcall operator+=(imut std::string& value) noexcept {
-				set(static_cast<std::string>( get() + value ));
+			__compelled_inline qe_string& __stackcall operator+=(imut std::string& value) nex {
+				set(get() + value );
 				return *this;
 			}
 
-			__compelled_inline qe_string& __stackcall operator=(imut std::string& value) noexcept {
+			__compelled_inline qe_string& __stackcall operator=(imut std::string& value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator std::string() imut noexcept {
+			__compelled_inline __stackcall operator std::string() imut nex {
 				return get();
 			}
 
@@ -2279,70 +2540,64 @@ namespace qengine{
 
 #pragma region Ctor / Dtor
 
-			__compelled_inline __stackcall qe_wstring(imut std::wstring value) noexcept {
-
-				if (!is_init) {
-					init_constants();
-				}
+			__compelled_inline __stackcall qe_wstring(imut std::wstring value) nex {
 
 				set(value);
 			}
 
-			__optimized_ctor qe_wstring(imut wchar_t* value = L"") noexcept {
-
-				if (!is_init) {
-					init_constants();
-				}
+			__optimized_ctor qe_wstring(imut wchar_t* value = L"") nex {
 
 				set(std::wstring(value));
 			}
 
-			__optimized_dtor ~qe_wstring() noexcept {
+			__optimized_dtor ~qe_wstring() nex {
 
-				polyc::unregister_polyc_pointer(_value.c_str());
+				polyc::unregister_polyc_pointer(reinterpret_cast<c_void>( imut_cast<wchar_t*>(_value.c_str()) ));
+
+				RtlZeroMemory(imut_cast<wchar_t*>(_value.c_str()), _value.length() * sizeof(wchar_t));
 			}
 
 #pragma endregion
 
 #pragma region Accessors
 
-			__compelled_inline imut std::wstring __stackcall get() imut noexcept {
+			__compelled_inline imut std::wstring __stackcall get() imut nex {
 
-				polyc::algo(const_cast<wchar_t*>(_value.c_str()), _value.length() * sizeof(wchar_t));
+				polyc::algo(imut_cast<wchar_t*>(_value.c_str()), _value.length() * sizeof(wchar_t));
 
 				auto value = _value;
 
-				polyc::algo(const_cast<wchar_t*>(_value.c_str()), _value.length() * sizeof(wchar_t));
+				polyc::algo(imut_cast<wchar_t*>(_value.c_str()), _value.length() * sizeof(wchar_t));
 
 				return value;
 			}
 
-			__compelled_inline imut bool __stackcall set(imut std::wstring value) noexcept {
+			__compelled_inline imut bool __stackcall set(imut std::wstring value) nex {
 
 				_value = value;
 
-				return polyc::algo(const_cast<wchar_t*>(_value.c_str()), _value.length() * sizeof(wchar_t));
+				return polyc::algo(imut_cast<wchar_t*>(_value.c_str()), _value.length() * sizeof(wchar_t));
 			}
 
 #pragma endregion
 
 #pragma region Operators
 
-			__compelled_inline qe_wstring __stackcall operator+(imut std::wstring& value) imut noexcept {
+			__compelled_inline qe_wstring __stackcall operator+(imut std::wstring& value) imut nex {
 				return qe_wstring(get() + value);
 			};
 
-			__compelled_inline qe_wstring& __stackcall operator+=(imut std::wstring& value) noexcept {
+			__compelled_inline qe_wstring& __stackcall operator+=(imut std::wstring& value) nex {
 				set(get() + value);
 				return *this;
 			}
 
-			__compelled_inline qe_wstring& __stackcall operator=(imut std::wstring& value) noexcept {
+			__compelled_inline qe_wstring& __stackcall operator=(imut std::wstring& value) nex {
 				set(value);
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator std::wstring() imut noexcept {
+			__compelled_inline __stackcall operator std::wstring() imut nex {
 				return get();
 			}
 
@@ -2360,7 +2615,7 @@ namespace qengine{
 
 #pragma region Global Variables
 
-			void* local_alloc;
+			c_void local_alloc;
 			std::size_t alloc_size;
 
 #pragma endregion
@@ -2388,20 +2643,20 @@ namespace qengine{
 
 #pragma region Ctor
 
-				index_proxy(imut std::size_t index_, qe_malloc& instance) noexcept : index(index_), parent(instance) { }
+				index_proxy(imut std::size_t index_, qe_malloc& instance) nex : index(index_), parent(instance) { }
 
 #pragma endregion
 
 #pragma region Operator overrides
 
-				uint8_t& operator=(uint8_t value) noexcept {
+				std::uint8_t& operator=(std::uint8_t value) nex {
 
 					parent.set(index, value);
 
 					return value;   // return the passed assignment value rather than using up absurd resources to decrypt, re-encrypt everything using get()
 				}
 
-				__compelled_inline __stackcall operator uint8_t() imut noexcept {
+				__compelled_inline __stackcall operator std::uint8_t() imut nex {
 
 					return parent.get(index);
 				}
@@ -2415,39 +2670,29 @@ namespace qengine{
 
 #pragma region Ctor
 
-			__optimized_ctor qe_malloc(imut std::size_t size)
+			__optimized_ctor qe_malloc(imut std::size_t size = 1)
 				: 
 				alloc_size(size),
 				local_alloc(malloc(size))
 			{
 
 				if (!local_alloc)
-					throw std::bad_alloc();
+					return;
 
 				RtlZeroMemory(local_alloc, size);
 
-				algo(local_alloc, size, false);
-			}
-
-			__compelled_inline __stackcall qe_malloc() noexcept
-				:
-				alloc_size(NULL),
-				local_alloc(NULL)
-			{
-				if (!is_init) {
-					init_constants();
-				}
+				polyc::algo(local_alloc, size, false);
 			}
 
 #pragma endregion
 
 #pragma region Get accessors
 
-			__compelled_inline void* __stackcall get() noexcept {
-				return algo_inst(local_alloc, alloc_size, false);
+			__compelled_inline c_void __stackcall get() nex {
+				return polyc::algo_inst(local_alloc, alloc_size, false);
 			}
 
-			__compelled_inline void* __regcall get(imut std::uintptr_t pos, imut std::size_t length) noexcept {
+			__compelled_inline c_void __regcall get(imut std::uintptr_t pos, imut std::size_t length) nex {
 				auto dec_alloc = reinterpret_cast<uint8_t*>(get());
 
 				auto get_alloc = malloc(length);
@@ -2463,8 +2708,9 @@ namespace qengine{
 				return get_alloc;
 			}
 
-			__compelled_inline std::uint8_t __regcall get(imut std::size_t index) noexcept {
-				auto dec_alloc = reinterpret_cast<uint8_t*>(get());
+			__compelled_inline std::uint8_t __regcall get(imut std::size_t index) nex {
+
+				auto dec_alloc = reinterpret_cast<std::uint8_t*>(get());
 
 				auto _return = dec_alloc[index];
 
@@ -2475,7 +2721,7 @@ namespace qengine{
 			}
 
 			template<typename T>
-			__compelled_inline T& __regcall get_t(imut std::uintptr_t pos) noexcept {
+			__compelled_inline T& __regcall get_t(imut std::uintptr_t pos) nex {
 
 				auto value_r = reinterpret_cast<T*>(get(pos, sizeof(T)));
 
@@ -2488,11 +2734,11 @@ namespace qengine{
 				);
 			}
 
-			__compelled_inline void* __stackcall get_data_pointer() noexcept {
+			__compelled_inline c_void __stackcall get_data_pointer() nex {
 				return local_alloc;
 			}
 
-			__compelled_inline std::size_t __stackcall get_data_size() noexcept {
+			__compelled_inline std::size_t __stackcall get_data_size() nex {
 				return alloc_size;
 			}
 
@@ -2503,19 +2749,18 @@ namespace qengine{
 			//WARNING: appending length to the allocation here will cause exceptions / UB
 			__compelled_inline void __regcall set(
 				
-				void* src,
+				c_void src,
 				imut std::uintptr_t pos,
 				imut std::size_t length,
 				bool free_src = false
-			) noexcept {
+			) nex {
 
 				auto dec_alloc = get();
 
-				memcpy(&reinterpret_cast<std::uint8_t*>(dec_alloc)[pos], src, length);
+				memcpy(&static_cast<std::uint8_t*>(dec_alloc)[pos], src, length);
 
-				auto enc_alloc = algo_inst(dec_alloc, length, false);
+				auto enc_alloc = polyc::algo_inst(dec_alloc, length, false);
 				//free the decryption allocation and local alocation: reminder this class is performance-heavy and should not be used for large allocation pools
-				//for security reasons
 				RtlZeroMemory(dec_alloc, alloc_size);
 				RtlZeroMemory(local_alloc, alloc_size);
 				free(dec_alloc);
@@ -2534,7 +2779,7 @@ namespace qengine{
 				imut std::uintptr_t pos,
 				imut std::uint8_t value,
 				imut std::size_t size
-			) noexcept {
+			) nex {
 
 				auto dec_alloc = reinterpret_cast<std::uint8_t*>(get());
 
@@ -2542,7 +2787,7 @@ namespace qengine{
 					dec_alloc[i] = value;
 				}
 
-				auto enc_alloc = algo_inst(dec_alloc, alloc_size, false);
+				auto enc_alloc = polyc::algo_inst(dec_alloc, alloc_size, false);
 
 				//free the decryption allocation and local alocation: reminder this class is performance-heavy and should not be used for large allocation pools
 				//for security reasons
@@ -2557,13 +2802,13 @@ namespace qengine{
 			}
 
 			template<typename T>
-			__compelled_inline void __regcall set(uintptr_t pos, T value) noexcept {
-				auto dec_alloc = reinterpret_cast<uint8_t*>(get()); // so we can properly index the allocation
+			__compelled_inline void __regcall set(std::uintptr_t pos, T value) nex {
+				auto dec_alloc = reinterpret_cast<std::uint8_t*>(get()); // so we can properly index the allocation
 
 				T* cast_t = reinterpret_cast<T*>(&dec_alloc[pos]);
 				*cast_t = value;
 
-				auto enc_alloc = algo_inst(dec_alloc, alloc_size, false);
+				auto enc_alloc = polyc::algo_inst(dec_alloc, alloc_size, false);
 				//free the decryption allocation and local alocation: reminder this class is performance-heavy and should not be used for large allocation pools
 				//for security reasons
 				RtlZeroMemory(dec_alloc, alloc_size);
@@ -2581,14 +2826,14 @@ namespace qengine{
 
 #pragma region Utility functions
 
-			__compelled_inline void __regcall swap(void* src, imut std::size_t length, imut bool free_src = false) noexcept {
+			__compelled_inline void __regcall swap(c_void src, imut std::size_t length, imut bool free_src = false) nex {
 				//release current resources
 				zero();
 				free(local_alloc);
 				local_alloc = nullptr;
 				alloc_size = 0x0000000000000000ULL;
 
-				auto enc_alloc = algo_inst(src, length, false);
+				auto enc_alloc = polyc::algo_inst(src, length, false);
 
 				alloc_size = length;
 				local_alloc = enc_alloc;
@@ -2598,7 +2843,7 @@ namespace qengine{
 			}
 
 			//size is only the length in bytes of the allocation to be appended or destroyed
-			__compelled_inline bool __regcall resize(imut std::size_t size) noexcept {
+			__compelled_inline bool __regcall resize(imut std::size_t size) nex {
 				auto dec_alloc = get();
 
 				auto n_local_alloc = realloc(dec_alloc, size);
@@ -2611,9 +2856,9 @@ namespace qengine{
 				dec_alloc = NULL; // zero  old pointer ;; useless even if realloc didnt need to move memory
 				//zero out the extended memory (if it was being extended rather than shrunk)
 				if ((size) > alloc_size)
-					RtlZeroMemory(&(reinterpret_cast<uint8_t*>(n_local_alloc)[alloc_size]), (size - alloc_size));
+					RtlZeroMemory(&(reinterpret_cast<std::uint8_t*>(n_local_alloc)[alloc_size]), (size - alloc_size));
 
-				auto enc_alloc = algo_inst(n_local_alloc, size, false);
+				auto enc_alloc = polyc::algo_inst(n_local_alloc, size, false);
 				//free the decryption allocation and local alocation: reminder this class is performance-heavy and should not be used for large allocation pools
 				//for security reasons
 				RtlZeroMemory(n_local_alloc, alloc_size);
@@ -2630,7 +2875,7 @@ namespace qengine{
 				return true;
 			}
 
-			__compelled_inline void __stackcall zero() noexcept {
+			__compelled_inline void __stackcall zero() nex {
 				set(0x0000000000000000ULL, 0x0ui8, alloc_size);
 			}
 
@@ -2638,22 +2883,18 @@ namespace qengine{
 
 #pragma region Operators
 
-			__compelled_inline qe_malloc& __regcall operator=(imut std::vector<uint8_t>& value) noexcept {
-				swap(const_cast<std::vector<uint8_t>*>(&value)->data(), value.size());
+			__compelled_inline qe_malloc& __regcall operator=(imut std::vector<std::uint8_t>& value) nex {
+				swap(volatile_cast<std::vector<std::uint8_t>*>(&value)->data(), value.size());
 
 				return *this;
 			}
 
-			__compelled_inline __stackcall operator void* () imut noexcept {
-				return algo_inst(local_alloc, alloc_size, false);
-			}
-
 			template<typename T>
-			__compelled_inline __stackcall operator T* () imut noexcept {
-				return reinterpret_cast<T*>(algo_inst(local_alloc, alloc_size, false));
+			__compelled_inline __stackcall operator T* () imut nex {
+				return reinterpret_cast<T*>( polyc::algo_inst(local_alloc, alloc_size, false) );
 			}
 
-			index_proxy __regcall operator[](std::size_t index) noexcept {
+			index_proxy __regcall operator[](std::size_t index) nex {
 				return index_proxy(index, *this);
 			}
 
@@ -2661,13 +2902,17 @@ namespace qengine{
 
 #pragma region Destructor
 
-			__compelled_inline void __regcall destroy() noexcept {
-				if (local_alloc)
-					free(local_alloc);
-				
+			__compelled_inline imut bool __stackcall destroy() nex {
+
+				if (!local_alloc)
+					return false;
+
+				RtlZeroMemory(local_alloc, alloc_size);
+
+				free(local_alloc);
 			}
 
-			__compelled_inline __stackcall ~qe_malloc() noexcept {
+			__compelled_inline __stackcall ~qe_malloc() nex {
 				destroy();
 			}
 

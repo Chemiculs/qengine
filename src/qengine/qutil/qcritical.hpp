@@ -40,7 +40,8 @@ namespace qengine {
 
 		/* scrambled comparison operation */
 		template<typename T, typename T2>
-		static __compelled_inline bool __regcall compare_memory(T word1, T2 word2) noexcept {
+		static __compelled_inline imut bool __regcall compare_memory(T word1, T2 word2) nex {
+
 			bool same = true;
 
 			if (sizeof(decltype(word1)) != sizeof(decltype(word2))) {
@@ -68,10 +69,10 @@ namespace qengine {
 						continue;
 			}
 
-			return same;
+			return std::move(same);
 		}
 
-		static __compelled_inline bool __regcall fast_compare_string(const std::string string1, const std::string string2) noexcept {
+		static __compelled_inline imut bool __regcall fast_compare_string(imut std::string string1, imut std::string string2) nex {
 
 			bool same = true;
 
@@ -94,14 +95,12 @@ namespace qengine {
 				}
 			}
 
-
-
 		ret:
 
 			return same;
 		}
 
-		static __compelled_inline bool __regcall fast_compare_wstring(std::wstring string1, std::wstring string2) noexcept {
+		static __compelled_inline imut bool __regcall fast_compare_wstring(imut std::wstring string1, imut std::wstring string2) nex {
 
 			bool same = true;
 
@@ -133,7 +132,7 @@ namespace qengine {
 
 		ret:
 
-			return same;
+			return std::move(same);
 		}
 
 		template<typename... args, typename... args2, typename T, typename T2>
@@ -141,8 +140,8 @@ namespace qengine {
 
 			void(*callback)(args...), 
 			void(*callback_two)(args2...),
-			const std::tuple<args...> args_one,
-			const std::tuple<args2...> args_two,
+			imut std::tuple<args...> args_one,
+			imut std::tuple<args2...> args_two,
 			T condition_one,
 			T2 condition_two,
 			condition_t condition = EQUALTO
@@ -225,12 +224,11 @@ namespace qengine {
 				}
 			}
 
-			if (compare_memory(evaluation, true))
+			if (compare_memory(std::move(evaluation), true))
 				std::apply(callback, args_one);
 
 			else
 				std::apply(callback_two, args_two);
-			
 		}
 
 #pragma endregion

@@ -15,10 +15,7 @@
 
 #pragma region std
 
-#include <exception>
-#include <vector>
 #include <string>
-#include <tuple>
 
 #pragma endregion
 
@@ -56,7 +53,7 @@ namespace qengine {
 			template<typename T, typename... args>
 			static __inlineable T __apicall invoke_internal(std::uintptr_t fn, args... arguments) noexcept {
 
-				return static_cast<T>(reinterpret_cast<T(WINAPI*)(args...)>(reinterpret_cast<void*>(fn))(arguments...));
+				return static_cast<T>(reinterpret_cast<T(WINAPI*)(args...)>(reinterpret_cast<c_void>(fn))(arguments...));
 			}
 
 		public:
@@ -90,7 +87,7 @@ namespace qengine {
 
 				const auto fn = GetProcAddress(handle, fn_str.c_str());
 
-				return reinterpret_cast<T(__apicall*)(args...)>(reinterpret_cast<void*>(fn));
+				return reinterpret_cast<T(__apicall*)(args...)>(reinterpret_cast<c_void>(fn));
 			}
 
 		};

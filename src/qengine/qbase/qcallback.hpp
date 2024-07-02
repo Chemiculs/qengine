@@ -9,9 +9,7 @@ namespace qengine {
 
 #pragma region Callback FN Prototypes
 
-		typedef void(__regcall* qmem_exception_rogue_c)(qexcept::q_rogueaccess violation, void* data);
-
-		typedef void(__regcall* qmem_except_hook)(qexcept::q_fn_alteration violation);
+		typedef void(__regcall* qmem_exception_rogue_c)(qengine::qexcept::q_rogueaccess violation, c_void data);
 
 #pragma endregion
 	}

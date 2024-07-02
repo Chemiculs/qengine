@@ -107,9 +107,9 @@ namespace qengine {
 
 #pragma region Rolling Addition / Subtraction (Junk Code Generation + WEAK Encryption)
 
-		static __compelled_inline imut std::uint8_t rol_add(imut std::uint8_t base, imut std::uint8_t modifier) noexcept {
+		static __compelled_inline imut std::uint8_t rol_add(imut std::uint8_t base, imut std::uint8_t modifier) nex {
 
-			static imut constexpr std::uint8_t maximum = 0xFFui8;
+			static imut imutexpr std::uint8_t maximum = 0xFFui8;
 
 			imut std::uint8_t remaining = maximum - base;
 
@@ -119,73 +119,79 @@ namespace qengine {
 			return (modifier - remaining) - 1;
 		}
 
-		static __compelled_inline imut std::uint8_t rol_sub(imut std::uint8_t base, imut std::uint8_t modifier) noexcept {
+		static __compelled_inline imut std::uint8_t rol_sub(imut std::uint8_t base, imut std::uint8_t modifier) nex {
 
-			static imut constexpr std::uint8_t maximum = 0xFFui8;
+			static imut imutexpr std::uint8_t maximum = 0xFFui8;
 
 			return modifier > base ? maximum - ((modifier - base) - 1) : base - modifier;
 		}
 
 #pragma endregion
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_0(void* data, imut std::size_t length, imut bool crypted) noexcept {
+		/*
+
+			The below symbols must be statically compilled as to retrieve a function pointer, optimizations are disabled for the varying subroutines and function inlining is explicitly disabled
+
+		*/
+
+		static __singleton imut bool __regcall internal_do_algo_subroutine_0(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			if (crypted)
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_add(reinterpret_cast<std::uint8_t*>(data)[i], qsub0_mutator);
 			else
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_sub(reinterpret_cast<std::uint8_t*>(data)[i], qsub0_mutator);
 
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_1(void* data, imut std::size_t length, imut bool crypted) noexcept {
+		static __singleton imut bool __regcall internal_do_algo_subroutine_1(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 
 			if (crypted)
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_sub(reinterpret_cast<std::uint8_t*>(data)[i], qsub1_mutator);
 			else
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_add(reinterpret_cast<std::uint8_t*>(data)[i], qsub1_mutator);
 
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_2(void* data, imut std::size_t length, imut bool crypted) noexcept {
+		static __singleton imut bool __regcall internal_do_algo_subroutine_2(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 			internal_do_algo_subroutine_1(data, length, crypted);
 
 			if (crypted)
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_add(reinterpret_cast<std::uint8_t*>(data)[i], qsub2_mutator);
 			else
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_sub(reinterpret_cast<std::uint8_t*>(data)[i], qsub2_mutator);
 
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_3(void* data, imut std::size_t length, imut bool crypted) noexcept {
+		static __singleton imut bool __regcall internal_do_algo_subroutine_3(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 			internal_do_algo_subroutine_1(data, length, crypted);
 			internal_do_algo_subroutine_2(data, length, crypted);
 
 			if (crypted)
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_sub(reinterpret_cast<std::uint8_t*>(data)[i], qsub3_mutator);
 			else
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_add(reinterpret_cast<std::uint8_t*>(data)[i], qsub3_mutator);
 
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_4(void* data, imut std::size_t length, imut bool crypted) noexcept {
+		static __singleton imut bool __regcall internal_do_algo_subroutine_4(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 			internal_do_algo_subroutine_1(data, length, crypted);
@@ -193,16 +199,16 @@ namespace qengine {
 			internal_do_algo_subroutine_3(data, length, crypted);
 
 			if (crypted)
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_add(reinterpret_cast<std::uint8_t*>(data)[i], qsub4_mutator);
 			else
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_sub(reinterpret_cast<std::uint8_t*>(data)[i], qsub4_mutator);
 
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_5(void* data, imut std::size_t length, imut bool crypted) noexcept {
+		static __singleton imut bool __regcall internal_do_algo_subroutine_5(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 			internal_do_algo_subroutine_1(data, length, crypted);
@@ -211,16 +217,16 @@ namespace qengine {
 			internal_do_algo_subroutine_4(data, length, crypted);
 
 			if (crypted)
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_sub(reinterpret_cast<std::uint8_t*>(data)[i], qsub5_mutator);
 			else
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_add(reinterpret_cast<std::uint8_t*>(data)[i], qsub5_mutator);
 
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_6(void* data, imut std::size_t length, imut bool crypted) noexcept {
+		static __singleton imut bool __regcall internal_do_algo_subroutine_6(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 			internal_do_algo_subroutine_1(data, length, crypted);
@@ -230,16 +236,16 @@ namespace qengine {
 			internal_do_algo_subroutine_5(data, length, crypted);
 
 			if (crypted)
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_add(reinterpret_cast<std::uint8_t*>(data)[i], qsub6_mutator);
 			else
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_sub(reinterpret_cast<std::uint8_t*>(data)[i], qsub6_mutator);
 
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_7(void* data, imut std::size_t length, imut bool crypted) noexcept {
+		static __singleton imut bool __regcall internal_do_algo_subroutine_7(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 			internal_do_algo_subroutine_1(data, length, crypted);
@@ -250,16 +256,16 @@ namespace qengine {
 			internal_do_algo_subroutine_6(data, length, crypted);
 
 			if (crypted)
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_sub(reinterpret_cast<std::uint8_t*>(data)[i], qsub7_mutator);
 			else
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_add(reinterpret_cast<std::uint8_t*>(data)[i], qsub7_mutator);
 
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_8(void* data, imut std::size_t length, imut bool crypted) noexcept {
+		static __singleton imut bool __regcall internal_do_algo_subroutine_8(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 			internal_do_algo_subroutine_1(data, length, crypted);
@@ -271,10 +277,10 @@ namespace qengine {
 			internal_do_algo_subroutine_7(data, length, crypted);
 
 			if (crypted)
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_add(reinterpret_cast<std::uint8_t*>(data)[i], qsub8_mutator);
 			else
-				for (auto i = 0; i < length; ++i)
+				for (std::size_t i = 0; i < length; ++i)
 					reinterpret_cast<std::uint8_t*>(data)[i] = rol_sub(reinterpret_cast<std::uint8_t*>(data)[i], qsub8_mutator);
 
 			return true;
@@ -282,11 +288,11 @@ namespace qengine {
 
 #pragma region Subroutine FN Prototype
 
-		typedef bool(__regcall* _algo_subroutine_prototype)(void*, imut std::size_t, imut bool);
+		typedef bool(__regcall* _algo_subroutine_prototype)(c_void, imut std::size_t, imut bool);
 
 #pragma endregion
 
-		static __compelled_inline imut bool __regcall internal_do_algo_subroutine_byref(polyc_pointer_t* pointer_entry) noexcept {
+		static __compelled_inline imut bool __regcall internal_do_algo_subroutine_byref(polyc_pointer_t* pointer_entry) nex {
 
 			if (!pointer_entry || !_polyc_pointer_table || !_polyc_subroutine_safecall_table)
 				return false;
@@ -299,9 +305,9 @@ namespace qengine {
 
 			__XORWORD__(subroutine_addr_cpy, _polyc_pointer_table_key);								//	Decrypt pointer ONLY on the stack
 
-			result = reinterpret_cast<_algo_subroutine_prototype>(subroutine_addr_cpy)(reinterpret_cast<void*>(pointer_entry->abs), pointer_entry->length, pointer_entry->is_crypted);
+			result = reinterpret_cast<_algo_subroutine_prototype>(subroutine_addr_cpy)(reinterpret_cast<c_void>(pointer_entry->abs), pointer_entry->length, pointer_entry->is_crypted);
 
-			RtlZeroMemory(&subroutine_addr_cpy, sizeof(void*));										//	Ensure stack pointer is wiped
+			RtlZeroMemory(&subroutine_addr_cpy, sizeof(c_void));										//	Ensure stack pointer is wiped
 
 			pointer_entry->is_crypted = pointer_entry->is_crypted ? false : true;					//	Toggle Encryption state indicator
 
@@ -314,7 +320,7 @@ namespace qengine {
 
 #pragma region Pseudo-Ctor
 
-		static __singleton imut bool __stackcall polyc_init() noexcept {
+		static __singleton imut bool __stackcall polyc_init() nex {
 
 			if (_polyc_initialized)
 				return false;
@@ -325,7 +331,7 @@ namespace qengine {
 			);
 
 			/* Determine algorithm key value(s) */
-			for (auto i = 0; i < 16; ++i) {
+			for (std::size_t i = 0; i < 16; ++i) {
 
 				_ciph_x[i] = ((static_cast<uintptr_t>(std::chrono::high_resolution_clock::now().time_since_epoch().count() % __RAND__(0x10000ui32, 0x1ui32)) ^ 16ui64) * 1024) | BIT_SCRAMBLE;
 
@@ -400,7 +406,7 @@ namespace qengine {
 
 #pragma region Pointer Table Search
 
-		static __compelled_inline polyc_pointer_t* __regcall get_pointer_table_entry_by_abs(imut void* abs) noexcept {
+		static __compelled_inline polyc_pointer_t* __regcall get_pointer_table_entry_by_abs(imut c_void abs) nex {
 
 			if (!abs || !_polyc_pointer_table)
 				return nullptr;
@@ -409,7 +415,7 @@ namespace qengine {
 
 				__XORWORD__(pointer_entry.abs, _polyc_pointer_table_key);		//	Decrypt pointer to allow for memcmp
 
-				if (reinterpret_cast<void*>(pointer_entry.abs) == abs) {
+				if (reinterpret_cast<c_void>(pointer_entry.abs) == abs) {
 
 					__XORWORD__(pointer_entry.abs, _polyc_pointer_table_key);	//	Re-Encrypt pointer before returning
 
@@ -429,7 +435,7 @@ namespace qengine {
 
 #pragma region Pointer Table Manipulation
 
-		static __singleton imut bool __regcall unregister_polyc_pointer( imut void* abs ) noexcept {
+		static __singleton imut bool __regcall unregister_polyc_pointer( imut c_void abs ) nex {
 
 			if ( !abs || !_polyc_pointer_table || !_polyc_pointer_table->size() )
 				return false;
@@ -440,7 +446,7 @@ namespace qengine {
 				return false;
 
 			if (_polyc_pointer_table->size() - 1 > existing_entry->pointer_table_index)								// Perform table relocations if necessary
-				for (auto i = (existing_entry->pointer_table_index + 1); i < _polyc_pointer_table->size(); ++i)
+				for (std::size_t i = (existing_entry->pointer_table_index + 1); i < _polyc_pointer_table->size(); ++i)
 					--(*_polyc_pointer_table)[i].pointer_table_index;
 
 			_polyc_pointer_table->erase(_polyc_pointer_table->begin() + existing_entry->pointer_table_index);
@@ -448,7 +454,7 @@ namespace qengine {
 			return true;
 		}
 
-		static __singleton polyc_pointer_t* __regcall register_polyc_pointer( void* abs, imut std::size_t length ) noexcept {
+		static __singleton polyc_pointer_t* __regcall register_polyc_pointer( c_void abs, imut std::size_t length ) nex {
 
 			if (!abs || !_polyc_pointer_table)
 				return nullptr;
@@ -481,7 +487,7 @@ namespace qengine {
 
 #pragma region Algorithm
 
-		static __compelled_inline imut bool __regcall algo(void* abs, imut size_t length, imut bool execute_subroutine = true ) noexcept {
+		static __compelled_inline imut bool __regcall algo(c_void abs, imut size_t length, imut bool execute_subroutine = true ) nex {
 
 			if (!_polyc_initialized)
 				polyc_init();
@@ -504,7 +510,7 @@ namespace qengine {
 			auto data_c = reinterpret_cast<std::uint8_t*>(abs);
 
 			/* iterate each individual byte of data in the source */
-			for (auto i = 0; i < length; ++i) {
+			for (std::size_t i = 0; i < length; ++i) {
 				
 				/* run our first pass on the data */
 				for (auto x = 0; x < sizeof(_indice_map_x); ++x)
@@ -528,7 +534,7 @@ namespace qengine {
 			return true;
 		}
 
-		static __compelled_inline void* __regcall algo_inst(void* abs, imut std::size_t length, imut bool execute_subroutine = true) noexcept {
+		static __compelled_inline c_void __regcall algo_inst(c_void abs, imut std::size_t length, imut bool execute_subroutine = true) nex {
 
 			if (!abs || !length)
 				return nullptr;
@@ -546,13 +552,13 @@ namespace qengine {
 		}
 
 		template<typename T>
-		static __compelled_inline imut bool __regcall algo_t(T& data, imut bool execute_subroutine = true) noexcept {
+		static __compelled_inline imut bool __regcall algo_t(T& data, imut bool execute_subroutine = true) nex {
 
 			return algo(&data, sizeof(decltype(data)), execute_subroutine);
 		}
 
 		template<typename T>
-		static __compelled_inline T __regcall algo_t_inst(T data, imut bool execute_subroutine = true) noexcept {
+		static __compelled_inline T __regcall algo_t_inst(T data, imut bool execute_subroutine = true) nex {
 
 			T copy_t = data;
 
@@ -561,12 +567,12 @@ namespace qengine {
 			return copy_t;
 		}
 
-		static __compelled_inline imut bool __stackcall algo_str(imut std::string& data) noexcept {
+		static __compelled_inline imut bool __stackcall algo_str(imut std::string& data) nex {
 
-			return algo(const_cast<char*>(data.c_str()), data.length());
+			return algo(imut_cast<char*>(data.c_str()), data.length());
 		}
 
-		static __compelled_inline std::string __cdecl algo_str_inst(imut std::string& data) noexcept {
+		static __compelled_inline std::string __cdecl algo_str_inst(imut std::string& data) nex {
 
 			std::string copy_str = data;
 
@@ -575,12 +581,12 @@ namespace qengine {
 			return copy_str;
 		}
 
-		static __compelled_inline imut bool __stackcall algo_wstr(imut std::wstring& data) noexcept {
+		static __compelled_inline imut bool __stackcall algo_wstr(imut std::wstring& data) nex {
 
-			return algo(const_cast<wchar_t*>(data.c_str()), data.size() * sizeof(wchar_t));
+			return algo(imut_cast<wchar_t*>(data.c_str()), data.size() * sizeof(wchar_t));
 		}
 
-		static __compelled_inline std::wstring __stackcall algo_wstr_inst(const std::wstring& data) noexcept {
+		static __compelled_inline std::wstring __stackcall algo_wstr_inst(imut std::wstring& data) nex {
 
 			std::wstring copy_wstr = data;
 
@@ -593,7 +599,7 @@ namespace qengine {
 
 #pragma region Decommission
 
-		static __singleton imut bool __stackcall decommit_polyc_resources() noexcept {
+		static __singleton imut bool __stackcall decommit_polyc_resources() nex {
 			if (!_polyc_initialized)
 					return false;
 

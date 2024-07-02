@@ -1,12 +1,12 @@
 src/qengine/extern/asmjit32.lib
 src/qengine/extern/asmjit64.lib
-src/qengine/qmemory/qptr_table.hpp
-src/qengine/qhook/qcall_table.hpp
 src/qengine/engine/polytypes/qtype_enc.hpp.bak
 src/qengine/engine/hashtypes/qtype_hash.hpp.bak
 src/qengine/engine/polyhashtypes/qtype_enchash.hpp.bak
 src/qengine/polyc/polyc.hpp.bak
-src/qengine/qimport/qmap.hpp
+src/qengine/qhook/qhook_fn.hpp.bak
+src/qengine/qhook/qhook_util.hpp.bak
+src/qengine/qhook/qhook.hpp.bak
 
 src/qengine/extern/asmjit/
 src/qengine_c_wrapper/

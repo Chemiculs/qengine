@@ -65,6 +65,14 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "array": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "bitset": "cpp",
+        "deque": "cpp",
+        "functional": "cpp",
+        "map": "cpp",
+        "numeric": "cpp",
+        "set": "cpp",
+        "unordered_set": "cpp",
+        "xtree": "cpp"
     }
 }

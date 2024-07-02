@@ -46,10 +46,22 @@ typedef void* c_void;
 
 #define imut const
 
+#define imutexpr constexpr
+
 // It gets old retyping noexcept
 #define nex noexcept
 
-#pragma endregion
+// Our intention in declaring many variables as volatile in qengine, is to prevent the addressing of the variables from being optimized into registers
+// The polyc algorithm requires absolute allocation addressing currently, and moving these addresses into registers or copying creates engine-breaking problem(s)
+#define noregister volatile
+
+// It makes zero sense for the language to state a const cast is occuring when no such thing is in reality, renaming to volatility cast for context
+#define volatile_cast const_cast
+
+// I am taking rusts theme and running with it, fuck off
+#define imut_cast const_cast 
+
+#pragma endregionss
 
 #pragma region Polyc Algorithm Constants
 

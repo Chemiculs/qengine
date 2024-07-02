@@ -79,11 +79,11 @@ namespace qengine {
 
 #pragma region Table Generation
 
-		__compelled_inline static void qtable32_gen() noexcept {
+		__compelled_inline static void qtable32_gen() nex {
 
 			static std::int32_t seed = 0xFEEDDCCBui32;
 
-			static const constexpr std::uint16_t decrementor = 0xFFFFui16;
+			static imut imutexpr std::uint16_t decrementor = 0xFFFFui16;
 
 			for (auto i = 0; i < 255; ++i) {
 				qtable32[i] = (((seed ^ QHBASE32) ^ QHEPILOGUE32) ^ 0xFFFFFFFFul);
@@ -94,11 +94,11 @@ namespace qengine {
 
 #ifdef _WIN64
 
-		__compelled_inline static void __stackcall qtable64_gen() noexcept {
+		__compelled_inline static void __stackcall qtable64_gen() nex {
 
 			static std::uint64_t seed = 0xFEEDDCCBBAA99887ui64;
 
-			static const constexpr std::uint32_t decrementor = 0xFFFFFFFFui32;
+			static imut imutexpr std::uint32_t decrementor = 0xFFFFFFFFui32;
 
 			for (auto i = 0; i < 255; ++i) {
 
@@ -115,7 +115,7 @@ namespace qengine {
 #pragma region Hashing
 
 		// 0.0000000233% collision rate among 65535 unique 2-byte data sets ( 1 out of 4,294,770,690 possible collisions )
-		__compelled_inline static std::uint32_t __regcall qhash32(void* data, uint32_t length) noexcept {
+		__compelled_inline static std::uint32_t __regcall qhash32(void* data, std::uint32_t length) nex {
 			/* check if our global variables have been initialized */
 			if (!initialized32) {
 				qtable32_gen();
@@ -124,7 +124,7 @@ namespace qengine {
 			}
 
 			/* initialize base hash32 value constant within structure */
-			auto hash_r = QHBASE32;
+			std::uint32_t hash_r = QHBASE32;
 
 			for (auto i = 0; i < length; ++i) {
 				for (auto x = 0; x < sizeof(decltype(hash_r)); ++x)
@@ -133,16 +133,16 @@ namespace qengine {
 				hash_r ^= qtable32[reinterpret_cast<std::uint8_t*>(data)[i] ^ 0xFF];
 			}
 
-			auto preamble_result = hash_r;
+			static std::uint32_t preamble_result = hash_r;
 
 			/* initialize epilogue with base epilogue constant */
-			auto epilogue = QHEPILOGUE32;
+			static std::uint32_t epilogue = QHEPILOGUE32;
 
 			std::uint8_t least_significant = reinterpret_cast<std::uint8_t*>(data)[0];
 			std::uint8_t most_significant = (length > 1 ? reinterpret_cast<std::uint8_t*>(data)[length - 1] : MOST_SIGNIFICANT_DEFAULT);
 
-			std::uint32_t least_significant_length = length;
-			std::uint32_t most_significant_length = length;
+			std::size_t least_significant_length = length;
+			std::size_t most_significant_length = length;
 
 			for (auto i = 0; i < sizeof(decltype(length)); ++i) {
 
@@ -150,7 +150,7 @@ namespace qengine {
 				*reinterpret_cast<std::uint8_t*>(&most_significant_length) ^= most_significant;
 			}
 
-			bool significance_switch = false;
+			static bool significance_switch = false;
 
 			for (auto i = 0; i < sizeof(hash_r); ++i) {
 
@@ -165,16 +165,23 @@ namespace qengine {
 				hash_r ^= (((significance_switch ? most_significant_length : least_significant_length) << (32 - ((i * 8) > 0 ? (i * 8) : 8))));
 			}
 
-			auto epilogue_result = hash_r;
+			hash_r = (preamble_result & hash_r) ^ ((0xFFFFFFFF - (most_significant * 255) - (least_significant * 128)));
 
-			hash_r = (preamble_result & epilogue_result) ^ ((0xFFFFFFFF - (most_significant * 255) - (least_significant * 128)));
+			// Wipe Singletons / Locals
+			RtlZeroMemory(&preamble_result, sizeof(std::uint32_t));
+			RtlZeroMemory(&epilogue, sizeof(std::uint32_t));
+			RtlZeroMemory(&least_significant, sizeof(std::uint8_t));
+			RtlZeroMemory(&most_significant, sizeof(std::uint8_t));
+			RtlZeroMemory(&least_significant_length, sizeof(std::size_t));
+			RtlZeroMemory(&most_significant_length, sizeof(std::size_t));
+			RtlZeroMemory(&significance_switch, sizeof(bool));
 
 			return hash_r;
 		}
 
 #ifdef _WIN64
 		//  0.00% collision rate among every possible 2-byte data set ( 0 out of 4,294,770,690 possible collisions )
-		__compelled_inline static std::uint64_t __regcall qhash64(void* data, size_t length) noexcept {
+		__compelled_inline static std::uint64_t __regcall qhash64(void* data, size_t length) nex {
 			/* check if our global variables have been initialized */
 			if (!initialized64) {
 
@@ -193,16 +200,16 @@ namespace qengine {
 
 				hash_r ^= qtable64[reinterpret_cast<std::uint8_t*>(data)[i] ^ 0xFF];
 			}
-			auto preamble_result = hash_r;
+			static std::uint64_t preamble_result = hash_r;
 
 			/* initialize epilogue with base epilogue constant */
-			auto epilogue = QHEPILOGUE64;
+			static std::uint64_t epilogue = QHEPILOGUE64;
 
 			std::uint8_t least_significant = reinterpret_cast<std::uint8_t*>(data)[0];
 			std::uint8_t most_significant = (length > 1 ? reinterpret_cast<std::uint8_t*>(data)[length - 1] : MOST_SIGNIFICANT_DEFAULT);
 
-			std::uint64_t least_significant_length = length;
-			std::uint64_t most_significant_length = length;
+			std::size_t least_significant_length = length;
+			std::size_t most_significant_length = length;
 
 			for (auto i = 0; i < sizeof(decltype(length)); ++i) {
 
@@ -210,7 +217,7 @@ namespace qengine {
 				*reinterpret_cast<std::uint8_t*>(&most_significant_length) ^= most_significant;
 			}
 
-			bool significance_switch = false;
+			static bool significance_switch = false;
 
 			for (auto i = 0; i < sizeof(hash_r); ++i) {
 				/* inverse significance flag */
@@ -224,11 +231,18 @@ namespace qengine {
 				hash_r ^= (((significance_switch ? most_significant_length : least_significant_length) << (64 - ((i * 8) > 0 ? (i * 8) : 8))));
 			}
 
-			auto epilogue_result = hash_r;
+			hash_r = (preamble_result & hash_r) ^ ((0xFFFFFFFFFFFFFFFF - (most_significant * 255) - (least_significant * 128)));
 
-			hash_r = (preamble_result & epilogue_result) ^ ((0xFFFFFFFFFFFFFFFF - (most_significant * 255) - (least_significant * 128)));
+			// Wipe Singletons / Locals
+			RtlZeroMemory(&preamble_result, sizeof(std::uint64_t));
+			RtlZeroMemory(&epilogue, sizeof(std::uint64_t));
+			RtlZeroMemory(&least_significant, sizeof(std::uint8_t));
+			RtlZeroMemory(&most_significant, sizeof(std::uint8_t));
+			RtlZeroMemory(&least_significant_length, sizeof(std::size_t));
+			RtlZeroMemory(&most_significant_length, sizeof(std::size_t));
+			RtlZeroMemory(&significance_switch, sizeof(bool));
 
-			return hash_r;
+			return std::move(hash_r);
 		}
 
 #endif
@@ -237,7 +251,7 @@ namespace qengine {
 
 #pragma region CPU-Safe Template Accessor
 
-		static __compelled_inline decltype(auto) __regcall qhash_cpu(void* data, size_t length) noexcept {
+		static __compelled_inline decltype(auto) __regcall qhash_cpu(c_void data, std::size_t length) nex {
 
 #ifdef _WIN64
 
@@ -268,9 +282,9 @@ namespace qengine {
 
 	std::uint64_t qhash::qtable64[255] { };
 
-}
-
 #endif
+
+}
 
 #pragma region Preprocessor
 

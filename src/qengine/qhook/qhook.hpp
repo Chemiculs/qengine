@@ -1,27 +1,64 @@
 #pragma region Header Guard
 
-#ifndef QHOOK_H
-#define QHOOK_H
+#ifndef QHOOK_UTIL_H
+#define QHOOK_UTIL_H
 
 #pragma endregion
 
 #pragma region Imports
 
+#pragma region Operating System
+
+#include <windows.h>
+
+#pragma endregion
+
 #pragma region std
 
-#include <iostream>
 #include <vector>
-#include <thread>
-#include <mutex>
+#include <cstdint>
 
 #pragma endregion
 
 #pragma region qengine
 
-#include "qhook_fn.hpp"
-#include "../qbase/qcallback.hpp"
+#include "../qbase/qdef.hpp"
 
 #pragma endregion
+
+#pragma region Capstone
+
+#include "../extern/capstone/include/capstone/capstone.h"
+
+#pragma endregion
+
+#pragma endregion
+
+#pragma region Preprocessor
+
+#ifdef _WIN64
+
+#pragma comment(lib, "capstone64.lib")
+
+#elif defined(_WIN32)
+
+#pragma comment(lib, "capstone32.lib")
+
+#endif
+
+#pragma endregion
+
+#pragma region Preprocessor / imutants
+
+#ifdef _WIN64
+
+#define qcs_mode CS_MODE_64
+
+#else
+
+#define qcs_mode CS_MODE_32
+
+#endif
 
 #pragma endregion
 
@@ -29,268 +66,263 @@ namespace qengine {
 
 	namespace qhook {
 
-		class qhook_thread_pool {
+		typedef struct qhook_detection_t {
 
-		private:
+			bool is_hook;
 
-#pragma region Singleton Globals
+			std::size_t hook_length;
 
-			static void( __regcall * callback_ )( qhook_detection_t* );
+			std::uintptr_t hook_address;
 
-			static bool is_cancel_flag;
+			std::vector<std::uint8_t> hook_data;
+		};
 
-			static bool is_pool_initialized;
+		inline MODULEINFO qmodule_information {};
+		inline bool is_qmodule_information_init = false;
 
-			static std::vector<qhook_fn> qhook_scan_list;
+		struct qhook_util {
+			
+		public:
 
-			static std::thread* qhook_scan_thread;
+			// This function is currently only a POC, and while it will work for less complex inline hooks, the lacking of recursion will prevent this from (properly / fully) detecting extensive / variable length hooks
 
-			static std::mutex qhook_scan_mutex;
+			static __singleton  qhook_detection_t* __regcall analyze_fn_hook_presence(
 
-#pragma endregion
+				imut c_void fn_address,
+				imut std::size_t fn_length
+			) noexcept { // return nullptr if no hook detected
 
-#pragma region Global Instantiation
+				if (!fn_address || !fn_length )
+					return nullptr;
 
-			__inlineable void __stackcall initialize_globals() noexcept {
+				if (!is_qmodule_information_init && !GetModuleInformation(GetCurrentProcess(), GetModuleHandle(NULL), &qmodule_information, sizeof(MODULEINFO)))
+					return nullptr;
 
-				qhook_scan_thread = new std::thread(&qhook_thread_pool::do_hook_scans);
+				is_qmodule_information_init = true;
 
-				qhook_scan_thread->detach();
+				csh handle;
 
-				is_pool_initialized = true;
-			}
+				if( (cs_open(CS_ARCH_X86, qcs_mode, &handle) != CS_ERR_OK) || !handle )
+					return nullptr;
 
-#pragma endregion
+				cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
-#pragma region Scan Loop
+				cs_insn* instructions = nullptr;
 
-			static __singleton void __stackcall do_hook_scans() noexcept {
+				auto disasm_count = cs_disasm(handle, static_cast<std::uint8_t*>(fn_address), fn_length, reinterpret_cast<std::uintptr_t>(fn_address), static_cast<std::size_t>(fn_length * 16), &instructions);
 
-				while (true) {
+				if (!disasm_count)
+					return nullptr;
 
-					// scanning operation(s)
-					std::this_thread::sleep_for(std::chrono::milliseconds(1));
-
-					std::lock_guard<std::mutex> lock(qhook_scan_mutex);
-
-					if (is_cancel_flag) // condition must be checked here or race condition
-						break;
+				for (size_t i = 0; i < disasm_count; ++i) {
 					
-					for (auto& fn : qhook_scan_list) {
+					if (instructions[i].id == X86_INS_JMP || instructions[i].id == X86_INS_CALL) { // if immediate check if address is in valid module address space, if regiter check last mov to register
 
-						if (!fn.function_address())
-							continue;
-
-						if (fn.has_exception_triggered()) // to avoid multiple triggers for same except
-							continue;
-
-						qhook_detection_t* fn_detect_o = nullptr;
-
-						if (fn_detect_o = qhook_util::analyze_fn_hook_presence(reinterpret_cast<imut c_void>(fn.function_address()), fn.function_length(), fn.module_information(), fn.capstone_handle())) {
+						if (instructions[i].detail->x86.operands[0].type == X86_OP_IMM) { // jmp / call immediate address, check if in module address space
 							
-							// hook detected
-							if (!callback_) {
-								
-								if(fn_detect_o)
-									delete fn_detect_o;
+							imut auto& operand_address = instructions[i].detail->x86.operands[0].imm;
 
-								continue;
+							if (operand_address < reinterpret_cast<std::uintptr_t>(qmodule_information.lpBaseOfDll) || operand_address > ( reinterpret_cast<std::uintptr_t>(qmodule_information.lpBaseOfDll) + qmodule_information.SizeOfImage) ) {
+
+								auto* hook_o = new qhook_detection_t{
+									true,
+									static_cast<std::size_t>(instructions[i].size),
+									static_cast<std::uintptr_t>(instructions[i].address)
+								};
+
+								for (size_t i = 0; i < instructions[i].size; ++i)
+									hook_o->hook_data.push_back(instructions[i].bytes[i]);
+
+								return hook_o;
 							}
 
-							fn.has_exception_triggered(true);
+						}
+						else if (instructions[i].detail->x86.operands[0].type = X86_OP_REG) { // jmp / call to register val, check for last write to register
+							
+							if (!i)
+								continue;
+							
+							for (std::intptr_t x = i - 1; x > -1; --x) {
 
-							callback_(fn_detect_o);
+								if (instructions[x].id == X86_INS_MOV || instructions[x].id == X86_INS_MOVABS || instructions[x].id == X86_INS_MOVZX || instructions[x].id == X86_INS_MOVSX) { // mov reg jmp reg hook detected
+
+									if (( instructions[x].detail->x86.operands[0].type == X86_OP_REG ) && instructions[x].detail->x86.operands[1].type == X86_OP_IMM) { // immediate mov into register
+
+										if (instructions[x].detail->x86.operands[0].reg == instructions[i].detail->x86.operands[0].reg) {
+
+											imut auto& operand_address = instructions[x].detail->x86.operands[1].imm;
+
+											if (operand_address < reinterpret_cast<std::uintptr_t>(qmodule_information.lpBaseOfDll) || operand_address >(reinterpret_cast<std::uintptr_t>(qmodule_information.lpBaseOfDll) + qmodule_information.SizeOfImage)) { // mov reg jmp reg hook detected
+
+												auto* hook_o = new qhook_detection_t{
+													true,
+													static_cast<std::size_t>(instructions[i].address + instructions[i].size) - static_cast<std::size_t>(instructions[x].address),
+													static_cast<std::uintptr_t>(instructions[x].address)
+												};
+
+												for (auto y = instructions[x].address; y < instructions[i].address + instructions[i].size; ++y)
+													hook_o->hook_data.push_back(*reinterpret_cast<std::uint8_t*>(y));
+
+												return hook_o;
+											}
+										}
+									}
+								}
+
+								// You need to get context() and watch rip / eip in feature to track the hook and dump the malicious code
+								// It doesn't look like i properly checked for the possibility of a push imm32 instruction for 32-bit applications
+
+								else if (instructions[x].id == X86_INS_POP) { // check if top of stack popped into our register
+
+									if (instructions[x].detail->x86.operands[0].type == X86_OP_REG && (instructions[x].detail->x86.operands[0].reg == instructions[i].detail->x86.operands[0].reg) ) { // pop value off stack into same register, scan for last push
+
+										if (!x)
+											continue;
+
+										for (std::intptr_t y = x - 1; y > -1; --y) { // scan for push
+
+											if (instructions[y].id == X86_INS_PUSH && instructions[y].detail->x86.operands[0].type == X86_OP_REG) { // register pushed onto stack
+
+												for (std::intptr_t z = y - 1; z > -1; --z) {
+
+													if ((instructions[z].id == X86_INS_MOV) && instructions[z].detail->x86.operands[0].type == X86_OP_REG && instructions[z].detail->x86.operands[0].reg == instructions[y].detail->x86.operands[0].reg && instructions[z].detail->x86.operands[1].type == X86_OP_IMM) { // mov operation of naddress into register, any deeper recursion in the hook than this and our detection fails
+
+														imut auto& operand_address = instructions[z].detail->x86.operands[1].imm;
+
+														if (operand_address < reinterpret_cast<uintptr_t>(qmodule_information.lpBaseOfDll) || operand_address >(reinterpret_cast<uintptr_t>(qmodule_information.lpBaseOfDll) + qmodule_information.SizeOfImage)) { // mov reg jmp reg hook detected
+
+															auto* hook_o = new qhook_detection_t{
+																true,
+																static_cast<std::size_t>(instructions[i].address + instructions[i].size) - static_cast<size_t>(instructions[z].address),
+																static_cast<std::uintptr_t>(instructions[z].address)
+															};
+
+															for (auto w = instructions[y].address; w < instructions[i].address + instructions[i].size; ++w)
+																hook_o->hook_data.push_back(*reinterpret_cast<std::uint8_t*>(w));
+
+															return hook_o;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+
+					}
+					else if(instructions[i].id == X86_INS_RET) { // check last address pushed to stack
+						
+						if (!i)
+							return nullptr;
+
+						for (intptr_t x = i - 1; x > -1; --x) {
+
+							if (instructions[x].id == X86_INS_PUSH && instructions[x].detail->x86.operands[0].type == X86_OP_REG) { // register pushed onto stack, look for mov into register
+
+								if (!x)
+									continue;
+
+								for (intptr_t y = x - 1; y > -1; --y) {
+
+									if ((instructions[y].id == X86_INS_MOV || instructions[y].id == X86_INS_MOVABS) && (instructions[y].detail->x86.operands[0].type == X86_OP_REG) && instructions[y].detail->x86.operands[1].type == X86_OP_IMM) { // mov operation of naddress into register, any deeper recursion in the hook than this and our detection fails
+
+										imut auto& operand_address = instructions[y].detail->x86.operands[1].imm;
+
+										if (operand_address < reinterpret_cast<uintptr_t>(qmodule_information.lpBaseOfDll) || operand_address >(reinterpret_cast<uintptr_t>(qmodule_information.lpBaseOfDll) + qmodule_information.SizeOfImage)) { // mov reg jmp reg hook detected
+
+											auto* hook_o = new qhook_detection_t{
+												true,
+												static_cast<std::size_t>(instructions[i].address + instructions[i].size) - static_cast<std::size_t>(instructions[y].address),
+												static_cast<std::uintptr_t>(instructions[y].address)
+											};
+
+											for (auto z = instructions[y].address; z < instructions[i].address + instructions[i].size; ++z)
+												hook_o->hook_data.push_back(*reinterpret_cast<std::uint8_t*>(z));
+
+											return hook_o;
+										}
+									}
+								}
+							}
 						}
 					}
-					
+				}
+
+				if(disasm_count)
+					cs_free(instructions, disasm_count);
+
+				return nullptr;
+			}
+
+			static __singleton std::size_t __regcall analyze_fn_length(imut c_void fn_address) noexcept {
+
+				if (!fn_address)
+					return NULL;
+
+				std::size_t function_size = static_cast<size_t>(0x0);
+
+				LPCBYTE address_iterator = reinterpret_cast<LPCBYTE>(fn_address);
+
+				csh handle;
+
+				if( (cs_open(CS_ARCH_X86, qcs_mode, &handle) != CS_ERR_OK) || !handle )
+					return NULL;
+
+				cs_insn* instructions = nullptr;
+
+#pragma region Microsoft Thingy pls fix
+
+#ifndef LPCWORD
+
+#define LPCWORD imut WORD*
+
+#endif
+
+#pragma endregion
+
+				while (*reinterpret_cast<LPCWORD>(address_iterator) != static_cast<WORD>(0xCCCC)) {
+
+					auto disasm_count = cs_disasm(handle, reinterpret_cast<LPCBYTE>(address_iterator), 16, reinterpret_cast<uintptr_t>(address_iterator), static_cast<size_t>(0x0), &instructions);
+
+					if (!disasm_count)
+						break;
+
+					auto insn_length = instructions[0].size;
+
+					if (insn_length == 0x1) {
+
+						cs_insn* sub_instruction = nullptr;
+
+						auto sub_disasm_count = cs_disasm(handle, reinterpret_cast<LPCBYTE>(address_iterator + 1), 16, reinterpret_cast<uintptr_t>(address_iterator + 1), static_cast<size_t>(0x0), &sub_instruction);
+
+						if (sub_disasm_count) {
+
+							if (sub_instruction[0].size == 0x1) {
+
+								if (*reinterpret_cast<LPCWORD>(address_iterator) == 0xCCCC) {
+									cs_free(sub_instruction, sub_disasm_count);
+									break;
+								}
+
+							}
+							cs_free(sub_instruction, sub_disasm_count);
+						}
+					}
+
+					function_size += insn_length;
+					address_iterator += insn_length;
+
+					cs_free(instructions, disasm_count);
 
 				}
+
+				return function_size;
 			}
-
-#pragma endregion
-
-		public:
-
-#pragma region Helper Functions
-
-			__inlineable void __regcall apply_callback_fn( void(__regcall* fn)(qhook_detection_t*) ) noexcept {
-
-				callback_ = fn;
-			}
-
-			__inlineable void __regcall append_fn(void* fn_address) {
-
-				std::lock_guard<std::mutex> lock(qhook_scan_mutex);
-				
-				if (!is_pool_initialized)
-					initialize_globals();
-
-				qhook_scan_list.push_back(
-					qhook_fn{ fn_address }
-				);
-				
-			}
-
-			__inlineable void __regcall remove_fn(const void* fn_address) noexcept {
-
-				std::lock_guard<std::mutex> lock(qhook_scan_mutex);
-
-				for (unsigned int i = 0; i < qhook_scan_list.size(); ++i)
-					if (qhook_scan_list[i].function_address() == reinterpret_cast<uintptr_t>(fn_address))
-						qhook_scan_list.erase( qhook_scan_list.begin() +  i );
-			}
-
-#pragma endregion
-
-#pragma region Instanced Ctor / Static Dtor
-
-			__optimized_ctor qhook_thread_pool(void* fn = nullptr) noexcept {
-
-				if (!fn)
-					return;
-
-				append_fn(fn);
-			}
-
-			static __inlineable void __stackcall free_pool() noexcept {
-				
-				if (!is_pool_initialized)
-					return;
-
-				std::lock_guard<std::mutex> lock(qhook_scan_mutex);
-
-				is_cancel_flag = true;
-
-				if (qhook_scan_thread->joinable())
-					qhook_scan_thread->join(); // wait for thread to exit
-
-				if (qhook_scan_thread)
-					delete qhook_scan_thread; // free resources
-			}
-
-#pragma endregion
-
+		
 		};
-
-#pragma region Static Declarators
-
-		void(__regcall* qhook_thread_pool::callback_)(qhook_detection_t*);
-
-		bool qhook_thread_pool::is_cancel_flag = false;
-
-		bool qhook_thread_pool::is_pool_initialized = false;
-
-		std::vector<qhook_fn> qhook_thread_pool::qhook_scan_list;
-
-		std::thread* qhook_thread_pool::qhook_scan_thread = nullptr;
-
-		std::mutex qhook_thread_pool::qhook_scan_mutex;
-
-#pragma endregion
-
-		class qhook_t {
-
-		private:
-
-#pragma region Singleton Globals
-
-			static bool is_callback_init;
-
-			static qcallback::qmem_except_hook client_callback_fn_;
-
-			static qhook_thread_pool hook_scan_pool_;
-
-#pragma endregion
-
-#pragma region Instanced Globals
-
-			mut void* fn_address_;
-
-#pragma endregion
-
-#pragma region Low Level Exception Callback Routine
-
-			static __singleton void __regcall base_exception_handler(qhook_detection_t* except) noexcept {
-
-				if (!client_callback_fn_)
-					return;
-
-				client_callback_fn_(qexcept::q_fn_alteration { // trigger higher-level callback fn
-					except->is_hook,
-						except
-				});
-			}
-
-#pragma endregion
-
-#pragma region Single-Threaded Scan Routine
-
-			static __compelled_inline qhook_detection_t* __regcall single_scan_fn_hook_presence ( imut c_void fn, imut std::size_t fn_sz ) noexcept {
-				
-
-			}
-
-#pragma endregion
-
-		public:
-
-#pragma region Ctor
-
-			__optimized_ctor qhook_t(void* fn) : fn_address_(fn) {
-				
-				if (!is_callback_init)
-					hook_scan_pool_.apply_callback_fn(&qhook_t::base_exception_handler);
-
-				hook_scan_pool_.append_fn(fn);
-			}
-
-#pragma endregion
-
-#pragma region Helper Functions
-
-			__inlineable void __stackcall remove_from_scan_pool() noexcept {
-
-				if (!is_callback_init)
-					return;
-
-				if (!fn_address_)
-					return;
-
-				hook_scan_pool_.remove_fn(fn_address_);
-			}
-
-			static __inlineable void __regcall set_client_callback_fn(qcallback::qmem_except_hook callback) noexcept {
-
-				if (!callback)
-					return;
-
-				client_callback_fn_ = callback;
-			}
-
-			static __inlineable void __stackcall terminate_scan_thread() noexcept {
-
-				if (!is_callback_init) // while this singleton is not named in accordance with this usage, it is an accurate determination of whether this class has been initialized
-					return;
-
-				hook_scan_pool_.free_pool();
-			}
-
-#pragma endregion
-
-		};
-
-#pragma region Static Declarators
-
-		bool qhook_t::is_callback_init = false;
-
-		qcallback::qmem_except_hook qhook_t::client_callback_fn_ = nullptr;
-
-		qhook_thread_pool qhook_t::hook_scan_pool_;
-
-#pragma endregion
-
 	}
-
 }
 
 #endif
