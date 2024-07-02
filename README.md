@@ -24,7 +24,6 @@ qengine is a polymorphic engine (meaning an engine that takes multiple forms/per
 
 This project aims to make binaries appear as unique and unrecognizable as possible at each independent execution.
 
-
 * qengine is fairly well tested (considering we are a small team) - I currently am unaware of any bugs for LLVM / CLANG, MSVC, and Intel compiler targets for both x86 and x64 release builds.
 
 * This will NOT prevent static disk signatures of your executables - however, it will make the task of understanding your code from a classic disassembler such as IDA VERY difficult if used properly, and will prevent memory-dump / memory-scan-based signature detections of your binary.
@@ -34,6 +33,82 @@ This project aims to make binaries appear as unique and unrecognizable as possib
 qengine is very lightweight and incurs a ~1.70% average performance loss vs. standard library / primitive types, likewise you will retain ~98.3% of your application's original performance ( on average ) while simultaneously generating thousands or even millions of junk instructions dilluting your meaningful compiled codebase 
 
 If anyone is able to contribute further detailed benchmarks if they have the time, this would be extremely helpful - my hands are tied when it comes to free time for this project at the moment.
+
+</details>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<details>
+<summary>How does qengine work?</summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+qengine creates obfuscated compiler output by compelling function inlining through a number of means including function modifiers and high inlining depth.
+
+Function inlining is a compiler feature which allows the compiler to expand / copy the contents of a called function, directly into the calling function. 
+
+Below is a basic diagram outlining the difference between standard symbolic function compilation, and inlined compilation :
+
+![symbolicvsinline](img/symbolicinline.png)
+
+qengine creates instruction-bloated and heavily-inlined wrappers around commonly used primitive and extended datatypes, which create a meaningful and simple way to bring about obfuscation of your code without need for 
+appending unrelated protections or using third-party post-compilation obfuscators.
+
+For a better example, take the below code using a qengine string type, as opposed to a standard library string type: 
+
+```cpp
+#include <iostream>
+
+#include <qengine/engine/qengine.hpp>
+
+using namespace qengine;
+
+int main(){
+
+	qtype_enc::e_string MyString("Hello World!");
+
+	std::cout << MyString.get() << std::endl;
+
+	return 0;
+}
+
+```
+
+This code, presuming the compiler manages to comply with qengine's inlining reuests, eactually expands to the following:
+
+```cpp
+#include <iostream>
+
+#include <qengine/engine/qengine.hpp>
+
+using namespace qengine;
+
+int main(){
+
+	[-- qtype_enc::e_string MyString("Hello World!"); --]   EXPAND ---->
+	{
+		MyString.ctor() 								<------ Inlined ->
+		MyString.set("Hello World!")							<------ Inlined ->
+		qengine::polyc::algorithm( MyString.std_string() )				<------ Inlined ->
+		qengine::polyc::register_polyc_pointer( MyString.std_string() )			<------ Inlined ->
+		qengine::polyc::internal_do_algo_subroutine( MyString.std_string() )		<------ Inlined
+	}
+
+	std::cout << MyString.get() << std::endl;	EXPAND ---->
+	{
+		MyString.get()									<------ Inlined ->
+		qengine::polyc::algorithm( MyString.std_string() )				<------ Inlined
+		std::cout << MyString.std_string() << std::endl;
+		qengine::polyc::algorithm( MyString.std_string() )				<------ Inlined
+			
+	}
+
+	return 0;
+}
+```
+Keep in mind that the above example is only from basic initialization of one local qengine::string variable and one get() accessor invokation -
+
+Each get() and set() accessor call is compelled inline, and each math operation or manipulation of qengine::type variables calls get() and / or set() accessor, seeing as these are rather large functions to begin with, the compiler output can go as far as crashing modern disassemblers.
 
 </details>
 
@@ -285,7 +360,7 @@ using namespace qengine;
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-qengine contains some changes in representations to ideas and concepts in the C++ standard library, which were only intended to increase the readability of qengine in relation to the instructions prompted to the compiler.
+qengine contains some changes in representations to ideas and concepts in the C++ standard library, which were only intended to increase my own productivity alongside the readability of qengine in relation to the instructions / intentions prompted to the compiler:
 
 * Below macro effectively disables inlining optimization for a specific function, if we wish for it to have a single instance per parent object, use in place of ``` __declspec(noinline) ```
 ```cpp
@@ -326,6 +401,21 @@ __inlineable
 ```cpp
 __fpcall
 ```
+
+* I have adopted some of Rust's syntax in qengine as it feels more reflective of compiler output and intentions in some cases, opted to use similar name conventions in qengine as follows ( some of these aren't Rust-related )
+```cpp
+
+mut 		= mutable
+imut 		= const
+imutexpr 	= constexpr
+c_void 		= void*
+noregister 	= volatile
+nex 		= noexcept
+volatile_cast	= const_cast
+imut_cast 	= const_cast
+
+```
+
  
 </details>
 
@@ -553,7 +643,16 @@ Below is a screenshot of the resulting output from the above code:
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-This library can disrupt the ability to signature scan the executable sections of the PE file in memory / from memory dumps, and corrupt + wipe the header information (it would need to be rebuilt to properly parse through PE-bear / CFF explorer etc.)
+qengine currently has the Randomize, or Wipe the following from your PE while running:
+
+-> DOS Header
+-> DOS Stub
+-> NT Header(s)
+-> Section Header(s)
+-> .idata (import section, IAT is preserved, ILT wiped)
+-> .reloc (basereloc section)
+
+In addition to the above, qengine has the ability to mutate the ( --> executable <-- ) interrupt padding between compiled executable symbols ( this can be big as it breaks hash-based signature detection of .text section ).
 
 Below is an example of how to mutate the executable sections of the PE and scramble the header information:
 
@@ -564,37 +663,53 @@ Below is an example of how to mutate the executable sections of the PE and scram
 
 using namespace qengine;
 
-__singleton  std::int32_t __stackcall main() noexcept {
+__singleton std::int32_t __stackcall main() noexcept {
 
-	// You do not have to use all of the below functions, however analyze_executable_sections() must be called before morph_executable_sections(), and this must be called before manipulating headers as it depends on information from the headers to perform analyzation
+	//You do not have to use all of the below functions, however analyze_executable_sections() must be called before morph_executable_sections(), and this must be called before manipulating headers as it depends on information from the headers to perform analyzation
+	std::cout << "[+] Initializing section assembler object..." << std::endl;
 
-	qdisasm::qsection_assembler sec{ };
+	qmorph::qdisasm::qsection_assembler sec{ };	//	initialize qengine's PE manipulation object
 
-	sec.analyze_executable_sections();
+	std::cout << "[+] Analyzing image for executable code..." << std::endl;
 
+	sec.analyze_executable_sections();	//	perform initial analysis on executable section of compiler output in memory
+	
 	if (sec.morph_executable_sections(true)) // NOW we morph our stored sections and pass true to flag for memory clearance 
-		std::cout << "Interrupt Padding morphed successfully! " << std::endl;
+		std::cout << "[+] Executable Interrupt Padding morphed successfully! " << std::endl;
 	else
-		std::cout << "Interrupt Padding failed to be morphed! " << std::endl;
+		std::cout << "[!] Executable Interrupt Padding failed to be morphed! " << std::endl;
 
-	if (sec.zero_information_sections())
-		std::cout << "Garbage sections nulled" << std::endl;
+	if (sec.wipe_idata_iat_ilt())
+		std::cout << "[+] .idata / ILT Wiped, IAT preserved!" << std::endl;
 	else
-		std::cout << "Garbage section wipe failed" << std::endl;
+		std::cout << "[!] .idata / ILT wipe failed!" << std::endl;
 
-	if (sec.scramble_dos_header(true))
-		std::cout << "DOS headers wiped" << std::endl;
+	if (sec.wipe_basereloc())
+		std::cout << "[+] basereloc section wipe succeeded!" << std::endl;
 	else
-		std::cout << "DOS headers not wiped" << std::endl;
+		std::cout << "[!] basereloc section wipe failed!" << std::endl;
+
+	if (sec.wipe_section_headers())
+		std::cout << "[+] Section headers wiped!" << std::endl;
+	else
+		std::cout << "[!] Section header wipe failed!" << std::endl;
+
+	if (sec.scramble_dos_header())
+		std::cout << "[+] DOS headers scrambled!" << std::endl;
+	else
+		std::cout << "[!] DOS header scramble failed!" << std::endl;
 
 	if (sec.scramble_nt_header())
-		std::cout << "NT headers wiped" << std::endl;
+		std::cout << "[+] NT headers scrambled!" << std::endl;
 	else
-		std::cout << "NT headers not wiped" << std::endl;
-	
-	std::cout << ".text / header permutations complete!" << std::endl;
+		std::cout << "[!] NT headers scramble failed!" << std::endl;
+
+	std::cout << "[+] .text / PE header permutations complete!" << std::endl;
 
 	std::cin.get();
+
+	// Check IAT was preserved during wipe by calling an imported function which address must be retrieved via IAT 
+	MessageBoxA(NULL, "", "", NULL);
 
 	return 0;
 }
@@ -624,9 +739,9 @@ Some fields such as e_magic in the DOS header and SizeOfStackCommit / SizeOfStac
 
 I cannot show the whole .text section in one screenshot, so I tracked down a section above from a memory dump that was mutated (note that there are generally hundreds or thousands of these regions which will be mutated depending on the symbol count/complexity of the binary).
 
-The interrupt padding (0xCC / INT3 on x86 PE files) between symbols is being tracked and permutated to change the appearance of the executable section in memory.
+The interrupt padding (0xCCui8 / INT3 on x86 PE files) between symbols is being tracked and permutated to change the appearance of the executable section in memory.
 
-The INT3 paddings ( 0xCC arrays) are regions that the instruction pointer never hits, so they are (almost) safely mutable to any form, the engine now mutates these regions to random executable machine code which will make it extremely hard to determine where a function/subroutine ends, and which code is valid and executed.
+The INT3 paddings ( 0xCCui8 arrays) are regions that the instruction pointer never hits, so they are (almost) safely mutable to any form, the engine now mutates these regions to random executable machine code which will make it extremely hard to determine where a function/subroutine ends, and which code is valid and executed beyond the first legitimate function / symbol inside of the section.
 
 </details>
 
@@ -684,7 +799,7 @@ using namespace qengine;
 /* First template argument specifies return type, subsequent template arguments specify argument type list in Left -> Right order for the fn being imported */
 static auto imp_MessageBoxA = qimport::qimp::get_fn_import_object<NTSTATUS, unsigned int, const char*, const char*, unsigned int>(L"user32.dll", "MessageBoxA");
 
-__singleton  std::int32_t __stackcall main() noexcept {
+__singleton std::int32_t __stackcall main() noexcept {
 
 	auto status = imp_MessageBoxA(NULL, "Hello World!", "Hello World!", NULL); // call MessageBoxA and assign it's status return to a local 
 
@@ -718,12 +833,14 @@ jmp rax                      ; move the instruction pointer to the address held 
 
 Detecting these hooks can be a non-trivial task depending on the complexity of the hook -
 
-I have implemented a rather basic implementation of a hook scanning class inside of qengine in the latest update, the class uses a separate thread to efficiently scan methods in memory for the placement of hooks inside of the method's body.
+qengine has the, for now, somewhat limited and PoC ability to scan for these inline hooks for both x86_32, and x86_64 architecture builds.
 
-The thread searches for control flow transfer instructions (ret, jmp, call namely), and when these are found, it checks if the address to which control flow is being transferred is within the module's address space.
+The reason why it is currently considered a PoC is largely due to the fact that the hook scanning function does not implement proper recursion to account for hooks of heavily extended complexity / length - I plan to fix this issue when i get time.
+
+The hook scanner searches for control flow transfer instructions (ret, jmp, call namely), and when these are found, it checks if the address to which control flow is being transferred is within the module's address space.
 If not, this likely means a hook has been placed on the method and that your security measures have been breached.
 
-Below is an example application that initializes the hook-detection library, and references the designated callback function to it. After this, an example hook is placed at the functions address in memory to demonstrate detection by our library :
+Below is an example application that initializes the hook-detection library, calculates the size of the function in memory, and then scans the function multiple times, with different inline hook formats for both x32 and x64 architectures:
 
 ```cpp
 #include <iostream>
@@ -732,72 +849,127 @@ Below is an example application that initializes the hook-detection library, and
 
 using namespace qengine;
 
-static __singleton  void __regcall myimportantmethod(long long val) noexcept { // add junk code to our dummy method to increase it's size in memory to be viable for hook placement
+#define PRINT_HEXADECIMAL std::hex << std::noshowbase
+
+#define STDOUT_PRINTBLOCK_SEPERATOR() std::cout << "\n[--------------------------------------------------------------------------------------]" << std::endl;
+
+static __singleton void __regcall myimportantmethod(std::uintptr_t val) noexcept { // add junk code to our dummy method to increase it's size in memory to be viable for hook placement
 
 	auto j = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 
 	auto k = j % val;
 
-	std::cout << k << std::endl;
+	std::cout << "\n[+] Placeholder function called, output: " << k << std::endl;
 }
 
-__singleton  void __stackcall callback(qexcept::q_fn_alteration alteration) noexcept {	//	callbacks are never inlined nor inlineable, therefore in this example i am explicitly declaring these things
+__singleton void __stackcall print_hook_details(qengine::qhook::qhook_detection_t* detection) noexcept {	//	callbacks are never inlined nor inlineable, therefore in this example i am explicitly declaring these things
 
-	if (alteration.id != qexcept::HOOK_DETECTED)
-		return;
+	STDOUT_PRINTBLOCK_SEPERATOR();
 
-	auto casted_arg = reinterpret_cast<qhook::qhook_detection_t*>(alteration.violation_object_);
+	std::cout << "\n[+] Function hook detected, address: 0x" << std::hex << detection->hook_address << std::endl;
+	std::cout << "\n[+] Hook size: 0x" << detection->hook_length << " bytes" << std::endl;
+	std::cout << "\n[+] Hook data: \n\n" << std::endl;
 
-	std::cout << "Function hook detected, address: " << std::hex << casted_arg->hook_address << "\n";
-	std::cout << "Hook size: " << casted_arg->hook_length << "\n";
-	std::cout << "Hook data: " << std::endl;
+	for (auto i = 0; i < detection->hook_length; ++i)
+		std::cout << std::hex << "0x" << (std::uint32_t)detection->hook_data[i] << std::endl;
 
-	for (auto i = 0; i < casted_arg->hook_length; ++i)
-		std::cout << std::hex << (int)casted_arg->hook_data[i] << "\n";
-
-	delete casted_arg; // thi was allocated with new, must be deleted inside callback to avoid memory leak
+	STDOUT_PRINTBLOCK_SEPERATOR();
 }
 
-__singleton  std::int32_t __stackcall main() noexcept {
+__singleton std::int32_t __stackcall main() noexcept {
 
-	std::cout << "initializing hook scanner..." << std::endl;
+	std::cout << "\n[+] Analyzing function length..." << std::endl;
 
-	qhook::qhook_t::set_client_callback_fn(&callback);
+	imut auto function_length = qengine::qhook::qhook_util::analyze_fn_length(&myimportantmethod);
 
-	qhook::qhook_t((c_void)&myimportantmethod);
+	std::cout << "\n[+] Succeeded, function length is " << function_length << " bytes" << std::endl;
 
-	// any of the below hooks will be detected - you could change the registers used etc. if you wanted to
+	// The most elementary x86_64 mov rax, jmp rax inline function hook
+	unsigned char hook1[12] = {0x48, 0xB8, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0xFF, 0xE0 };
 
-	unsigned char hook1[12] = {
-		0x48, 0xB8, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0xFF, 0xE0 // mov rax, 0x1111111111111111 ; jmp rax
-	};
+	// x86_32 equivalent of above hook - mov eax ADDRESS, jmp eax
+	std::uint8_t hook1_x32[] = { 0xb8, 0x00, 0x00, 0x00, 0x00, 0xff, 0xe0 }; // mov eax, 0x00000000, jmp eax
 
-	unsigned char hook2[14] = { // this is a trash hook used to test features of the detection, push rax, pop rax is a NOP essentially
-		0x48, 0xB8, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x50, 0x58, // mov rax, 0x1111111111111111 ; push rax ; pop rax ; jmp rax
+	// This hook demonstrates the inability of junk instructions emplaced between CFT (control-flow-transfer) instructions to throw off the current algorithm
+	unsigned char hook2[14] = { 
+		0x48, 0xB8, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x50, 0x58, // mov rax, ADDRESS; push rax; pop rax; jmp rax
 		0xFF, 0xE0
 	};
 
+	// x86_32 equivalent of above hook
+	unsigned char hook2_x32[] = {
+		0xb8, 0x00, 0x00, 0x00, 0x00, 0x50, 0x58, 0xff, // mov eax, ADDRESS; push eax; pop eax; jmp eax
+		0xe0,
+	};
+
+	// This hook demonstrates the ability of the algorithm to detect RETURN-induced control-flow transference
 	unsigned char hook3[12] = {
-		0x48, 0xB8, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x50, 0xC3 // mov rax, 0x1111111111111111 ; push rax ; ret
+		0x48, 0xB8, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x50, 0xC3 // mov rax, ADDRESS ; push rax ; ret
+	};
+
+	unsigned char hook3_x32[] = {
+		0xb8, 0x00, 0x00, 0x00, 0x00, 0x50, 0xc3, // mov eax, ADDRESS; push eax; ret
 	};
 
 	myimportantmethod(4);
 
-	std::cout << "emplacing hook..." << std::endl;
+	std::cout << "\n[+] Granting R/W/X permissions to function memory..." << std::endl;
 
-	auto* ptr = (c_void)&myimportantmethod;
+	auto* ptr = static_cast<void*>(&myimportantmethod);
 
 	DWORD tmp{};
 
-	VirtualProtect(ptr, sizeof(hook2), PAGE_EXECUTE_READWRITE, &tmp);
+	VirtualProtect(ptr, sizeof(hook1), PAGE_EXECUTE_READWRITE, &tmp);
 
+	std::cout << "\n[+] Beginning x86_64 inline hook detection..." << std::endl;
+
+	memcpy(ptr, &hook1, sizeof(hook1));
+
+	qengine::qhook::qhook_detection_t* dtc;
+
+	std::cout << "\n[+] Emplaced x86_64 hook #1: mov rax, ADDRESS; jmp rax ..." << std::endl;
+	if (dtc = qengine::qhook::qhook_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
+		print_hook_details(dtc);
+
+	//Emplace 2nd hook type
 	memcpy(ptr, &hook2, sizeof(hook2));
 
-	VirtualProtect(ptr, sizeof(hook2), tmp, &tmp);
+	std::cout << "\n[+] Emplaced x86_64 hook #2: mov rax, ADDRESS; push rax; pop rax; jmp rax ..." << std::endl;
+	if (dtc = qengine::qhook::qhook_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
+		print_hook_details(dtc);
+
+	memcpy(ptr, &hook3, sizeof(hook3));
+
+	std::cout << "\n[+] Emplaced x86_64 hook #3: // mov rax, ADDRESS ; push rax ; ret" << std::endl;
+	if (dtc = qengine::qhook::qhook_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
+		print_hook_details(dtc);
+
+	memcpy(ptr, &hook1_x32, sizeof(hook1_x32));
+
+	std::cout << "\n[+] Emplaced x86_32 hook #1: mov eax, ADDRESS; jmp eax ..." << std::endl;
+	if (dtc = qengine::qhook::qhook_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
+		print_hook_details(dtc);
+
+	memcpy(ptr, &hook2_x32, sizeof(hook2_x32));
+
+	// WARNING: This 32-bit hook format is improperly detected on 64-bit build targets (it recognizes the hooks presence, but returns invalid length)
+	// This is considered precisely a non-issue as 32-bit hooks fail in 64-bit address spacing
+	std::cout << "\n[+] Emplaced x86_32 hook #2: mov eax, ADDRESS; push eax; pop eax; jmp eax ..." << std::endl;
+	if (dtc = qengine::qhook::qhook_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
+		print_hook_details(dtc);
+
+	memcpy(ptr, &hook3_x32, sizeof(hook3_x32));
+
+	std::cout << "\n[+] Emplaced x86_32 hook #3: mov eax, ADDRESS; push eax; ret ..." << std::endl;
+	if (dtc = qengine::qhook::qhook_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
+		print_hook_details(dtc);
+
+	//Restore page protections as we are done emplacing inline hooks
+	VirtualProtect(ptr, sizeof(hook1), tmp, &tmp);
 
 	std::cin.get();
 
-	return 0;
+	return static_cast<std::int32_t>(NULL);
 }
 ```
 
