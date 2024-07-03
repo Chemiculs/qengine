@@ -679,7 +679,7 @@ __singleton std::int32_t __stackcall main() noexcept {
 	else
 		std::cout << "[!] Executable Interrupt Padding failed to be morphed! " << std::endl;
 
-	if (sec.wipe_idata_iat_ilt())
+	if (sec.wipe_idata_ilt())
 		std::cout << "[+] .idata / ILT Wiped, IAT preserved!" << std::endl;
 	else
 		std::cout << "[!] .idata / ILT wipe failed!" << std::endl;
