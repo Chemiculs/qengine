@@ -455,7 +455,7 @@ namespace qengine {
 					return true;
 				}
 
-				__inlineable imut bool __stackcall wipe_idata_iat_ilt() nex {
+				__inlineable imut bool __stackcall wipe_idata_ilt() nex {
 
 					static DWORD protection = NULL;
 

@@ -180,7 +180,7 @@ class qh_struct{
 				return true;
 			}
 
-			__singleton imut T __stackcall get() imut nex {
+			__compelled_inline imut T __stackcall get() imut nex {
 
 				if (!is_polyc_alteration) {
 
