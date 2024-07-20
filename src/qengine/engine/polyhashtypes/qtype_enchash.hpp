@@ -2852,8 +2852,6 @@ class qeh_longdouble {
 
 			__compelled_inline __stackcall qeh_string(imut std::string value) nex {
 
-				//_value = algo_str_inst(value);
-
 				if (!is_init)
 					init_qtype_hash();
 
@@ -2861,8 +2859,6 @@ class qeh_longdouble {
 			}
 
 			__optimized_ctor qeh_string(imut char* value = "") {
-				
-				//_value = algo_str_inst(std::string(value));
 
 				if (!is_init)
 					init_qtype_hash();
@@ -2954,7 +2950,7 @@ class qeh_longdouble {
 
 #pragma region Ctor / Dtor
 
-			__compelled_inline __stackcall qeh_wstring(imut std::wstring value) nex : _value(qengine::polyc::algo_wstr_inst(value)) {
+			__compelled_inline __stackcall qeh_wstring(imut std::wstring value) nex {
 
 				if (!is_init)
 					init_qtype_hash();

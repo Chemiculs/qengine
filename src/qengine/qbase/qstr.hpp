@@ -1,15 +1,15 @@
 /*
 /**************************************************************************************************************************************************************************
 *																											                                                              *
-* This class is ONLY intended to prevent plaintext cstring from being output to the binary                                                                               *
-* This does not use the polyq algorithm and is NOT hash-checked, it's one and only purpose is the most basic possible encryption to prevent string-searching the binary  *
-*                                                                                                                                                                        *
-*                                                                                                                                                                        *
-* Credit for this class should mostly, if not entirely, go to the original author of skCrypt:                                                                            *
-*                                                                                                                                                                        *
+* This class is ONLY intended to prevent plaintext cstring from being output to the binary                                                                                *
+* This does not use the polyq algorithm and is NOT hash-checked, it's one and only purpose is the most basic possible encryption to prevent string-searching the binary   *
+*                                                                                                                                                                         *
+*                                                                                                                                                                         *
+* Credit for this class should mostly, if not entirely, go to the original author of skCrypt:                                                                             *
+*                                                                                                                                                                         *
 * https://github.com/javaloader/Sky-Crypt-C-11-String-Encryptor-                                                                                                          *
-*                                                                                                                                                                        *
-* Preprocessor / Constexpr is tricky, so i modified the naming convention(s) and a few specificities from his class to fit qengine's                                     *
+*                                                                                                                                                                         *
+* Preprocessor / Constexpr is tricky, so i modified the naming convention(s) and a few specificities from his class to fit qengine's formatting                           *
 *																											                                                              *                      
 ***************************************************************************************************************************************************************************
 */
@@ -31,8 +31,12 @@
 
 #pragma endregion
 
+#pragma region constexpr Qualifier Removal
+
 template <class C>
 using qclean_type = typename std::remove_const_t<std::remove_reference_t<C>>;
+
+#pragma endregion
 
 #pragma region Output Macro
 

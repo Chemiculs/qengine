@@ -12,6 +12,7 @@ namespace qengine {
 		typedef void(__regcall* qmem_exception_rogue_c)(qengine::qexcept::q_rogueaccess violation, c_void data);
 
 #pragma endregion
+
 	}
 }
 

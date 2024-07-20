@@ -2832,7 +2832,7 @@ class qh_bool{
 
 #pragma region AVX
 
-	#ifdef __AVX__
+#ifdef __AVX__
 
 		class qh_m256 {
 

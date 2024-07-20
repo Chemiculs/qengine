@@ -7,6 +7,7 @@ src/qengine/polyc/polyc.hpp.bak
 src/qengine/qhook/qhook_fn.hpp.bak
 src/qengine/qhook/qhook_util.hpp.bak
 src/qengine/qhook/qhook.hpp.bak
+src/qengine/qhook/qhook.hpp
 src/qengine/qimport/qmap.hpp
 
 src/qengine/extern/asmjit/

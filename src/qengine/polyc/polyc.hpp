@@ -130,7 +130,7 @@ namespace qengine {
 
 		/*
 
-			The below symbols must be statically compilled as to retrieve a function pointer, optimizations are disabled for the varying subroutines and function inlining is explicitly disabled
+			The below symbols must be statically compilled as to retrieve a function pointer, optimizations are disabled for the varying subroutines and function inlining is explicitly disabled, as well being marked volatile
 
 		*/
 
@@ -333,6 +333,7 @@ namespace qengine {
 			/* Determine algorithm key value(s) */
 			for (std::size_t i = 0; i < 16; ++i) {
 
+				// | BIT_SCRAMBLE is used to produce / garauntee a degree of entropy among the algorithm key(s)
 				_ciph_x[i] = ((static_cast<uintptr_t>(std::chrono::high_resolution_clock::now().time_since_epoch().count() % __RAND__(0x10000ui32, 0x1ui32)) ^ 16ui64) * 1024) | BIT_SCRAMBLE;
 
 				_ciph_y[i] = ((static_cast<uintptr_t>(std::chrono::high_resolution_clock::now().time_since_epoch().count() % __RAND__(0x20000ui32, 0x1ui32)) ^ 32ui64) * 2048) | BIT_SCRAMBLE;
@@ -340,13 +341,15 @@ namespace qengine {
 				_ciph_z[i] = ((static_cast<uintptr_t>(std::chrono::high_resolution_clock::now().time_since_epoch().count() % __RAND__(0x30000ui32, 0x1ui32)) ^ 64ui64) * 4096) | BIT_SCRAMBLE;
 			}
 
-			/* determine indices in x vector to use */
+			/* Determine indices in x vector to use */
 			for (auto x = 0; x < sizeof(_indice_map_x); ++x)
 				_indice_map_x[x] = static_cast<char>(std::chrono::high_resolution_clock::now().time_since_epoch().count() % static_cast<std::uint8_t>(__RAND__(16, 1)));
 
+			/* Determine indices in y vector to use */
 			for (auto y = 0; y < sizeof(_indice_map_y); ++y)
 				_indice_map_y[y] = static_cast<char>(std::chrono::high_resolution_clock::now().time_since_epoch().count() % static_cast<std::uint8_t>(__RAND__(16, 1)));
 
+			/* Determine indices in z vector to use */
 			for (auto z = 0; z < sizeof(_indice_map_z); ++z)
 				_indice_map_z[z] = static_cast<char>(std::chrono::high_resolution_clock::now().time_since_epoch().count() % static_cast<std::uint8_t>(__RAND__(16, 1)));
 
@@ -445,7 +448,7 @@ namespace qengine {
 			if ((existing_entry = get_pointer_table_entry_by_abs(abs)) == nullptr)
 				return false;
 
-			if (_polyc_pointer_table->size() - 1 > existing_entry->pointer_table_index)								// Perform table relocations if necessary
+			if (_polyc_pointer_table->size() - 1 > existing_entry->pointer_table_index)	// Perform table relocations if necessary
 				for (std::size_t i = (existing_entry->pointer_table_index + 1); i < _polyc_pointer_table->size(); ++i)
 					--(*_polyc_pointer_table)[i].pointer_table_index;
 
@@ -487,6 +490,7 @@ namespace qengine {
 
 #pragma region Algorithm
 
+		// TODO: Optimize this algorithm to operate on larger block sizes
 		static __compelled_inline imut bool __regcall algo(c_void abs, imut size_t length, imut bool execute_subroutine = true ) nex {
 
 			if (!_polyc_initialized)
@@ -511,24 +515,24 @@ namespace qengine {
 
 			/* iterate each individual byte of data in the source */
 			for (std::size_t i = 0; i < length; ++i) {
-				
-				/* run our first pass on the data */
-				for (auto x = 0; x < sizeof(_indice_map_x); ++x)
+
+				/* run our first  XOR pass on the data */
+				for (std::size_t x = 0; x < sizeof(_indice_map_x); ++x)
 					__XORBYTE__(data_c[i], _ciph_x[_indice_map_x[x]]);
 
-				/* run our second pass on the data */
-				for (auto y = 0; y < sizeof(_indice_map_y); ++y)
+				/* run our second XOR pass on the data */
+				for (std::size_t y = 0; y < sizeof(_indice_map_y); ++y)
 					__XORBYTE__(data_c[i], _ciph_y[_indice_map_y[y]]);
 
-				/* run our third pass on the data */
-				for (auto z = 0; z < sizeof(_indice_map_z); ++z)
+				/* run our third XOR pass on the data */
+				for (std::size_t z = 0; z < sizeof(_indice_map_z); ++z)
 					__XORBYTE__(data_c[i], _ciph_z[_indice_map_z[z]]);
 
 			}
 
-			if(execute_subroutine)												//	Safety check to ensure this data is manipulated using a subroutine 
-				if (algo_pointer_entry->is_crypted)								//	Check if the entry is was crypted, this means the XOR (decryption) subroutine has completed and we now need to realign our data to match the inverse subroutine algorithm
-					if (!internal_do_algo_subroutine_byref(algo_pointer_entry)) //  This function automatically toggles the is_crypted field when executed
+			if(execute_subroutine)																//	Safety check to ensure this data is manipulated using a further subroutine 
+				if (algo_pointer_entry->is_crypted)												//	Check if the entry is was crypted, this means the XOR (decryption) subroutine has completed and we now need to realign our data to match the inverse subroutine algorithm
+					if (!internal_do_algo_subroutine_byref(algo_pointer_entry))  //  This function automatically toggles the [ is_crypted ] field when executed
 						return false;
 
 			return true;
@@ -551,63 +555,18 @@ namespace qengine {
 			return copy_d;
 		}
 
-		template<typename T>
-		static __compelled_inline imut bool __regcall algo_t(T& data, imut bool execute_subroutine = true) nex {
-
-			return algo(&data, sizeof(decltype(data)), execute_subroutine);
-		}
-
-		template<typename T>
-		static __compelled_inline T __regcall algo_t_inst(T data, imut bool execute_subroutine = true) nex {
-
-			T copy_t = data;
-
-			algo_t(copy_t, execute_subroutine);
-
-			return copy_t;
-		}
-
-		static __compelled_inline imut bool __stackcall algo_str(imut std::string& data) nex {
-
-			return algo(imut_cast<char*>(data.c_str()), data.length());
-		}
-
-		static __compelled_inline std::string __cdecl algo_str_inst(imut std::string& data) nex {
-
-			std::string copy_str = data;
-
-			algo_str(copy_str);
-
-			return copy_str;
-		}
-
-		static __compelled_inline imut bool __stackcall algo_wstr(imut std::wstring& data) nex {
-
-			return algo(imut_cast<wchar_t*>(data.c_str()), data.size() * sizeof(wchar_t));
-		}
-
-		static __compelled_inline std::wstring __stackcall algo_wstr_inst(imut std::wstring& data) nex {
-
-			std::wstring copy_wstr = data;
-
-			algo_wstr(copy_wstr);
-
-			return copy_wstr;
-		}
-
 #pragma endregion
 
 #pragma region Decommission
 
 		static __singleton imut bool __stackcall decommit_polyc_resources() nex {
-			if (!_polyc_initialized)
+			if (!_polyc_initialized || !_polyc_pointer_table || !_polyc_subroutine_safecall_table)
 					return false;
-
-			if(!_polyc_pointer_table || !_polyc_subroutine_safecall_table)
-				return false;
 
 			delete _polyc_pointer_table;
 			delete _polyc_subroutine_safecall_table;
+
+			return true;
 		}
 
 #pragma endregion

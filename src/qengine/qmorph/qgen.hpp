@@ -1,4 +1,3 @@
-#include <cstdint>
 #pragma region Header Guard
 
 #ifndef QGEN_H
@@ -21,7 +20,9 @@
 
 #pragma region ASMJIT
 
+// If your bin folder outputs a static library, you don't need it. this seems to cause an unnecessary binary output in some cases.
 #define ASMJIT_STATIC
+
 #include "../extern/asmjit/asmjit.h"
 
 #pragma endregion
@@ -119,95 +120,99 @@ namespace qengine {
 
 			private:
 
-				static __inlineable const asmjit::_abi_1_10::x86::Gpq* generate_random_register64() nex {
+				static __inlineable const asmjit::_abi_1_10::x86::Gpq* generate_random_register64() noexcept {
 
-					srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+#pragma region RNG Locals
 
-					auto register_o = static_cast<asm_register64>(__RAND__(4, 0));
-					// TODO add r8-r15
+					auto epoch_t = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+
+					std::default_random_engine engine_r(epoch_t);
+
+					std::uniform_int_distribution<short> distributor_o(0, 4);
+
+#pragma endregion
+
+					auto register_o = static_cast<asm_register64>(distributor_o(engine_r));
+
 					switch (register_o) {
-						
 						case RAX: {
-
 							return &asmjit::x86::rax;
 							break;
 						}
 						case RBX: {
-
 							return &asmjit::x86::rbx;
 							break;
 						}
 						case RCX: {
-
 							return &asmjit::x86::rcx;
 							break;
 						}
 						case RDX: {
-
 							return &asmjit::x86::rdx;
 							break;
 						}
 						case RSI: {
-
 							return &asmjit::x86::rsi;
 							break;
 						}
 						default: {
-
 							return nullptr;
-							break;
 						}
 					}
 
 				}
 
-				static __inlineable const asmjit::_abi_1_10::x86::Gpd* generate_random_register32() nex {
+				static __inlineable const asmjit::_abi_1_10::x86::Gpd* generate_random_register32() noexcept {
 
-					srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+#pragma region RNG locals
 
-					auto register_o = static_cast<asm_register32>(__RAND__(4, 0));
+					auto epoch_t = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+
+					std::default_random_engine engine_r(epoch_t);
+
+					std::uniform_int_distribution<short> distributor_o(0, 4);
+
+#pragma endregion
+
+					auto register_o = static_cast<asm_register32>(distributor_o(engine_r));
 
 					switch (register_o) {
-
 						case EAX: {
-
 							return &asmjit::x86::eax;
 							break;
 						}
 						case EBX: {
-
 							return &asmjit::x86::ebx;
 							break;
 						}
 						case ECX: {
-
 							return &asmjit::x86::ecx;
 							break;
 						}
 						case EDX: {
-
 							return &asmjit::x86::edx;
 							break;
 						}
 						case ESI: {
-
 							return &asmjit::x86::esi;
 							break;
 						}
 						default: {
-
 							return nullptr;
-							break;
 						}
 					}
 
 				}
 
-				static __inlineable imut c_void __regcall generate_insn(asm_preamble insn_t) nex {
+				static __inlineable void* __regcall generate_insn(asm_preamble insn_t) noexcept {
 
 #pragma region Random Number Generator
 
-					srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+					auto epoch_t = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+
+					std::default_random_engine engine_r(epoch_t);
+
+					std::uniform_int_distribution<uint32_t> distributor_o(0, UINT32_MAX);
 
 #pragma endregion
 
@@ -223,22 +228,22 @@ namespace qengine {
 
 #pragma endregion
 
-					static c_void alloc_insn = nullptr;
+					void* alloc_insn = nullptr;
 
 					switch (insn_t) { // could compress the preprocessor directives but this works for now
 
 						case MOV: {
 
 #ifdef _WIN64
-							assembler_o.mov(*generate_random_register64(), static_cast<std::uint32_t>(__RAND__(UINT32_MAX, 0)));
+							assembler_o.mov(*generate_random_register64(), static_cast<uint32_t>(distributor_o(engine_r)));
 #else
-							assembler_o.mov(*generate_random_register32(), static_cast<std::uint32_t>(__RAND__(UINT32_MAX, 0)));
+							assembler_o.mov(*generate_random_register32(), static_cast<uint32_t>(distributor_o(engine_r)));
 #endif
 							break;
 						}
 
 						case PUSH:{
-							assembler_o.push(static_cast<std::uint32_t>(__RAND__(UINT32_MAX, 0)));
+							assembler_o.push(static_cast<uint32_t>(distributor_o(engine_r)));
 							break;
 						}
 						case POP: {
@@ -252,7 +257,7 @@ namespace qengine {
 						}
 						case CALL: {
 
-							assembler_o.call(static_cast<std::uint32_t>(__RAND__(UINT32_MAX, 0))); // call imm64 does not exist so use imm32
+							assembler_o.call(static_cast<uint32_t>(distributor_o(engine_r))); // call imm64 does not exist so use imm32
 
 							break;
 						}
@@ -304,49 +309,53 @@ namespace qengine {
 						}
 					}
 
-					static asmjit::Error err;
+					asmjit::Error err;
 
 					if (err = jit_r.add(&alloc_insn, &code_h)) 
 						return nullptr;
 
-					c_void alloc_r = malloc(code_h.codeSize());
+					auto* alloc_r = malloc(code_h.codeSize());
 
 					memcpy(alloc_r, alloc_insn, code_h.codeSize()); // asmjit compiled code lifetime expires at end of scope, so use a ghetto heap allocation work-around
 
-					// Securely wipe Singletons, skipping some asmjit objects to avoid potential UB
-					RtlZeroMemory(static_cast<c_void>(&alloc_insn), sizeof(c_void));
-					RtlZeroMemory(&err, sizeof(asmjit::Error));
-
-					return std::move(alloc_r);
+					return alloc_r;
 				}
 
 			public:
 
-				static __inlineable imut c_void __regcall generate_assembly(imut std::uint32_t length) nex {
+				static __inlineable void* __regcall generate_assembly(uint32_t length) noexcept {
 
 					if (!length)
 						return nullptr;
 
-					srand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+#pragma region RNG Locals
 
-					c_void shellcode_r;
+					auto epoch_t = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+
+					std::default_random_engine engine_r(epoch_t);
+
+					std::uniform_int_distribution<short> distributor_o(0, 9);
+
+#pragma endregion
+
+					void* shellcode_r;
 
 					if (!(shellcode_r = malloc(length)))
 						return nullptr;
 
-					static std::intptr_t last_insn_index = -1;
+					intptr_t last_insn_index = -1;
 
-					static std::size_t bytes_written = static_cast<size_t>(0);
+					size_t bytes_written = static_cast<size_t>(0);
 
 					do {
 
-						static std::size_t remaining = length - bytes_written;
+						auto remaining = length - bytes_written;
 
 						asm_preamble insn;
 
 						std::pair<char, char> insn_size_data;
 
-						static std::uint16_t word_r = static_cast<std::uint16_t>(__RAND__(9, 0));
+						auto word_r = distributor_o(engine_r);
 
 						if (remaining >= 7) {
 
@@ -376,10 +385,10 @@ namespace qengine {
 						}
 						else { // Fill remaining padding with NOP instructions
 							
-							c_void alloc_nop;
+							void* alloc_nop;
 
 							if (!(alloc_nop = malloc(remaining)))
-								return nullptr;
+								throw std::bad_alloc();
 
 							memset(alloc_nop, static_cast<std::uint8_t>(0x90), remaining);
 
@@ -394,26 +403,19 @@ namespace qengine {
 
 						insn_size_data = preamble_size_mapping_64.at(insn);
 
-						c_void alloc_insn = generate_insn(std::move(insn));
+						auto* alloc_insn = generate_insn(insn);
 
 						memcpy(reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(shellcode_r) + bytes_written), alloc_insn, insn_size_data.first);
 
 						free(alloc_insn);
 
-						bytes_written += std::move( insn_size_data.first );
-
-						// This is a redundant call foreach iteration, but it garauntees secured Singleton(s) after last iteration at slight performance loss
-						RtlZeroMemory(&remaining, sizeof(std::size_t));
-						RtlZeroMemory(&word_r, sizeof(std::uint16_t));
+						bytes_written += insn_size_data.first;
 
 					} while (bytes_written < length);
 
 				do_ret:
 
-					RtlZeroMemory(&last_insn_index, sizeof(std::intptr_t));
-					RtlZeroMemory(&bytes_written, sizeof(std::size_t));
-
-					return std::move( shellcode_r );
+					return shellcode_r;
 				}
 
 			};

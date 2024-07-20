@@ -7,7 +7,7 @@
 
 #pragma region Imports
 
-#pragma region Operating System
+#pragma region Windows
 
 #include <windows.h>
 #include <Psapi.h>
@@ -18,6 +18,7 @@
 
 #include <tuple>
 #include <string>
+#include <memory>
 #include <algorithm>
 #include <cstdint>
 
@@ -54,6 +55,8 @@ typedef void* c_void;
 // Our intention in declaring many variables as volatile in qengine, is to prevent the addressing of the variables from being optimized into registers
 // The polyc algorithm requires absolute allocation addressing currently, and moving these addresses into registers or copying creates engine-breaking problem(s)
 #define noregister volatile
+
+#define muteval volatile
 
 // It makes zero sense for the language to state a const cast is occuring when no such thing is in reality, renaming to volatility cast for context
 #define volatile_cast const_cast
