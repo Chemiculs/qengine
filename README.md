@@ -24,22 +24,17 @@ qengine is a polymorphic engine (meaning an engine that takes multiple forms/per
 
 This project aims to make binaries appear as unique and unrecognizable as possible at each independent execution.
 
-* qengine is fairly well tested (considering we are a small team) - I currently am unaware of any bugs for LLVM / CLANG, MSVC, and Intel compiler targets for both x86 and x64 release builds.
+* qengine is well tested (considering we are a small team) - I currently am unaware of any bugs for LLVM / CLANG, MSVC, and Intel compiler targets for both x86 and x64 release builds.
 
 * This will NOT prevent static disk signatures of your executables - however, it will make the task of understanding your code from a classic disassembler such as IDA VERY difficult if used properly, and will prevent memory-dump / memory-scan-based signature detections of your binary.
 
 * This library is fully inlined, employing a minimalist design and maximum performance + reliability, function inlining allows qengine to hide the actual code you are executing behind a wall of cryptographic instructions and protected memory regions
 
-qengine is very lightweight and incurs a ~1.70% average performance loss vs. standard library / primitive types, likewise you will retain ~98.3% of your application's original performance ( on average ) while simultaneously generating thousands or even millions of junk instructions dilluting your meaningful compiled codebase 
-
-If anyone is able to contribute further detailed benchmarks if they have the time, this would be extremely helpful - my hands are tied when it comes to free time for this project at the moment.
-
-</details>
+qengine is very lightweight and from my personal benchmarks, incurs a ~1.70% average performance ( for qxx_ types ) loss vs. standard library / primitive types on modern CPU's, likewise you will retain most of your application's original performance ( on average ) while simultaneously generating thousands or even millions of junk instructions dilluting your meaningful compiled codebase from the eyes of Reverse-Engineer's.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-<details>
-<summary>How does qengine work?</summary>
+## How does qengine work?
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -110,12 +105,9 @@ Keep in mind that the above example is only from basic initialization of one loc
 
 Each get() and set() accessor call is compelled inline, and each math operation or manipulation of qengine::type variables calls get() and / or set() accessor, seeing as these are rather large functions to begin with, the compiler output can go as far as crashing modern disassemblers.
 
-</details>
-
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-<details>
-<summary> Is qengine Malicious? </summary>
+## Is qengine Malicious?
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -679,7 +671,7 @@ __singleton std::int32_t __stackcall main() noexcept {
 	else
 		std::cout << "[!] Executable Interrupt Padding failed to be morphed! " << std::endl;
 
-	if (sec.wipe_idata_iat_ilt())
+	if (sec.wipe_idata_ilt())
 		std::cout << "[+] .idata / ILT Wiped, IAT preserved!" << std::endl;
 	else
 		std::cout << "[!] .idata / ILT wipe failed!" << std::endl;
