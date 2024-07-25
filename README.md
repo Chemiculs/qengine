@@ -286,7 +286,7 @@ If you require compile-time string encryption, simply use the QSTR macro as belo
 
 using namespace qengine;
 
- __singleton std::int32_t __stackcall main() noexcept {
+ __symbolic std::int32_t __stackcall main() noexcept {
 
 	qtype_enc::qe_string my_string_e(QSTR("Hello World!"));
 
@@ -320,7 +320,7 @@ Here is the obligatory "Hello World" for qengine:
 
 using namespace qengine;
 
- __singleton std::int32_t __stackcall main() noexcept {	
+ __symbolic std::int32_t __stackcall main() noexcept {	
 
 	qtype_enc::qe_string my_string_e("Hello World!");
 
@@ -356,7 +356,7 @@ qengine contains some changes in representations to ideas and concepts in the C+
 
 * Below macro effectively disables inlining optimization for a specific function, if we wish for it to have a single instance per parent object, use in place of ``` __declspec(noinline) ```
 ```cpp
-__singleton 	//	we only want a single instance of the declared fn per object instance, not instanced copies inlined to caller functions
+__symbolic 	//	We want the function to be symbolically compiled (not inlined)
 ```
 
 * Below macro disables compiler generation of windows native SEH-related code in relation to the declared function whilst compelling the function to be inlined to the caller(s), use in place of ``` __forceinline ```
@@ -475,18 +475,18 @@ Here is an example of creating an obfuscated conditional branch that evaluates t
 
 using namespace qengine;
 
-static  __singleton void true_() noexcept {	//	callback functions shall never be inlined and should always be explicitly declared as a singleton point of execution, intentions are very ant to know
+static  __symbolic void true_() noexcept {	//	callback functions shall never be inlined and should always be explicitly declared as a symbolic point of execution, intentions are very ant to know
 
 	std::cout << "condition is true" << std::endl;
 }
 
-static  __singleton void false_() noexcept {	
+static  __symbolic void false_() noexcept {	
 
 	std::cout << "condition is false" << std::endl;
 }
 
 
- __singleton std::int32_t __stackcall main() noexcept {
+ __symbolic std::int32_t __stackcall main() noexcept {
 
 	int x = 1;
 	int y = 1;
@@ -586,7 +586,7 @@ Below I will give an example of how to create a callback function to handle this
 
 using namespace qengine;
 
-__singleton  void __regcall violation_callback(qexcept::q_rogueaccess except, c_void data) noexcept {
+__symbolic  void __regcall violation_callback(qexcept::q_rogueaccess except, c_void data) noexcept {
 
 	if (except.id != qexcept::MEMORY_ALTERATION) // ensure this callback has been raised due to memory alteration
 		return;
@@ -601,7 +601,7 @@ __singleton  void __regcall violation_callback(qexcept::q_rogueaccess except, c_
 }
 
 
-__singleton  std::int32_t __stackcall main() noexcept {
+__symbolic  std::int32_t __stackcall main() noexcept {
 
 	qtype_enchash::init_qtype_hash(&violation_callback); // assign our callback function to the namespace - all instances will refer to this callback if they detect a violation
 
@@ -655,7 +655,7 @@ Below is an example of how to mutate the executable sections of the PE and scram
 
 using namespace qengine;
 
-__singleton std::int32_t __stackcall main() noexcept {
+__symbolic std::int32_t __stackcall main() noexcept {
 
 	//You do not have to use all of the below functions, however analyze_executable_sections() must be called before morph_executable_sections(), and this must be called before manipulating headers as it depends on information from the headers to perform analyzation
 	std::cout << "[+] Initializing section assembler object..." << std::endl;
@@ -757,7 +757,7 @@ Below is an example of importing a Windows API function using the import tool -
 
 using namespace qengine;
 
-__singleton  std::int32_t __stackcall main() noexcept {
+__symbolic  std::int32_t __stackcall main() noexcept {
 	// Return type is NTSTATUS (template parameter)
 	// Argument 1 is the library name (wide / ansi char depend on charset)
 	// Argument 2 is name of function or ordinal number
@@ -791,7 +791,7 @@ using namespace qengine;
 /* First template argument specifies return type, subsequent template arguments specify argument type list in Left -> Right order for the fn being imported */
 static auto imp_MessageBoxA = qimport::qimp::get_fn_import_object<NTSTATUS, unsigned int, const char*, const char*, unsigned int>(L"user32.dll", "MessageBoxA");
 
-__singleton std::int32_t __stackcall main() noexcept {
+__symbolic std::int32_t __stackcall main() noexcept {
 
 	auto status = imp_MessageBoxA(NULL, "Hello World!", "Hello World!", NULL); // call MessageBoxA and assign it's status return to a local 
 
@@ -851,7 +851,7 @@ using namespace qengine;
 
 #pragma region Placeholder Methods
 
-static __singleton void __regcall myimportantmethod(std::uintptr_t val) noexcept { // add junk code to our dummy method to increase it's size in memory to be viable for hook placement
+static __symbolic void __regcall myimportantmethod(std::uintptr_t val) noexcept { // add junk code to our dummy method to increase it's size in memory to be viable for hook placement
 
 	auto j = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 
@@ -864,7 +864,7 @@ static __singleton void __regcall myimportantmethod(std::uintptr_t val) noexcept
 
 #pragma region Callback Methods
 
-__singleton void __stackcall print_hook_details(qengine::qhook::qhook_detection_t* detection) noexcept {	//	callbacks are never inlined nor inlineable, therefore in this example i am explicitly declaring these things
+__symbolic void __stackcall print_hook_details(qengine::qhook::qhook_detection_t* detection) noexcept {	//	callbacks are never inlined nor inlineable, therefore in this example i am explicitly declaring these things
 
 	STDOUT_PRINTBLOCK_SEPERATOR();
 
@@ -882,7 +882,7 @@ __singleton void __stackcall print_hook_details(qengine::qhook::qhook_detection_
 
 #pragma region EP fn
 
-__singleton std::int32_t __stackcall main() noexcept {
+__symbolic std::int32_t __stackcall main() noexcept {
 
 	std::cout << "\n[+] Analyzing function length..." << std::endl;
 
