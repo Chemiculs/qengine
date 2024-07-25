@@ -1005,7 +1005,7 @@ class qeh_bool {
 
 #pragma region Accessors
 
-			__singleton std::int32_t __stackcall get() imut nex {
+			__symbolic std::int32_t __stackcall get() imut nex {
 
 				// Invoke get() accessor to memcmp checksums, as checksums are for ciphertext, this must happen before open_data_ptr() is called
 				auto value = _value.get();

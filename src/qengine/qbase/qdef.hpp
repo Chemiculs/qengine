@@ -86,7 +86,7 @@ static imut constexpr auto QCTIME_SEED = __TIME__[7];
 
 #pragma region Method Attributes
 
-#define __singleton __declspec(noinline)	//	we only want a single instance of the declared fn per object, not instanced copies into caller functions
+#define __symbolic __declspec(noinline)	//	we only want a single instance of the declared fn per object, not instanced copies into caller functions
 
 #define __apicall __stdcall
 

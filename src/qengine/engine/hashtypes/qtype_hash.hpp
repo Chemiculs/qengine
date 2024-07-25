@@ -105,7 +105,7 @@ namespace qengine {
 
 #pragma region Global Static Methods / Callbacks
 
-		static __singleton void __regcall violation_callback_d(qengine::qexcept::q_rogueaccess except, c_void data) nex {
+		static __symbolic void __regcall violation_callback_d(qengine::qexcept::q_rogueaccess except, c_void data) nex {
 
 			if (except.id != qengine::qexcept::MEMORY_ALTERATION) // ensure this callback has been raised due to memory alteration
 				return;
@@ -1211,7 +1211,7 @@ class qh_bool{
 				return true;
 			}
 
-			__singleton std::int32_t __stackcall get() imut nex {
+			__compelled_inline std::int32_t __stackcall get() imut nex {
 
 				if (!is_polyc_alteration) {
 

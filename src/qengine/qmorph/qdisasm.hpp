@@ -128,7 +128,7 @@ namespace qengine {
 			public:
 
 				/* specify __regcall should the compiler choose to optimize the argument as a pointer (to fit register) */
-				__singleton imut bool __regcall instruction_permutation(interrupt_region& region) nex {
+				__symbolic imut bool __regcall instruction_permutation(interrupt_region& region) nex {
 
 					static DWORD protection = NULL;
 
@@ -154,7 +154,7 @@ namespace qengine {
 				}
 
 				/* if you erase / randomize headers before calling this the function will fail and your program will crash */
-				__singleton imut bool __stackcall analyze_executable_sections() noexcept {
+				__symbolic imut bool __stackcall analyze_executable_sections() noexcept {
 					
 					if (cs_open(arch, mode, &handle) != CS_ERR_OK) // initialize capstone with our target architecture using our handle
 						return false;
@@ -229,7 +229,7 @@ namespace qengine {
 					return true;
 				}
 
-				__singleton imut bool __regcall morph_executable_sections(imut bool free_memory = true) noexcept {
+				__symbolic imut bool __regcall morph_executable_sections(imut bool free_memory = true) noexcept {
 
 					if (!pe_interrupt_regions.size())
 						return false;
@@ -255,7 +255,7 @@ namespace qengine {
 
 #pragma region PE Header Manipulation
 
-				__singleton imut bool __stackcall scramble_dos_header( imut bool null_header = false, imut bool erase_stub = true) noexcept {
+				__symbolic imut bool __stackcall scramble_dos_header( imut bool null_header = false, imut bool erase_stub = true) noexcept {
 
 #pragma region Locals Setup
 
@@ -309,7 +309,7 @@ namespace qengine {
 					return true;
 				}
 
-				__singleton bool __stackcall scramble_nt_header(bool null_headers = false) noexcept {
+				__symbolic bool __stackcall scramble_nt_header(bool null_headers = false) noexcept {
 
 #pragma region Locals Setup
 
@@ -455,7 +455,7 @@ namespace qengine {
 					return true;
 				}
 
-				__singleton imut bool __stackcall wipe_idata_ilt() nex {
+				__symbolic imut bool __stackcall wipe_idata_ilt() nex {
 
 					static DWORD protection = NULL;
 
@@ -584,7 +584,7 @@ namespace qengine {
 					return true;
 				}
 
-				__singleton void __stackcall parse_main_module_headers() noexcept {
+				__symbolic void __stackcall parse_main_module_headers() noexcept {
 
 					base_address = reinterpret_cast<std::uintptr_t>(GetModuleHandle(NULL));
 

@@ -125,7 +125,7 @@ namespace qengine {
 
 			return modifier > base ? maximum - ((modifier - base) - 1) : base - modifier;
 		}
-
+		
 #pragma endregion
 
 		/*
@@ -134,7 +134,7 @@ namespace qengine {
 
 		*/
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_0(c_void data, imut std::size_t length, imut bool crypted) nex {
+		static __symbolic imut bool __regcall internal_do_algo_subroutine_0(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			if (crypted)
 				for (std::size_t i = 0; i < length; ++i)
@@ -146,7 +146,7 @@ namespace qengine {
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_1(c_void data, imut std::size_t length, imut bool crypted) nex {
+		static __symbolic imut bool __regcall internal_do_algo_subroutine_1(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 
@@ -160,7 +160,7 @@ namespace qengine {
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_2(c_void data, imut std::size_t length, imut bool crypted) nex {
+		static __symbolic imut bool __regcall internal_do_algo_subroutine_2(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 			internal_do_algo_subroutine_1(data, length, crypted);
@@ -175,7 +175,7 @@ namespace qengine {
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_3(c_void data, imut std::size_t length, imut bool crypted) nex {
+		static __symbolic imut bool __regcall internal_do_algo_subroutine_3(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 			internal_do_algo_subroutine_1(data, length, crypted);
@@ -191,7 +191,7 @@ namespace qengine {
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_4(c_void data, imut std::size_t length, imut bool crypted) nex {
+		static __symbolic imut bool __regcall internal_do_algo_subroutine_4(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 			internal_do_algo_subroutine_1(data, length, crypted);
@@ -208,7 +208,7 @@ namespace qengine {
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_5(c_void data, imut std::size_t length, imut bool crypted) nex {
+		static __symbolic imut bool __regcall internal_do_algo_subroutine_5(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 			internal_do_algo_subroutine_1(data, length, crypted);
@@ -226,7 +226,7 @@ namespace qengine {
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_6(c_void data, imut std::size_t length, imut bool crypted) nex {
+		static __symbolic imut bool __regcall internal_do_algo_subroutine_6(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 			internal_do_algo_subroutine_1(data, length, crypted);
@@ -245,7 +245,7 @@ namespace qengine {
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_7(c_void data, imut std::size_t length, imut bool crypted) nex {
+		static __symbolic imut bool __regcall internal_do_algo_subroutine_7(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 			internal_do_algo_subroutine_1(data, length, crypted);
@@ -265,7 +265,7 @@ namespace qengine {
 			return true;
 		}
 
-		static __singleton imut bool __regcall internal_do_algo_subroutine_8(c_void data, imut std::size_t length, imut bool crypted) nex {
+		static __symbolic imut bool __regcall internal_do_algo_subroutine_8(c_void data, imut std::size_t length, imut bool crypted) nex {
 
 			internal_do_algo_subroutine_0(data, length, crypted);
 			internal_do_algo_subroutine_1(data, length, crypted);
@@ -320,7 +320,7 @@ namespace qengine {
 
 #pragma region Pseudo-Ctor
 
-		static __singleton imut bool __stackcall polyc_init() nex {
+		static __symbolic imut bool __stackcall polyc_init() nex {
 
 			if (_polyc_initialized)
 				return false;
@@ -438,7 +438,7 @@ namespace qengine {
 
 #pragma region Pointer Table Manipulation
 
-		static __singleton imut bool __regcall unregister_polyc_pointer( imut c_void abs ) nex {
+		static __symbolic imut bool __regcall unregister_polyc_pointer( imut c_void abs ) nex {
 
 			if ( !abs || !_polyc_pointer_table || !_polyc_pointer_table->size() )
 				return false;
@@ -457,7 +457,7 @@ namespace qengine {
 			return true;
 		}
 
-		static __singleton polyc_pointer_t* __regcall register_polyc_pointer( c_void abs, imut std::size_t length ) nex {
+		static __symbolic polyc_pointer_t* __regcall register_polyc_pointer( c_void abs, imut std::size_t length ) nex {
 
 			if (!abs || !_polyc_pointer_table)
 				return nullptr;
@@ -559,7 +559,7 @@ namespace qengine {
 
 #pragma region Decommission
 
-		static __singleton imut bool __stackcall decommit_polyc_resources() nex {
+		static __symbolic imut bool __stackcall decommit_polyc_resources() nex {
 			if (!_polyc_initialized || !_polyc_pointer_table || !_polyc_subroutine_safecall_table)
 					return false;
 

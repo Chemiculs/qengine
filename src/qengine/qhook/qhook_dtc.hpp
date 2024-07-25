@@ -86,7 +86,7 @@ namespace qengine {
 
 			// This function is currently only a POC, and while it will work for less complex inline hooks, the lacking of recursion will prevent this from (properly / fully) detecting extensive / variable length hooks
 
-			static __singleton qhook_detection_t* __regcall analyze_fn_hook_presence(
+			static __symbolic qhook_detection_t* __regcall analyze_fn_hook_presence(
 
 				imut c_void fn_address,
 				imut std::size_t fn_length
@@ -256,7 +256,7 @@ namespace qengine {
 				return nullptr;
 			}
 
-			static __singleton std::size_t __regcall analyze_fn_length(imut c_void fn_address) noexcept {
+			static __symbolic std::size_t __regcall analyze_fn_length(imut c_void fn_address) noexcept {
 
 				if (!fn_address)
 					return NULL;
