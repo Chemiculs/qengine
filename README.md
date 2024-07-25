@@ -841,9 +841,15 @@ Below is an example application that initializes the hook-detection library, cal
 
 using namespace qengine;
 
+#pragma region Macros
+
 #define PRINT_HEXADECIMAL std::hex << std::noshowbase
 
-#define STDOUT_PRINTBLOCK_SEPERATOR() std::cout << "\n[--------------------------------------------------------------------------------------]" << std::endl;
+#define STDOUT_PRINTBLOCK_SEPERATOR() std::cout << "\n\n<-------------------------------------------------------------------------------------->\n\n";
+
+#pragma endregion
+
+#pragma region Placeholder Methods
 
 static __singleton void __regcall myimportantmethod(std::uintptr_t val) noexcept { // add junk code to our dummy method to increase it's size in memory to be viable for hook placement
 
@@ -853,6 +859,10 @@ static __singleton void __regcall myimportantmethod(std::uintptr_t val) noexcept
 
 	std::cout << "\n[+] Placeholder function called, output: " << k << std::endl;
 }
+
+#pragma endregion
+
+#pragma region Callback Methods
 
 __singleton void __stackcall print_hook_details(qengine::qhook::qhook_detection_t* detection) noexcept {	//	callbacks are never inlined nor inlineable, therefore in this example i am explicitly declaring these things
 
@@ -868,11 +878,15 @@ __singleton void __stackcall print_hook_details(qengine::qhook::qhook_detection_
 	STDOUT_PRINTBLOCK_SEPERATOR();
 }
 
+#pragma endregion
+
+#pragma region EP fn
+
 __singleton std::int32_t __stackcall main() noexcept {
 
 	std::cout << "\n[+] Analyzing function length..." << std::endl;
 
-	imut auto function_length = qengine::qhook::qhook_util::analyze_fn_length(&myimportantmethod);
+	imut auto function_length = qengine::qhook::qhook_dtc_util::analyze_fn_length(&myimportantmethod);
 
 	std::cout << "\n[+] Succeeded, function length is " << function_length << " bytes" << std::endl;
 
@@ -920,26 +934,26 @@ __singleton std::int32_t __stackcall main() noexcept {
 	qengine::qhook::qhook_detection_t* dtc;
 
 	std::cout << "\n[+] Emplaced x86_64 hook #1: mov rax, ADDRESS; jmp rax ..." << std::endl;
-	if (dtc = qengine::qhook::qhook_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
+	if (dtc = qengine::qhook::qhook_dtc_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
 		print_hook_details(dtc);
 
 	//Emplace 2nd hook type
 	memcpy(ptr, &hook2, sizeof(hook2));
 
 	std::cout << "\n[+] Emplaced x86_64 hook #2: mov rax, ADDRESS; push rax; pop rax; jmp rax ..." << std::endl;
-	if (dtc = qengine::qhook::qhook_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
+	if (dtc = qengine::qhook::qhook_dtc_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
 		print_hook_details(dtc);
 
 	memcpy(ptr, &hook3, sizeof(hook3));
 
 	std::cout << "\n[+] Emplaced x86_64 hook #3: // mov rax, ADDRESS ; push rax ; ret" << std::endl;
-	if (dtc = qengine::qhook::qhook_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
+	if (dtc = qengine::qhook::qhook_dtc_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
 		print_hook_details(dtc);
 
 	memcpy(ptr, &hook1_x32, sizeof(hook1_x32));
 
 	std::cout << "\n[+] Emplaced x86_32 hook #1: mov eax, ADDRESS; jmp eax ..." << std::endl;
-	if (dtc = qengine::qhook::qhook_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
+	if (dtc = qengine::qhook::qhook_dtc_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
 		print_hook_details(dtc);
 
 	memcpy(ptr, &hook2_x32, sizeof(hook2_x32));
@@ -947,13 +961,13 @@ __singleton std::int32_t __stackcall main() noexcept {
 	// WARNING: This 32-bit hook format is improperly detected on 64-bit build targets (it recognizes the hooks presence, but returns invalid length)
 	// This is considered precisely a non-issue as 32-bit hooks fail in 64-bit address spacing
 	std::cout << "\n[+] Emplaced x86_32 hook #2: mov eax, ADDRESS; push eax; pop eax; jmp eax ..." << std::endl;
-	if (dtc = qengine::qhook::qhook_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
+	if (dtc = qengine::qhook::qhook_dtc_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
 		print_hook_details(dtc);
 
 	memcpy(ptr, &hook3_x32, sizeof(hook3_x32));
 
 	std::cout << "\n[+] Emplaced x86_32 hook #3: mov eax, ADDRESS; push eax; ret ..." << std::endl;
-	if (dtc = qengine::qhook::qhook_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
+	if (dtc = qengine::qhook::qhook_dtc_util::analyze_fn_hook_presence(&myimportantmethod, function_length))
 		print_hook_details(dtc);
 
 	//Restore page protections as we are done emplacing inline hooks
@@ -963,6 +977,8 @@ __singleton std::int32_t __stackcall main() noexcept {
 
 	return static_cast<std::int32_t>(NULL);
 }
+
+#pragma endregion
 ```
 
 Here is the output when we execute the above application :
