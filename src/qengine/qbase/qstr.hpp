@@ -78,11 +78,6 @@ public:
 
 #pragma endregion
 
-    __compelled_inline imut T* get() imut nex {
-
-        return _storage;
-    }
-
     __compelled_inline imut std::int32_t size() imut nex {
 
         return _size;
@@ -106,7 +101,14 @@ public:
         RtlZeroMemory(_storage, _size);
     }
 
-    __compelled_inline __stackcall operator T* () nex {
+    __compelled_inline __stackcall operator T* () muteval nex {
+
+        return imut_cast<T*>(
+            crypter_routine()
+        );
+    }
+
+    __compelled_inline imut T* get() nex {
 
         return imut_cast<T*>(
             crypter_routine()

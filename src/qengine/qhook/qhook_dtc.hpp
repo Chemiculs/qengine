@@ -257,7 +257,7 @@ namespace qengine {
 			}
 
 			static __symbolic std::size_t __regcall analyze_fn_length(imut c_void fn_address) noexcept {
-
+				
 				if (!fn_address)
 					return NULL;
 
