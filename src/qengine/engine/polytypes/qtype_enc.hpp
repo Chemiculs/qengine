@@ -1,8 +1,8 @@
 /*
 /***********************************************************************************************************************************************
-*																											                                  *
-*	QTYPE_ENC uses polyc32/64 runtime-encryption algorithm(s) to encrypt variables during runtime and provide severe control flow obfuscation *
-*																											                                  *
+*																											                                   *
+*	QTYPE_ENC uses the polyc polymorphic encryption algorithm to encrypt variables during runtime and provide classic control flow obfuscation *
+*																											                                   *
 ************************************************************************************************************************************************
 */
 
@@ -376,7 +376,15 @@ namespace qengine{
 				return *this;
 			}
 
-			__singleton qe_int8& __regcall operator*=(imut std::int8_t value) nex {
+			__compelled_inline qe_int8& __regcall operator++() nex {
+				return this->operator+=(1);
+			}
+
+			__compelled_inline qe_int8& __regcall operator--() nex {
+				return this->operator-=(1);
+			}
+
+			__compelled_inline qe_int8& __regcall operator*=(imut std::int8_t value) nex {
 
 				set(get() * value);
 				return *this;
@@ -528,6 +536,14 @@ namespace qengine{
 			__compelled_inline qe_uint8& __regcall operator-=(imut std::uint8_t value) nex {
 				set(get() - value);
 				return *this;
+			}
+
+			__compelled_inline qe_uint8& __regcall operator++() nex {
+				return this->operator+=(1);
+			}
+
+			__compelled_inline qe_uint8& __regcall operator--() nex {
+				return this->operator-=(1);
 			}
 
 			__compelled_inline qe_uint8& __regcall operator*=(imut std::uint8_t value) nex {
@@ -687,6 +703,14 @@ namespace qengine{
 				return *this;
 			}
 
+			__compelled_inline qe_int16& __regcall operator++() nex {
+				return this->operator+=(1);
+			}
+
+			__compelled_inline qe_int16& __regcall operator--() nex {
+				return this->operator-=(1);
+			}
+
 			__compelled_inline qe_int16& __regcall operator*=(imut std::int16_t value) nex {
 				set(get() * value);
 				return *this;
@@ -838,6 +862,14 @@ namespace qengine{
 			__compelled_inline qe_uint16& __regcall operator-=(imut std::uint16_t value) nex {
 				set(get() - value);
 				return *this;
+			}
+
+			__compelled_inline qe_uint16& __regcall operator++() nex {
+				return this->operator+=(1);
+			}
+
+			__compelled_inline qe_uint16& __regcall operator--() nex {
+				return this->operator-=(1);
 			}
 
 			__compelled_inline qe_uint16& __regcall operator*=(imut std::uint16_t value) nex {
@@ -997,6 +1029,14 @@ namespace qengine{
 				return *this;
 			}
 
+			__compelled_inline qe_int32& __regcall operator++() nex {
+				return this->operator+=(1);
+			}
+
+			__compelled_inline qe_int32& __regcall operator--() nex {
+				return this->operator-=(1);
+			}
+
 			__compelled_inline qe_int32& __regcall operator*=(imut int value) nex {
 				set(get() * value);
 				return *this;
@@ -1148,6 +1188,14 @@ namespace qengine{
 			__compelled_inline qe_uint32& __regcall operator-=(imut std::uint32_t value) nex {
 				set(get() - value);
 				return *this;
+			}
+
+			__compelled_inline qe_uint32& __regcall operator++() nex {
+				return this->operator+=(1);
+			}
+
+			__compelled_inline qe_uint32& __regcall operator--() nex {
+				return this->operator-=(1);
 			}
 
 			__compelled_inline qe_uint32& __regcall operator*=(imut std::uint32_t value) nex {
@@ -1306,6 +1354,14 @@ namespace qengine{
 			__compelled_inline qe_int64& __regcall operator-=(imut std::int64_t value) nex {
 				set(get() - value);
 				return *this;
+			}
+
+			__compelled_inline qe_int64& __regcall operator++() nex {
+				return this->operator+=(1);
+			}
+
+			__compelled_inline qe_int64& __regcall operator--() nex {
+				return this->operator-=(1);
 			}
 
 			__compelled_inline qe_int64& __regcall operator*=(imut std::int64_t value) nex {
@@ -1469,6 +1525,14 @@ namespace qengine{
 			__compelled_inline qe_uint64& __regcall operator/=(imut std::uint64_t value) nex {
 				set(get() / value);
 				return *this;
+			}
+
+			__compelled_inline qe_uint64& __regcall operator++() nex {
+				return this->operator+=(1);
+			}
+
+			__compelled_inline qe_uint64& __regcall operator--() nex {
+				return this->operator-=(1);
 			}
 
 			__compelled_inline qe_uint64& __regcall operator%=(imut std::uint64_t value) nex {

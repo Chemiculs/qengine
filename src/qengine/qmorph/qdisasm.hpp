@@ -455,7 +455,7 @@ namespace qengine {
 					return true;
 				}
 
-				__inlineable imut bool __stackcall wipe_idata_ilt() nex {
+				__singleton imut bool __stackcall wipe_idata_ilt() nex {
 
 					static DWORD protection = NULL;
 
@@ -494,8 +494,6 @@ namespace qengine {
 							// So we call virtual protect per each write to ensure proper memory access
 							if (!VirtualProtect(iat_pointer, sizeof(IMAGE_THUNK_DATA), PAGE_READWRITE, &protection))
 								return false;
-
-							RtlZeroMemory(iat_pointer, sizeof(IMAGE_THUNK_DATA));
 						}
 
 						// Reset IAT pointer to beginning

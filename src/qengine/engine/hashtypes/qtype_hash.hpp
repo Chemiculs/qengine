@@ -327,7 +327,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut bool* __stackcall get_raw_memory_address() imut nex {
@@ -431,7 +431,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut std::int8_t* __stackcall get_raw_memory_address() imut nex {
@@ -629,7 +629,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut std::uint8_t* __stackcall get_raw_memory_address() imut nex {
@@ -831,7 +831,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut std::int16_t* __stackcall get_raw_memory_address() imut nex {
@@ -1028,7 +1028,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut std::uint16_t* get_raw_memory_address() imut nex {
@@ -1230,7 +1230,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut std::int32_t* __stackcall get_raw_memory_address() imut nex {
@@ -1427,7 +1427,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut std::uint32_t* __stackcall get_raw_memory_address() imut nex {
@@ -1630,7 +1630,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut std::int64_t* __stackcall get_raw_memory_address() imut nex {
@@ -1827,7 +1827,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut std::uint64_t* __stackcall get_raw_memory_address() imut nex {
@@ -2035,7 +2035,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut float* __stackcall get_raw_memory_address() imut nex {
@@ -2184,7 +2184,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut double* get_raw_memory_address() imut nex {
@@ -2327,7 +2327,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut long double* get_raw_memory_address() imut nex {
@@ -2483,7 +2483,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut nex {
@@ -2623,7 +2623,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut nex {
@@ -2760,7 +2760,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut nex {
@@ -2908,7 +2908,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut decltype(_value)* get_raw_memory_address() imut nex {
@@ -3046,7 +3046,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut nex {
@@ -3183,7 +3183,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut decltype(_value)* __stackcall get_raw_memory_address() imut nex {
@@ -3345,7 +3345,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut char* __stackcall get_raw_memory_address() imut nex {
@@ -3473,7 +3473,7 @@ class qh_bool{
 
 				this->_hash = std::move(hash);
 
-				_value = std::move(value);
+				_value = value;
 			}
 
 			__compelled_inline imut wchar_t* __stackcall get_raw_memory_address() imut nex {
