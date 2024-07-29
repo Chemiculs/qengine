@@ -106,7 +106,7 @@ Keep in mind that the above example is only from basic initialization of one loc
 Each get() and set() accessor call is compelled inline, and each math operation or manipulation of qengine::type variables calls get() and / or set() accessor, seeing as these are rather large functions to begin with, the compiler output can go as far as crashing modern disassemblers.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+</details>
 <details>
 <summary>Features</summary>
 
