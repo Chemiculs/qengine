@@ -6,7 +6,7 @@
 </p>
 
 
-qengine is a Header-Only, Highly Configurable, Compiler-Independent, and largely inlined Binary Obfuscation Toolkit designed for C++ Standard 17 (or higher) Applications for Microsoft Windows,
+qengine is a Header-Only, Highly Configurable, Compiler-Independent Binary Obfuscation Toolkit designed for C++ Standard 17 (or higher) Applications for Microsoft Windows,
 offering ease of use in your projects, while making your output code extremely difficult to understand, especially for classic disassemblers like IDA.
 
 If you are interested in security testing qengine, or downloading further example usage of qengine, please refer to the Research and Development Repository which contains official template projects for these purposes:
@@ -28,7 +28,7 @@ This project aims to make binaries appear as unique and unrecognizable as possib
 
 * This will NOT prevent static disk signatures of your executables - however, it will make the task of understanding your code from a classic disassembler such as IDA VERY difficult if used properly, and will prevent memory-dump / memory-scan-based signature detections of your binary.
 
-* This library is fully inlined, employing a minimalist design and maximum performance + reliability, function inlining allows qengine to hide the actual code you are executing behind a wall of cryptographic instructions and protected memory regions
+* This library abuses function inlining to produce scattered compiler output, employing a minimalist design and maximum performance + reliability, function inlining allows qengine to hide the actual code you are executing behind a wall of cryptographic instructions and protected memory regions
 
 qengine is very lightweight and from my personal benchmarks, incurs a ~1.70% average performance ( for qxx_ types ) loss vs. standard library / primitive types on modern CPU's, likewise you will retain most of your application's original performance ( on average ) while simultaneously generating thousands or even millions of junk instructions dilluting your meaningful compiled codebase from the eyes of Reverse-Engineer's.
 
@@ -107,31 +107,12 @@ Each get() and set() accessor call is compelled inline, and each math operation 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Is qengine Malicious?
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-This is a perspective which i have been approached with several times to date and will likely wind up being subject to criticism of eventually (should this project continue to thrive and advance, ofcourse).
-
-I will say that at the moment, while this engine is interesting and powerful, it is not really currently much more effective than many other ( Virtualized ) obfuscation software(s) with VMProtect and Themida likely out-doing qengine in terms of protection of original code by a decent margin.
-
-qengine employ's it's own methods of mutation and  similar to other Obfuscation / Virtualization software(s), albeit much less aggressively and entirely optionally, currently only in very specific manners as well which could probably be constrained to a heuristic trait detection eventually.
-
-This project does however, if it has the potential which i believe it may, this could end up becoming something capable of significantly polluting the software ecosystem for a good while - whether this ends up happening or not only time will tell.
-
-</details>
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 <details>
 <summary>Features</summary>
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-* Runtime stack  ( locals will be manipulated directly on the stack through compiler-generated junk code, and will be encrypted with a dynamic key and algorithm decided at each execution )
-
-  
-* Runtime heap polymorphism ( polymorphic heap allocations are supported )
+* qengine-type Locals will be encrypted on the stack and lifespan of decrypted objects won't extend beyond the current frame. 
 
   
 * Thorough control-flow obfuscation ( depending on the compiler used and amount of library types used, the IDA control-flow graph will be extremely difficult to read and in many cases fail pseudo-code generation )
@@ -143,7 +124,7 @@ This project does however, if it has the potential which i believe it may, this 
 * .text / executable section Polymorphism ( .text section dumps will appear different at each runtime which would hypothetically prevent basic static .text dump signature scans by AV's / AC's etc. )
 
   
-* PE header wipe/mutation ( headers will be wiped or appear differently at each runtime, in memory )
+* PE header Wipe / Mutation ( headers will be wiped or appear differently at each runtime, in memory )
 
   
 * Dynamic / Runtime imports ( hide imports from disk PE image import table )
