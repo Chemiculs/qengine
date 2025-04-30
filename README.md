@@ -15,11 +15,6 @@ If you are interested in security testing qengine, or downloading further exampl
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-<details>
-<summary>What is qengine?</summary>
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 ** URGENT UPDATE **  
 
 LLVN / Clang MAY have pushed an update to their Cimpiler, which breaks qengine's inlining features, regardless of Compiler settings, I suspect this is due to redefinition or deprecation of the __forceinline Directive.
@@ -34,6 +29,12 @@ Apologies for the issue, I would fix it, but I am Homeless and without a Compute
 Thanks
 
 **************************************************************
+
+
+<details>
+<summary>What is qengine?</summary>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 qengine is a polymorphic engine (meaning an engine that takes multiple forms/permutations) created for the Microsoft Windows operating system, designed to make reverse engineering significantly harder. 
 
