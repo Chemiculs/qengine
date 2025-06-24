@@ -17,7 +17,7 @@ If you are interested in security testing qengine, or downloading further exampl
 
 ** URGENT UPDATE **  
 
-LLVM / Clang have pushed an update to their Compiler, which breaks qengine's inlining features, regardless of Compiler setting ;
+LLVM / Clang have pushed an update to their Compiler, which breaks some of qengine's inlining features, namely QSTR's compile-time string obfuscation, regardless of Compiler setting ;
 
 if your output fails to produce inlining, for now Either :
 
