@@ -17,15 +17,13 @@ If you are interested in security testing qengine, or downloading further exampl
 
 ** URGENT UPDATE **  
 
-LLVM/ Clang MAY have pushed an update to their Compiler, which breaks qengine's inlining features, regardless of Compiler setting ;
-I suspect this is due to redefinition or deprecation of the __forceinline Directive.
+LLVM / Clang have pushed an update to their Compiler, which breaks qengine's inlining features, regardless of Compiler setting ;
+
 if your output fails to produce inlining, for now Either :
 
 * Downgrade LLVM / Clang Compiler Version
 
 * Switch to MSVC or Intel Compiler 
-
-Apologies for the issue, I would fix it, but I am Homeless and without a Computer at the moment.
 
 Thanks
 
