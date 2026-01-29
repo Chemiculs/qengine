@@ -323,7 +323,7 @@ int main(){
 
 ```
 
-This code, presuming the compiler manages to comply with qengine's inlining reuests, actually expands to the following:
+This code, presuming the compiler manages to comply with qengine's inlining requests, actually expands to the following:
 
 ```cpp
 #include <iostream>
